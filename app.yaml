@@ -1,0 +1,15 @@
+runtime: nodejs16
+
+instance_class: F1
+
+env_variables:
+  ENVIRONMENT: "Production"
+  AUTH0SECRET: "Eykardia was developed by Dimitris for Computer Studio"
+  AUTH0CLIENTID: "Rp9q5mVSpO5blrUmU14PAjiPb18gPWcP"
+  LISTENINGURL: "https://eykardia.lm.r.appspot.com"
+  AUTH0BASEURL: "https://eykardia.lm.r.appspot.com"
+  DATABASEHOST: "localhost"
+  DATABASENAME: "eukardia"
+  DATABASEUSERNAME: "eukardiawebapp"
+  DATABASEPASSWORD: "3uk@rSqlWa"
+
