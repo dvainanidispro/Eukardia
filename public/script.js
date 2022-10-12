@@ -10,7 +10,7 @@ var App = {
 var Q = (selector) => {
     if ( selector.charAt(0)=='#' ) {  
         let element = document.querySelector(selector);    
-        element.on ??= function(event,callback){element.addEventListener(event,callback);return element}    // jshint ignore:line
+        // element.on ??= function(event,callback){element.addEventListener(event,callback);return element}    // jshint ignore:line
         return element;
     } else {
         if (selector.charAt(0)=='~') {selector='[data-variable=' + selector.substring(1) + ']'}
@@ -50,5 +50,25 @@ fetch('/profile').then(response=>response.json()).then(profile => {
 
 
 
+let path = window.location.pathname;
 
+if (path=="/dataentryform"){
+
+    Q("#naventry").style.display="none";
+    
+    Q("#testPatient").addEventListener("change",function(){
+        Q("#testWarning").style.display = this.checked ? "block":"none";
+    })
+    
+    // when press Enter, form is not sumbitted, but shows validation errors
+    window.addEventListener('keydown', function(e) {
+        if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
+            if (e.target.nodeName == 'INPUT') {     // textarea is not an input (in textarea you can use Enter)
+                e.preventDefault();
+                Q("#dataform").reportValidity();    // show validation errors
+            }
+        }
+    }, true);
+   
+}
 

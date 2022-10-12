@@ -1,5 +1,5 @@
 const { auth, requiresAuth } = require('express-openid-connect');
-const { getUserRoles } = require("./models/user");
+// const { getUserRoles } = require("./models/user");
 
 /** auth0 configuration */
 module.exports.auth0config = {
@@ -8,7 +8,7 @@ module.exports.auth0config = {
     secret: process.env.AUTH0SECRET,
     baseURL: process.env.AUTH0BASEURL,
     clientID: process.env.AUTH0CLIENTID,
-    issuerBaseURL: 'https://eykardia.eu.auth0.com'
+    issuerBaseURL: 'https://eukardia.eu.auth0.com'
 };
 
 
@@ -19,6 +19,7 @@ module.exports.appRoles = {
 
 /** auth0 authorization using ID Token */ 
 // checks if any of the user's roles matches any of the resource's required roles. 
+/*
 module.exports.validateRoleUsingToken = (rolesArray) => (req,res,next) => {
     let roles = req.oidc.isAuthenticated() ? req.oidc.user.positions : [];
     console.log(req.oidc.user.name)
@@ -30,9 +31,11 @@ module.exports.validateRoleUsingToken = (rolesArray) => (req,res,next) => {
         res.status(403).sendFile(__dirname + '/public/403.html');
     }
 };
+*/
 
 /** auth0 authorization using MySQL Database */ 
 // checks if any of the user's roles matches any of the resource's required roles. 
+/*
 module.exports.validateRoleUsingDB = (rolesArray=null) => async (req,res,next) => {
     // if (!rolesArray) {rolesArray=req.originalUrl}
     let userID = req.oidc.user.sub;
@@ -46,3 +49,4 @@ module.exports.validateRoleUsingDB = (rolesArray=null) => async (req,res,next) =
         res.status(403).sendFile(__dirname + '/public/403.html');
     }
 };
+*/

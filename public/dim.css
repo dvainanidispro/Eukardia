@@ -156,3 +156,19 @@ main{
 .input-element{
     margin: 1rem 0;
 }
+
+.bootstrap-input-style{
+    margin-block: 1rem;
+    background-color: var(--bs-white);
+    border: 1px solid lightgray;
+    border-radius: 0.4rem;
+    padding: 0.7rem;
+}
+
+#testPatient:checked {
+    background-color: red;
+}
+
+input[type="number"]+label, input[type="text"]+label, textarea+label {
+    color: var(--bs-secondary);
+  }

@@ -30,3 +30,6 @@ let getUserRoles = async (userID) => {
 
 module.exports = { User, getUserRoles };
 
+
+// console.log(DataTypes.TEXT('medium'));
+

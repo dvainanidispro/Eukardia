@@ -5,7 +5,7 @@ instance_class: F1
 env_variables:
   ENVIRONMENT: "Production"
   AUTH0SECRET: "Eykardia was developed by Dimitris for Computer Studio"
-  AUTH0CLIENTID: "Rp9q5mVSpO5blrUmU14PAjiPb18gPWcP"
+  AUTH0CLIENTID: "7lcPO0eJWTV6bxCDAcvqpj16GR2cOF2n"
   LISTENINGURL: "https://eykardia.lm.r.appspot.com"
   AUTH0BASEURL: "https://eykardia.lm.r.appspot.com"
   DATABASEHOST: "localhost"

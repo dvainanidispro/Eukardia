@@ -19,7 +19,7 @@ const {clearObject} = require('./models/typeConversion');
 
 
 // Database
-const { db, databaseConnectionTest } = require("./database");
+// const { db, databaseConnectionTest } = require("./database");
 
 
 // Authentication, Authorization 
@@ -81,15 +81,4 @@ const startWebServer = (server,port,listeningURL="http://localhost") => {
 
 const port = process.env.PORT || 80;
 const listeningURL = process.env.LISTENINGURL;
-
-if (typeof db == 'undefined') {
-    startWebServer(server,port,listeningURL);
-} else {
-    databaseConnectionTest(db)           // top level await is not supported everywhere... 
-    .then(()=>{
-        startWebServer(server,port,listeningURL);
-    })
-    .catch(()=>{
-        console.error(`\x1b[31m Server initiation aborted!`);
-    });
-}
+startWebServer(server,port,listeningURL);
