@@ -7,6 +7,7 @@
     --pharmacygreen: #00a651;
     --display-if-user: none;
     --display-if-guest: block;
+    --unknown-answer: silver;
 }
 
 
@@ -140,6 +141,7 @@ footer p{font-size: small}
 
 /*********************  MAIN   *********************/
 
+
 main{
     padding: 1rem 3rem;
 }
@@ -153,8 +155,13 @@ main{
 }
 
 
+
 .input-element{
     margin: 1rem 0;
+}
+
+input[type="number"]+label, input[type="text"]+label, textarea+label {
+    color: var(--bs-secondary);
 }
 
 .bootstrap-input-style{
@@ -165,10 +172,18 @@ main{
     padding: 0.7rem;
 }
 
+.bg-highlight{
+    background-color: WhiteSmoke;
+}
+
+.unknown-choice{
+    color: var(--unknown-answer);
+}
+.unknown-choice input[type="radio"]{
+    background-color: var(--unknown-answer);
+    border: var(--unknown-answer);
+} 
+
 #testPatient:checked {
     background-color: red;
 }
-
-input[type="number"]+label, input[type="text"]+label, textarea+label {
-    color: var(--bs-secondary);
-  }

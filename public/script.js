@@ -62,9 +62,9 @@ if (path=="/dataentryform"){
     
     // when press Enter, form is not sumbitted, but shows validation errors
     window.addEventListener('keydown', function(e) {
-        if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {
+        if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {         // if you press Enter
             if (e.target.nodeName == 'INPUT') {     // textarea is not an input (in textarea you can use Enter)
-                e.preventDefault();
+                e.preventDefault();                 // prevent sumbit
                 Q("#dataform").reportValidity();    // show validation errors
             }
         }

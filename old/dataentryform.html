@@ -43,9 +43,9 @@
 
         <form id="dataform" action="/submitdata" method="POST">
 
-            <h3 class="mb-3">Νέο περιστατικό</h3>
+            <h3 class="mb-3">Φόρμα νέου περιστατικού</h3>
 
-            <div class="bootstrap-input-style bg-highlight"><div class="form-check">
+            <div class="bootstrap-input-style bg-light"><div class="form-check">
                 <input class="form-check-input" type="checkbox" name="testPatient" id="testPatient" value="1">
                 <label class="form-check-label link-danger" for="testPatient">
                     Test περιστατικό
@@ -62,11 +62,11 @@
                 <label class="form-label ms-2">Φύλο</label>
                 <div class="ms-3">
                     <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="gender" id="male" value="0">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="male">
                         <label class="form-check-label" for="male">Άνδρας</label>
                     </div>
                     <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="gender" id="female" value="1">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="female">
                         <label class="form-check-label" for="female">Γυναίκα</label>
                     </div>
                     <!-- <div class="form-check col">
@@ -112,14 +112,6 @@
                         <input class="form-check-input" type="radio" name="activity" id="activity3" value="3">
                         <label class="form-check-label" for="activity3">Επίπεδο 3</label>
                     </div>
-                    <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="activity" id="activity4" value="4">
-                        <label class="form-check-label" for="activity4">Επίπεδο 4</label>
-                    </div>
-                    <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="activity" id="activity5" value="5">
-                        <label class="form-check-label" for="activity5">Επίπεδο 5</label>
-                    </div>
                 </div>
             </div>
 
@@ -133,8 +125,8 @@
             <div class="input-element bootstrap-input-style">
                 <label class="form-label ms-2 ">Κάπνισμα</label>
                 <div class="ms-3">
-                    <div class="form-check col unknown-choice">
-                        <input class="form-check-input" type="radio" name="smoking" id="smoking0" value="" checked>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="smoking" id="smoking0" value="0" checked>
                         <label class="form-check-label" for="smoking0">Άγνωστο</label>
                     </div>
                     <div class="form-check col">
@@ -189,8 +181,8 @@
             </div>
 
             <div class="form-floating input-element">
-                <input type="number" step="any" class="form-control" id="lpa" name="lpa" placeholder="Λιποπρωτεΐνη α (Lp(α))">
-                <label for="lpa">Λιποπρωτεΐνη α (Lp(α))</label>
+                <input type="number" step="any" class="form-control" id="lipoprotein" name="lipoprotein" placeholder="Λιποπρωτεΐνη α (Lp(α))">
+                <label for="lipoprotein">Λιποπρωτεΐνη α (Lp(α))</label>
             </div>
 
             <div class="form-floating input-element">
@@ -219,87 +211,32 @@
             </div>
 
 
-            <!-- <div class="bootstrap-input-style"><div class="form-check">
-                <input class="form-check-input" type="checkbox" id="fibrillationO" name="fibrillationO" value="1">
-                <label class="form-check-label" for="fibrillationO">
-                    Κολπική Μαρμαρυγή
-                </label>
-            </div></div> -->
+            <div class="bootstrap-input-style"><div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="fibrillation" name="fibrillation" value="1">
+                    <label class="form-check-label" for="fibrillation">
+                        Κολπική Μαρμαρυγή
+                    </label>
+            </div></div>
 
-
-            <div class="input-element bootstrap-input-style">
-                <label class="form-label ms-2 ">Κολπική Μαρμαρυγή</label>
-                <div class="ms-3">
-                    <div class="form-check col unknown-choice">
-                        <input class="form-check-input " type="radio" name="fibrillation" id="fibrillation" value="" checked>
-                        <label class="form-check-label" for="fibrillation">Άγνωστο</label>
-                    </div>
-                    <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="fibrillation" id="fibrillation0" value="0">
-                        <label class="form-check-label" for="fibrillation0">Όχι</label>
-                    </div>
-                    <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="fibrillation" id="fibrillation1" value="1">
-                        <label class="form-check-label" for="fibrillation1">Ναι</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div class="bootstrap-input-style"><div class="form-check">
+            <div class="bootstrap-input-style"><div class="form-check">
                 <input class="form-check-input" type="checkbox" id="heartfailure" name="heartfailure" value="1">
                 <label class="form-check-label" for="heartfailure">
                     Ιστορικό καρδιακής ανεπάρκειας
                 </label>
-            </div></div> -->
+            </div></div>
 
-            <div class="input-element bootstrap-input-style">
-                <label class="form-label ms-2 ">Ιστορικό καρδιακής ανεπάρκειας</label>
-                <div class="ms-3">
-                    <div class="form-check col unknown-choice">
-                        <input class="form-check-input " type="radio" name="heartfailure" id="heartfailure" value="" checked>
-                        <label class="form-check-label" for="heartfailure">Άγνωστο</label>
-                    </div>
-                    <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="heartfailure" id="heartfailure0" value="0">
-                        <label class="form-check-label" for="heartfailure0">Όχι</label>
-                    </div>
-                    <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="heartfailure" id="heartfailure1" value="1">
-                        <label class="form-check-label" for="heartfailure1">Ναι</label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div class="bootstrap-input-style"><div class="form-check">
+            <div class="bootstrap-input-style"><div class="form-check">
                 <input class="form-check-input" type="checkbox" id="cancer" name="cancer" value="1">
                 <label class="form-check-label" for="cancer">
                     Καρκίνος
                 </label>
-            </div></div> -->
-
-            <div class="input-element bootstrap-input-style">
-                <label class="form-label ms-2 ">Καρκίνος</label>
-                <div class="ms-3">
-                    <div class="form-check col unknown-choice">
-                        <input class="form-check-input " type="radio" name="cancer" id="cancer" value="" checked>
-                        <label class="form-check-label" for="cancer">Άγνωστο</label>
-                    </div>
-                    <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="cancer" id="cancer0" value="0">
-                        <label class="form-check-label" for="cancer0">Όχι</label>
-                    </div>
-                    <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="cancer" id="cancer1" value="1">
-                        <label class="form-check-label" for="cancer1">Ναι</label>
-                    </div>
-                </div>
-            </div>
+            </div></div>
 
             <div class="form-floating input-element">
                 <input type="number" step="any" class="form-control" id="creatinine" name="creatinine" placeholder="Κρεατινίνη">
                 <label for="creatinine">Κρεατινίνη</label>
             </div>
-
+            
             <!-- 
             <div class="bootstrap-input-style bg-light"><div class="form-check">
                 <input class="form-check-input" type="checkbox" id="result" name="result" value="1">
@@ -308,24 +245,12 @@
                 </label>
             </div></div> -->
 
-            <div class="input-element bootstrap-input-style bg-highlight">
-                <label class="form-label ms-2 ">Αποτέλεσμα (καρδιαγγειακή νόσος)</label>
-                <div class="ms-3">
-                    <div class="form-check col unknown-choice">
-                        <input class="form-check-input " type="radio" name="result" id="result" value="" checked>
-                        <label class="form-check-label" for="result">Άγνωστο</label>
-                    </div>
-                    <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="result" id="result0" value="0">
-                        <label class="form-check-label" for="result0">Όχι</label>
-                    </div>
-                    <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="result" id="result1" value="1">
-                        <label class="form-check-label" for="result1">Ναι</label>
-                    </div>
-                </div>
-            </div>
-
+            <div class="bootstrap-input-style"><div class="form-check">
+                <input class="form-check-input" type="checkbox" id="result" name="cancer" value="1">
+                <label class="form-check-label" for="cancer">
+                    Καρκίνος
+                </label>
+            </div></div>
 
 
 

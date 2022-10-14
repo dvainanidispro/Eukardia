@@ -16,9 +16,9 @@ const convert = (value,desiredType="number") =>{
 */
 
 
-const tryToConvertToNumber = (whatever) => isNaN(parseFloat(whatever)) ? whatever : parseFloat(whatever);
+const conversion = (whatever) => whatever=='' ? null : isNaN(parseFloat(whatever)) ? whatever : parseFloat(whatever);
 const objectMap = (obj, fn) => Object.fromEntries( Object.entries(obj).map( ([k,v],i)=>[k,fn(v,k,i)] ) );
-const clearObject = (obj) => objectMap(obj,x=>tryToConvertToNumber(x));
+const clearObject = (obj) => objectMap(obj,x=>conversion(x));
 
 
 module.exports = {clearObject}

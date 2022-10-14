@@ -15,11 +15,10 @@ server.use(express.json());
 server.use(express.static(__dirname + '/public'));      // vercel supports only the old command
 
 
-const {clearObject} = require('./models/typeConversion');
-
-
-// Database
+// Database and models
 const { db, databaseConnectionTest } = require("./database");
+const { Case } = require("./models/case")
+const {clearObject} = require('./models/typeConversion');
 
 
 // Authentication, Authorization 
@@ -49,6 +48,7 @@ server.get('/profile', (req, res) => {
 
 server.get('/dataentryform', authentication(), (req,res)=>{
     if (isDev || req.oidc.isAuthenticated()) {       // if user has logged in
+        // TODO: Add db record with user info
         res.sendFile(__dirname + '/public/dataentryform.html');
     } else {
         // res.status(403).send('<h1>You are not authorized to access this page</h1>');
@@ -56,15 +56,22 @@ server.get('/dataentryform', authentication(), (req,res)=>{
     }
 });
 
-server.post('/submitdata', authentication(), (req,res)=>{
+server.post('/submitdata', authentication(), async (req,res)=>{
     let dataRecieved = clearObject(req.body);
-    console.log(dataRecieved);
+    let record;
+    // console.log(typeof Case)
+    if (typeof Case !== 'undefined') {
+        dataRecieved.author = req?.oidc?.user?.sub ?? "testUser";
+        record = await Case.create(dataRecieved);
+        console.log(record);
+    }
+    res.send(JSON.stringify(record));
     // res.status(403).sendFile(__dirname + '/public/403.html');
-    res.status(200).send(`
-        <h1>Προς το παρόν, δεν είναι δυνατή η καταχώριση στοιχείων</h1>
-        <p>Στείλατε επιτυχώς τα παρακάτω στοιχεία στον web server, αλλά δεν καταχωρήθηκαν στη βάση:</p>
-        <p>${JSON.stringify(dataRecieved)}<p>
-    `);
+    // res.status(200).send(`
+    //     <h1>Προς το παρόν, δεν είναι δυνατή η καταχώριση στοιχείων</h1>
+    //     <p>Στείλατε επιτυχώς τα παρακάτω στοιχεία στον web server, αλλά δεν καταχωρήθηκαν στη βάση:</p>
+    //     <p>${JSON.stringify(dataRecieved)}<p>
+    // `);
 });
 
 
