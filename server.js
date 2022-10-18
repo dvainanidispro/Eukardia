@@ -16,14 +16,14 @@ server.use(express.static(__dirname + '/public'));      // vercel supports only 
 
 
 // Database and models
-const { db, databaseConnectionTest } = require("./database");
-const { Case } = require("./models/case")
+const { db, databaseConnectionTest } = require('./database');
 const {clearObject} = require('./models/typeConversion');
+const Models = require('./models/models')
 
 
 // Authentication, Authorization 
 const { auth, requiresAuth } = require('express-openid-connect');
-const { auth0config } = require("./auth");
+const { auth0config } = require('./auth');
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 server.use(auth(auth0config));
 
@@ -46,7 +46,7 @@ server.get('/profile', (req, res) => {
     res.send(req.oidc.isAuthenticated() ? JSON.stringify(req.oidc.user) : {"guest:": "true"});  // IdToken
 });
 
-server.get('/dataentryform', authentication(), (req,res)=>{
+server.get('/dataentryform', authentication(), async (req,res)=>{
     if (isDev || req.oidc.isAuthenticated()) {       // if user has logged in
         // TODO: Add db record with user info
         res.sendFile(__dirname + '/public/dataentryform.html');
@@ -59,19 +59,11 @@ server.get('/dataentryform', authentication(), (req,res)=>{
 server.post('/submitdata', authentication(), async (req,res)=>{
     let dataRecieved = clearObject(req.body);
     let record;
-    // console.log(typeof Case)
-    if (typeof Case !== 'undefined') {
-        dataRecieved.author = req?.oidc?.user?.sub ?? "testUser";
-        record = await Case.create(dataRecieved);
-        console.log(record);
-    }
+    // console.log(dataRecieved);
+    dataRecieved.author = req?.oidc?.user?.sub ?? "testUser";
+    record = await Models.Case.create(dataRecieved);
+    // console.log(record);    // returns the data submitted to database, so they are correct
     res.send(JSON.stringify(record));
-    // res.status(403).sendFile(__dirname + '/public/403.html');
-    // res.status(200).send(`
-    //     <h1>Προς το παρόν, δεν είναι δυνατή η καταχώριση στοιχείων</h1>
-    //     <p>Στείλατε επιτυχώς τα παρακάτω στοιχεία στον web server, αλλά δεν καταχωρήθηκαν στη βάση:</p>
-    //     <p>${JSON.stringify(dataRecieved)}<p>
-    // `);
 });
 
 
@@ -89,14 +81,10 @@ const startWebServer = (server,port,listeningURL="http://localhost") => {
 const port = process.env.PORT || 80;
 const listeningURL = process.env.LISTENINGURL;
 
-if (typeof db == 'undefined') {
+databaseConnectionTest(db)           // top level await is not supported everywhere... 
+.then(()=>{
     startWebServer(server,port,listeningURL);
-} else {
-    databaseConnectionTest(db)           // top level await is not supported everywhere... 
-    .then(()=>{
-        startWebServer(server,port,listeningURL);
-    })
-    .catch(()=>{
-        console.error(`\x1b[31m Server initiation aborted!`);
-    });
-}
+})
+.catch(()=>{
+    console.error(`\x1b[31m Server initiation aborted!`);
+});

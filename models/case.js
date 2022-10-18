@@ -1,8 +1,6 @@
 const { DataTypes } = require('sequelize');
 const { db } = require("../database.js"); 
 
-
-
 const Case = db.define('Case', {
     
     id: {
@@ -10,17 +8,14 @@ const Case = db.define('Case', {
         autoIncrement: true,
         primaryKey: true    
     },
-    author: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        defaultValue: "TestUser"
-    },
+    // author is a foreign key, so we define it ONLY in relationships, or else fields should only be the default: case\userid
+    // author: {  },                 
     testPatient: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: 0
     },
-    patientID: {
+    patientId: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -67,11 +62,27 @@ const Case = db.define('Case', {
         // allowNull: false
     },
     comments: DataTypes.TEXT('medium'),
-  }, {
+
+  }, 
+  
+  {
     tableName: 'cases',
+    indexes: [
+    {   
+        unique: true,
+        fields: ['id']
+    },
+    {   
+        fields: ['patientId']
+    }
+    ],
   });
 
 
-  Case.sync({ alter: true })
+    // χρειάζεται raw: true παρόλο που το έχεις και στα global settings, αλλιώς βγάζει λάθος!!!
+    // Models.Case.findAll({where:{author : req?.oidc?.user?.sub ?? "auth0|6343d56a1a612a02e26d6e41"} , include: 'user', raw: true }).then(data=>console.log(data));
+    // Models.User.findAll({where:{entity : "Computer Studio"} , include: 'cases', raw: true }).then(data=>console.log(data));
+    // const [results, metadata] = await db.query('SELECT * from casesview WHERE userid="auth0|6343d56a1a612a02e26d6e41"');
+    // console.log(results);
 
   module.exports = { Case };

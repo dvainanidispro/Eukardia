@@ -3,7 +3,8 @@ const { db } = require("../database.js");
 
 let User = db.define('user', {
     // Model attributes are defined here
-    user_id: {
+    id: {
+      primaryKey: true,
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -27,7 +28,7 @@ let getUserRoles = async (userID) => {
 }
 // getUserRoles("auth0|62f555e24c7ec8bba7e6ede0").then((data)=>console.log(data));
 
-User.sync({ alter: true })
+// Models.User.create({id:"newtest",name:"New Name", entity: "New Entity"});        // it works!
 
 module.exports = { User, getUserRoles };
 

@@ -1,21 +1,3 @@
-/*
-const convert = (value,desiredType="number") =>{
-    switch(desiredType){
-        case "string":
-            return value.toString();
-        case "number":
-            return isNaN(parseFloat(value)) ? 0 : parseFloat(value);
-        case "boolean":
-            if ( value==1 || value=="1" || value=="true" ) {return true}
-            if (value=="false") {return false}
-            return Boolean(value);
-            break;
-        default:
-    }
-}
-*/
-
-
 const conversion = (whatever) => whatever=='' ? null : isNaN(parseFloat(whatever)) ? whatever : parseFloat(whatever);
 const objectMap = (obj, fn) => Object.fromEntries( Object.entries(obj).map( ([k,v],i)=>[k,fn(v,k,i)] ) );
 const clearObject = (obj) => objectMap(obj,x=>conversion(x));
