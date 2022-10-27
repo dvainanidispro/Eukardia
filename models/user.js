@@ -5,7 +5,7 @@ let User = db.define('user', {
     // Model attributes are defined here
     id: {
       primaryKey: true,
-      type: DataTypes.STRING,
+      type: DataTypes.STRING,           // μπορεί να μην το πιάσει από εδώ, αλλά μόνο από το workbench... 
       allowNull: false
     },
     name: DataTypes.STRING,

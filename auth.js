@@ -8,7 +8,10 @@ module.exports.auth0config = {
     secret: process.env.AUTH0SECRET,
     baseURL: process.env.AUTH0BASEURL,
     clientID: process.env.AUTH0CLIENTID,
-    issuerBaseURL: 'https://eukardia.eu.auth0.com'
+    issuerBaseURL: 'https://eukardia.eu.auth0.com',
+    routes: {
+        login: false,       // use custom login, not the default. See server.get('/login')
+    },
 };
 
 

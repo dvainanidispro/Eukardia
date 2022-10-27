@@ -10,7 +10,7 @@ var App = {
 var Q = (selector) => {
     if ( selector.charAt(0)=='#' ) {  
         let element = document.querySelector(selector);    
-        // element.on ??= function(event,callback){element.addEventListener(event,callback);return element}    // jshint ignore:line
+        element.on ??= function(event,callback){element.addEventListener(event,callback);return element}    // jshint ignore:line
         return element;
     } else {
         if (selector.charAt(0)=='~') {selector='[data-variable=' + selector.substring(1) + ']'}
@@ -49,6 +49,12 @@ fetch('/profile').then(response=>response.json()).then(profile => {
 }).finally(()=>{initializeContent()});
 
 
+let validateForm = (form) => {
+    form.classList.add("was-validated");          // show errors using bootstrap
+    form.reportValidity();    // reportValidity = CheckValidity + show validation errors using default the browser's way
+};
+
+
 
 let path = window.location.pathname;
 
@@ -59,16 +65,27 @@ if (path=="/dataentryform"){
     Q("#testPatient").addEventListener("change",function(){
         Q("#testWarning").style.display = this.checked ? "block":"none";
     })
+
     
     // when press Enter, form is not sumbitted, but shows validation errors
     window.addEventListener('keydown', function(e) {
         if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {         // if you press Enter
-            if (e.target.nodeName == 'INPUT') {     // textarea is not an input (in textarea you can use Enter)
+            if (e.target.nodeName == 'INPUT') {     // textarea is not an input (in textarea, Enter must have another meaning)
                 e.preventDefault();                 // prevent sumbit
-                Q("#dataform").reportValidity();    // show validation errors
+                validateForm(Q("#dataform"));
             }
         }
     }, true);
+
+
+    Q("#btnFormSubmit").on('click',function(){
+        validateForm(Q("#dataform"));
+    });
+    /* Σημειώνεται ότι το το addEventListener('submit' , καθώς και το html onsubmit εκτελούνται μόνο όταν η φόρμα έχει γίνει validated σωστά.
+        Αυτό σημαίνει ότι αν η φόρμα δεν γίνει validated, δεν θα εκτελεστεί τίποτα από αυτά!
+    */
+
+
    
 }
 

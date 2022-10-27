@@ -42,13 +42,14 @@ if (isDev){
 
 /*******************             ROUTES             ***********************/ 
 
+// send ID token
 server.get('/profile', (req, res) => {
     res.send(req.oidc.isAuthenticated() ? JSON.stringify(req.oidc.user) : {"guest:": "true"});  // IdToken
 });
 
+// access to dataentryform only to authenticated users
 server.get('/dataentryform', authentication(), async (req,res)=>{
     if (isDev || req.oidc.isAuthenticated()) {       // if user has logged in
-        // TODO: Add db record with user info
         res.sendFile(__dirname + '/public/dataentryform.html');
     } else {
         // res.status(403).send('<h1>You are not authorized to access this page</h1>');
@@ -56,15 +57,35 @@ server.get('/dataentryform', authentication(), async (req,res)=>{
     }
 });
 
+// submit data (only authenticated users)
 server.post('/submitdata', authentication(), async (req,res)=>{
     let dataRecieved = clearObject(req.body);
-    let record;
-    // console.log(dataRecieved);
     dataRecieved.author = req?.oidc?.user?.sub ?? "testUser";
-    record = await Models.Case.create(dataRecieved);
+    // console.log(dataRecieved);
+    let record = await Models.Case.create(dataRecieved);
     // console.log(record);    // returns the data submitted to database, so they are correct
     res.send(JSON.stringify(record));
 });
+
+// after login, goto updateprofile
+server.get('/login', (req, res) => res.oidc.login({ returnTo: '/updateprofile' }));
+
+// update user profile on database after login
+server.get('/updateprofile', authentication(), (req, res) => {
+    res.redirect('/');      // redirect to index.html
+    // console.log(req.oidc.user);
+    let user = req.oidc.user;
+    const userInfo = Models.User.upsert({       // upsert: create or update if already exists!
+        id:user.sub,
+        name:user.name,
+        entity:user.entity,
+        roles:JSON.stringify(user.positions)
+    });      
+    // userInfo.save();
+    // res.send(req.oidc.isAuthenticated() ? JSON.stringify(req.oidc.user) : {"guest:": "true"});  // IdToken
+});
+
+
 
 
 
