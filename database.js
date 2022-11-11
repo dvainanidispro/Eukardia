@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize');
-require('dotenv').config();   // comment out when using web server (needs when testing db without web server)
+// require('dotenv').config();   // comment out when using web server (needs when testing db without web server)
 
 // const { User } = require("./models/user");
 // const { Case } = require("./models/case");

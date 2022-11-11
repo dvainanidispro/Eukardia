@@ -2,8 +2,8 @@
 
 let appHeader = /*html*/`
     
-    <a href="/" class="logo navbar-brand">
-    <img src="logo.png" height="35px"/>
+    <a href="/" class="navbar-brand">
+    <img src="logo.png" class="logo"/>
     <h1>ΕΥΚΑΡΔΙΑ</h1>
     <!-- <span>Logo and/or Brand Name</span> -->
     </a>

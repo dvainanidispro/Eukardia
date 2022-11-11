@@ -4,7 +4,7 @@
     --md: 768px;
     --lg: 992px;
     --xl: 1200px;
-    --pharmacygreen: #00a651;
+    --primarycolor: rgb(32,41,92);
     --display-if-user: none;
     --display-if-guest: block;
     --unknown-answer: silver;
@@ -47,10 +47,10 @@ ol, ul, li{
 
 /* Make images easier to work with */
 img,
-svg,
-.center,
+svg, 
 picture,
-figure {
+figure,
+.center {               /* center is here */
   max-width: 100%;
   display: block;
   margin-inline: auto;		
@@ -82,11 +82,6 @@ body{
 }
 
 
-.center{    
-	display: block;					/* important for everything */
-	margin-inline: auto !important; /* centers if this is image or div*/
-	text-align: center;				/* centers if this is text */
-}
 .center-contents{
 	display: grid;              /*(το grid έχει το ίδιο αποτέλεσμα με το flex:space-around) */
 	place-items: center;
@@ -111,7 +106,7 @@ header, header a:first-of-type, header nav>ul {    /*header, left logo, right na
 }
 
 header{
-    background-color:var(--pharmacygreen);
+    background-color:var(--primarycolor);
     color: whitesmoke;
     padding: 0.5rem 3rem;
     border-bottom: 1px solid #e5e5e5;
@@ -126,6 +121,11 @@ header a{
 
 footer{padding: 1rem 3rem;}
 footer p{font-size: small}
+
+
+.logo{
+    max-height: 6rem;
+}
 
 
 .body-container{
@@ -145,6 +145,11 @@ footer p{font-size: small}
 main{
     padding: 1rem 3rem;
 }
+
+/* .btn-primary {
+    background-color: var(--primarycolor);
+    border-color: var(--primarycolor);
+} */
 
 
 .show-if-user{
