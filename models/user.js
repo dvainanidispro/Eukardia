@@ -5,7 +5,7 @@ let User = db.define('user', {
     // Model attributes are defined here
     id: {
       primaryKey: true,
-      type: DataTypes.STRING,           // μπορεί να μην το πιάσει από εδώ, αλλά μόνο από το workbench... 
+      type: DataTypes.STRING,           // μπορεί να μην το πιάσει από εδώ, ειδικά αν τα υπάρχοντα data δεν είναι ΟΚ αλλά μόνο από το workbench... 
       allowNull: false
     },
     name: DataTypes.STRING,
@@ -13,7 +13,7 @@ let User = db.define('user', {
     roles: DataTypes.STRING,
 }, {
     tableName: 'users',
-    timestamps: false 
+    // timestamps: false 
   });
 
 

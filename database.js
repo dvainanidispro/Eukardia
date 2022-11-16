@@ -13,11 +13,13 @@ db = new Sequelize(
     {
         host: process.env.DATABASEHOST,
         dialect: process.env.DATABASEDIALECT,
-        dialectModule: (process.env.vercel=="true") ? null :require('mariadb'),
-        // dialectOptions: {
+        // dialectModule: null,
+        dialectModule: (process.env.vercel!=="true") ? null : require(process.env.DATABASEDIALECT),
+        dialectOptions: {
         //     useUTC: false,
         //     dateStrings: true,
-        // },
+            encrypt: true
+        },
         timezone: "Europe/Athens",                         // greek time, for writing to database   
         query:{raw:true},       // returns queries as simple JSON objects
         logging: false,         // does not console log things...
@@ -33,7 +35,7 @@ databaseConnectionTest = (DbConnection) => {
     return new Promise(async (resolve, reject) => {
         try{
             await DbConnection.authenticate();
-            console.log(`\x1b[35m Database Connection to ${process.env.DATABASEHOST}\\${process.env.DATABASENAME} (${process.env.DATABASEDIALECT}) has been established successfully.`);
+            console.log(`\x1b[35m Database connection to ${process.env.DATABASEHOST}\\${process.env.DATABASENAME} (${process.env.DATABASEDIALECT}) has been established successfully.\x1b[0m`);
             resolve();
         } catch (error) {
             console.error(`\x1b[31m Unable to connect to the database:`, error);

@@ -8,7 +8,7 @@ const Case = db.define('Case', {
         autoIncrement: true,
         primaryKey: true    
     },
-    // author is a foreign key, so we define it ONLY in relationships, or else fields should only be the default: case\userid
+    // author is a foreign key, so we define it ONLY in relationships (models.js), or else fields should only be the default: case\userid
     // author: {  },                 
     testPatient: {
         type: DataTypes.BOOLEAN,
@@ -20,47 +20,47 @@ const Case = db.define('Case', {
       allowNull: false
     },
 
-    gender: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    age: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    pressure: {
-        type: DataTypes.FLOAT,
-        allowNull: false
-    },
-    glucose: {
-        type: DataTypes.FLOAT,
-        allowNull: false
-    },
-    familyhistory: DataTypes.TEXT('medium'),
-    activity: DataTypes.INTEGER,
-    diet: DataTypes.TEXT('medium'),
-    smoking: DataTypes.INTEGER,
+    gender: DataTypes.TINYINT,
+    age: DataTypes.TINYINT,
+
+    drugbp: DataTypes.BOOLEAN,
+    sbp: DataTypes.FLOAT,
+    dbp: DataTypes.FLOAT,
+    // pressure: DataTypes.FLOAT,   TODO: Delete from form
+    glucose:  DataTypes.FLOAT,
+    hba1c: DataTypes.FLOAT,
+    diebetes: DataTypes.BOOLEAN,
+
+    activity: DataTypes.TINYINT,
+    diet: DataTypes.TINYINT,
+    alcohol: DataTypes.TINYINT,
+    smoking: DataTypes.TINYINT,
+
+    druglipids: DataTypes.BOOLEAN,
+    triglycerides: DataTypes.FLOAT,
     cholesterol: DataTypes.FLOAT,
-    bmi: DataTypes.FLOAT,
-    crp: DataTypes.FLOAT,
-    whitebloodcell: DataTypes.FLOAT,
-    carotid: DataTypes.FLOAT,
-    ef: DataTypes.FLOAT,
-    calcium: DataTypes.FLOAT,
-    lpa: DataTypes.FLOAT,
-    triglyceride: DataTypes.FLOAT,
     ldl: DataTypes.FLOAT,
     hdl: DataTypes.FLOAT,
-    hba1c: DataTypes.FLOAT,
-    diebetes: DataTypes.FLOAT,
-    fibrillation: DataTypes.BOOLEAN,
-    heartfailure: DataTypes.BOOLEAN,
-    cancer: DataTypes.BOOLEAN,
+    bmi: DataTypes.FLOAT,
+
+    crp: DataTypes.FLOAT,
+    wbc: DataTypes.FLOAT,
+    imt: DataTypes.FLOAT,
+    ef: DataTypes.FLOAT,
+    calciumscore: DataTypes.FLOAT,
+    lpa: DataTypes.FLOAT,
     creatinine: DataTypes.FLOAT,
-    result: {
-        type: DataTypes.BOOLEAN,
-        // allowNull: false
-    },
+    
+    artialfibrillation: DataTypes.BOOLEAN,
+    heartfailure: DataTypes.BOOLEAN,
+    cvd: DataTypes.BOOLEAN,
+    yrcvd: DataTypes.SMALLINT,
+    deathcvd: DataTypes.BOOLEAN,
+    yrcvddeath: DataTypes.SMALLINT,
+    familyhistory: DataTypes.BOOLEAN,
+
+    cancer: DataTypes.BOOLEAN,
+    yrcancer: DataTypes.SMALLINT,
     comments: DataTypes.TEXT('medium'),
 
   }, 

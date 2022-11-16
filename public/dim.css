@@ -4,7 +4,10 @@
     --md: 768px;
     --lg: 992px;
     --xl: 1200px;
-    --primarycolor: rgb(32,41,92);
+    --primarycolor: hsl(231, 48%, 24%);
+    --backgroundcolor: hsl(231, 48%, 13%);
+    --bodybackgroundcolor: lavender;
+    --unitcolor: hsl(250, 16%, 92%);
     --display-if-user: none;
     --display-if-guest: block;
     --unknown-answer: silver;
@@ -78,7 +81,7 @@ a:focus{outline: black solid 3px}
 
 
 body{
-    background-color: black;
+    background-color: var(--backgroundcolor);
 }
 
 
@@ -129,7 +132,7 @@ footer p{font-size: small}
 
 
 .body-container{
-    background-color: lavender;
+    background-color: var(--bodybackgroundcolor);
     max-width: min(100% - 2rem, var(--lg));
     margin-inline: auto; /*centers */
     overflow-x: hidden;
@@ -159,14 +162,13 @@ main{
     display: var(--display-if-guest) !important;
 }
 
-
-
-.input-element{
-    margin: 1rem 0;
+hr{
+    margin-block: 1.8rem;
 }
 
-input[type="number"]+label, input[type="text"]+label, textarea+label {
-    color: var(--bs-secondary);
+/*TODO: Να αφαιρεθεί το input-element από την html αν δεν χρειάζεται - Μόνο σε 2 συνεχόμενα θα χρειάζεται */
+.input-element, .input-group{
+    margin-block: 1rem;
 }
 
 .bootstrap-input-style{
@@ -176,8 +178,20 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
     border-radius: 0.4rem;
     padding: 0.7rem;
 }
+
+input[type="number"]+label, input[type="text"]+label, textarea+label {
+    color: var(--bs-secondary);
+}
+
+/* Τα πλαίσια με τις μονάδες μέτρησης - θα μπορούσε να ήταν .unit (unit of measurement)*/
+.input-group > .input-group-text{
+    min-width: 5rem;
+    justify-content: center; /*center text (it is a flex-box)*/
+    background-color: var(--unitcolor);
+}
+
 /* .was-validated is a Bootstrap class that the developer adds (manually) to the form element during validation
-    Bootstrap uses it in  its default validation format
+    Bootstrap uses it in its default validation format
     The following css declarations are copy-paste from Bootstrap
     */
 .was-validated .bootstrap-input-style:has(input:invalid){   /*copy from Bootstrap's rule: .was-validated .form-control:invalid */
