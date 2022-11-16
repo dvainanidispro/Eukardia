@@ -125,9 +125,10 @@ header a{
 footer{padding: 1rem 3rem;}
 footer p{font-size: small}
 
-
+/* Σταθερό μέγεθος για μην πηδάει στο φόρτωμα */
 .logo{
-    max-height: 6rem;
+    width: 6rem;
+    height: 6rem;
 }
 
 
@@ -137,8 +138,6 @@ footer p{font-size: small}
     margin-inline: auto; /*centers */
     overflow-x: hidden;
 }
-
-
 
 
 

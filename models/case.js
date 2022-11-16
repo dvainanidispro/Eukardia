@@ -26,7 +26,6 @@ const Case = db.define('Case', {
     drugbp: DataTypes.BOOLEAN,
     sbp: DataTypes.FLOAT,
     dbp: DataTypes.FLOAT,
-    // pressure: DataTypes.FLOAT,   TODO: Delete from form
     glucose:  DataTypes.FLOAT,
     hba1c: DataTypes.FLOAT,
     diebetes: DataTypes.BOOLEAN,

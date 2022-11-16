@@ -13,8 +13,8 @@ db = new Sequelize(
     {
         host: process.env.DATABASEHOST,
         dialect: process.env.DATABASEDIALECT,
-        // dialectModule: null,
-        dialectModule: (process.env.vercel!=="true") ? null : require('mariadb'),
+        // στο παρακάτω έβαλα 'mariadb' διότι το process.env.DATABASEDIALECT δεν έπαιζε...
+        dialectModule: (process.env.vercel!=="true") ? null : require('mariadb'), 
         dialectOptions: {
         //     useUTC: false,
         //     dateStrings: true,
