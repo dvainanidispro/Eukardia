@@ -128,15 +128,14 @@ if (path.includes("dataentryform")){
     });
 
     // if not invalid (valid, or unknown), check only when changed (and loose focus)
-    Q("#patientId").on('change',function(){
-        let isDuplicate = checkForDuplicate(this,"checkforduplicate");
-        if (isDuplicate) {Q("#ignorePatientId").classList.remove("d-none")}
+    Q("#patientId").on('change',async function(){
+        let isDuplicate = await checkForDuplicate(this,"checkforduplicate");
+        if (isDuplicate) { Q("#ignorePatientId").classList.remove("d-none") }
     });
     // if invalid, check on every letter pressed
     Q("#patientId").on('input',function(){
         if (!this.checkValidity()) {checkForDuplicate(this,"checkforduplicate")};
     });
-
 
 
 
