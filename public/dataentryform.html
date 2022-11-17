@@ -50,11 +50,13 @@
                 </label>
             </div></div>
 
-            <div class="form-floating">
-                <input type="text" class="form-control" id="patientId" name="patientId" placeholder="Αναγνωριστικό ασθενούς" required>
-                <label for="patientId">Αναγνωριστικό ασθενούς</label>
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="patientId" name="patientId" placeholder="Αναγνωριστικό ασθενούς" required>
+                    <label for="patientId">Αναγνωριστικό ασθενούς</label>
+                </div>
+                <button class="btn btn-outline-secondary d-none" type="button" role="ignore" for="patientId" id="ignorePatientId">Παράβλεψη Διπλότυπης</button>
             </div>
-
 
             <div class="bootstrap-input-style">
                 <label class="form-label ms-2">Φύλο</label>
@@ -106,7 +108,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="0.01" class="form-control" id="sbp" name="sbp" placeholder="Συστολική αρτηριακή πίεση">
+                    <input type="number" step="0.01" class="form-control" id="sbp" name="sbp" min="0" placeholder="Συστολική αρτηριακή πίεση">
                     <label for="sbp">Συστολική αρτηριακή πίεση</label> 
                 </div>
                 <span class="input-group-text">mmHg</span>
@@ -114,7 +116,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="0.01" class="form-control" id="dbp" name="dbp" placeholder="Διαστολική αρτηριακή πίεση">
+                    <input type="number" step="0.01" class="form-control" id="dbp" name="dbp" min="0" placeholder="Διαστολική αρτηριακή πίεση">
                     <label for="dbp">Διαστολική αρτηριακή πίεση</label>   
                 </div>
                 <span class="input-group-text">mmHg</span>
@@ -122,7 +124,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="0.01" class="form-control" id="glucose" name="glucose" placeholder="Επίπεδα Γλυκόζης" >
+                    <input type="number" step="0.01" class="form-control" id="glucose" name="glucose" min="0" placeholder="Επίπεδα Γλυκόζης" >
                     <label for="glucose">Επίπεδα γλυκόζης</label>
                 </div>
                 <span class="input-group-text">mg/dL</span>
@@ -130,7 +132,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="1" class="form-control" id="hba1c" name="hba1c" placeholder="Γλυκοζυλιωμένη αιμοσφαιρίνη (HbA1c)">
+                    <input type="number" step="1" class="form-control" id="hba1c" name="hba1c" min="0" placeholder="Γλυκοζυλιωμένη αιμοσφαιρίνη (HbA1c)">
                     <label for="hba1c">Γλυκοζυλιωμένη αιμοσφαιρίνη (HbA1c)</label>
                 </div>
                 <span class="input-group-text">%</span>
@@ -295,7 +297,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="0.01" class="form-control" id="triglyceride" name="triglyceride" placeholder="Τριγλυκερίδια">
+                    <input type="number" step="0.01" class="form-control" id="triglyceride" name="triglyceride" min="0" placeholder="Τριγλυκερίδια">
                     <label for="triglyceride">Τριγλυκερίδια</label>
                 </div>
                 <span class="input-group-text">mg/dL</span>
@@ -303,7 +305,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="0.01" class="form-control" id="cholesterol" name="cholesterol" placeholder="Ολική χοληστερόλη">
+                    <input type="number" step="0.01" class="form-control" id="cholesterol" name="cholesterol" min="0" placeholder="Ολική χοληστερόλη">
                     <label for="cholesterol">Ολική χοληστερόλη</label>
                 </div>
                 <span class="input-group-text">mg/dL</span>
@@ -311,7 +313,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="1" class="form-control" id="ldl" name="ldl" placeholder="Χοληστερόλη LDL">
+                    <input type="number" step="1" class="form-control" id="ldl" name="ldl" min="0" placeholder="Χοληστερόλη LDL">
                     <label for="ldl">Χοληστερόλη LDL</label>
                 </div>
                 <span class="input-group-text">mg/dL</span>
@@ -319,7 +321,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="1" class="form-control" id="hdl" name="hdl" placeholder="Χοληστερόλη HDL">
+                    <input type="number" step="1" class="form-control" id="hdl" name="hdl" min="0" placeholder="Χοληστερόλη HDL">
                     <label for="hdl">Χοληστερόλη HDL</label>
                 </div>
                 <span class="input-group-text">mg/dL</span>
@@ -327,7 +329,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="0.1" class="form-control" id="bmi" name="bmi" placeholder="Body mass index (BMI)">
+                    <input type="number" step="0.1" class="form-control" id="bmi" name="bmi" min="0" placeholder="Body mass index (BMI)">
                     <label for="bmi">Body mass index (BMI)</label>
                 </div>
                 <span class="input-group-text">kg/m2</span>
@@ -338,7 +340,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="0.01" class="form-control" id="crp" name="crp" placeholder="C-Αντιδρώσα πρωτεΐνη (CRP)">
+                    <input type="number" step="0.01" class="form-control" id="crp" name="crp" min="0" placeholder="C-Αντιδρώσα πρωτεΐνη (CRP)">
                     <label for="crp">C-Αντιδρώσα πρωτεΐνη (CRP)</label>
                 </div>
                 <span class="input-group-text">mg/L</span>
@@ -346,7 +348,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="0.01" class="form-control" id="wbc" name="wbc" placeholder="Λευκά αιμοσφαίρια">
+                    <input type="number" step="0.01" class="form-control" id="wbc" name="wbc" min="0" placeholder="Λευκά αιμοσφαίρια">
                     <label for="wbc">Λευκά αιμοσφαίρια</label>
                 </div>
                 <span class="input-group-text">10<sup>3</sup>/μL</span>
@@ -354,7 +356,7 @@
             
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="1" class="form-control" id="imt" name="imt" placeholder="Πάχος έσω-μέσου χιτώνα καρωτίδων">
+                    <input type="number" step="1" class="form-control" id="imt" name="imt" min="0" placeholder="Πάχος έσω-μέσου χιτώνα καρωτίδων">
                     <label for="imt">Πάχος έσω-μέσου χιτώνα καρωτίδων</label>
                 </div>
                 <span class="input-group-text">mm</span>
@@ -362,7 +364,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="1" class="form-control" id="ef" name="ef" placeholder="Κλάσμα εξώθησης (EF)">
+                    <input type="number" step="1" class="form-control" id="ef" name="ef" min="0" placeholder="Κλάσμα εξώθησης (EF)">
                     <label for="ef">Κλάσμα εξώθησης (EF)</label>
                 </div>
                 <span class="input-group-text">%</span>
@@ -370,14 +372,14 @@
             
             <!-- <div class="input-group"> -->
                 <div class="form-floating input-element">
-                    <input type="number" step="0.01" class="form-control" id="calciumscore" name="calciumscore" placeholder="Calcium score">
+                    <input type="number" step="0.01" class="form-control" id="calciumscore" min="0" name="calciumscore" placeholder="Calcium score">
                     <label for="calciumscore">Calcium score</label>
                 </div>
             <!-- </div> -->
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="0.01" class="form-control" id="lpa" name="lpa" placeholder="Λιποπρωτεΐνη α (Lp(α))">
+                    <input type="number" step="0.01" class="form-control" id="lpa" name="lpa" min="0" placeholder="Λιποπρωτεΐνη α (Lp(α))">
                     <label for="lpa">Λιποπρωτεΐνη α (Lp(α))</label>
                 </div>
                 <span class="input-group-text">mg/dL</span>
@@ -385,7 +387,7 @@
 
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="number" step="1" class="form-control" id="creatinine" name="creatinine" placeholder="Κρεατινίνη">
+                    <input type="number" step="1" class="form-control" id="creatinine" name="creatinine" min="0" placeholder="Κρεατινίνη">
                     <label for="creatinine">Κρεατινίνη</label>
                 </div>
                 <span class="input-group-text">mg/dL</span>

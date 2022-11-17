@@ -7,6 +7,7 @@ var App = {
     user:{},
 };
 
+
 var Q = (selector) => {
     if ( selector.charAt(0)=='#' ) {  
         let element = document.querySelector(selector);    
@@ -15,6 +16,7 @@ var Q = (selector) => {
     } else {
         if (selector.charAt(0)=='~') {selector='[data-variable=' + selector.substring(1) + ']'}
         let elements = [...document.querySelectorAll(selector)];
+        elements.on ??= function(event,action){elements.forEach(el=>el.addEventListener(event,action))}    // jshint ignore:line
         elements.set ??= function(content){elements.forEach(el=>el.textContent=content)}     // jshint ignore:line
         return elements;
     }
@@ -42,16 +44,16 @@ let initializeContent = () => {
 
 
 fetch('/profile').then(response=>response.json()).then(profile => {
-    console.log(profile);
+    console.debug(profile);
     App.user = profile;
     App.userType = profile.name ? 'user' : 'guest';        // jshint ignore:line
-    console.log(App.userType);
+    // console.log(App.userType);
 }).finally(()=>{initializeContent()});
 
 
 let validateForm = (form) => {
     form.classList.add("was-validated");          // show errors using bootstrap
-    form.reportValidity();    // reportValidity = CheckValidity + show validation errors using default the browser's way
+    form.reportValidity();    // reportValidity = CheckValidity + show validation errors using the default browser's way
 };
 
 
@@ -69,7 +71,6 @@ if (path.includes("dataentryform")){
     
     // when press Enter, form is not sumbitted, but shows validation errors
     window.addEventListener('keydown', function(e) {
-        console.log("Enter");
         if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {         // if you press Enter
             if (e.target.nodeName == 'INPUT') {     // textarea is not an input (in textarea, Enter must have another meaning)
                 e.preventDefault();                 // prevent sumbit
@@ -86,7 +87,58 @@ if (path.includes("dataentryform")){
         Αυτό σημαίνει ότι αν η φόρμα δεν γίνει validated, δεν θα εκτελεστεί τίποτα από αυτά!
     */
 
+    let setValidation = (inputElement,value) => {
+        if (value=="valid"){
+            inputElement.classList.add("is-valid");
+            inputElement.classList.remove("is-invalid");
+            inputElement.setCustomValidity(""); // marks field as valid
+        } else if (value=="invalid"){
+            inputElement.classList.remove("is-valid");
+            inputElement.classList.add("is-invalid");
+        }
+        inputElement.reportValidity();
+    }
 
-   
+    let checkForDuplicate = async (field,path) => {
+        // if field empty, do nothing
+        if (field.value.trim()=="") {
+            setValidation(field,"invalid");
+            return null;
+        } 
+        let checkPath = `${path}/${field.value}`;
+        let duplicateFound = "initial value";
+        await fetch(checkPath).then(answer=>answer.text()).then(duplicate=>{
+            duplicate = (duplicate=="false")?false:true;    //duplicate is text!
+            if (duplicate){      
+                setValidation(field,"invalid");    // marks field as invalid
+                field.setCustomValidity("Διπλότυπη εγγραφή. Παρακαλώ ελέγξτε!");
+                duplicateFound = true;
+            } else {
+                setValidation(field,"valid");
+                duplicateFound = false;
+            }
+        });
+        return duplicateFound;
+    };
+
+    Q('[role="ignore"]').on('click',function(){
+        let underlyingField = Q("#"+this.getAttribute("for"));
+        setValidation(underlyingField,"valid");
+        underlyingField.focus();
+    });
+
+    // if not invalid (valid, or unknown), check only when changed (and loose focus)
+    Q("#patientId").on('change',function(){
+        let isDuplicate = checkForDuplicate(this,"checkforduplicate");
+        if (isDuplicate) {Q("#ignorePatientId").classList.remove("d-none")}
+    });
+    // if invalid, check on every letter pressed
+    Q("#patientId").on('input',function(){
+        if (!this.checkValidity()) {checkForDuplicate(this,"checkforduplicate")};
+    });
+
+
+
+
 }
 
