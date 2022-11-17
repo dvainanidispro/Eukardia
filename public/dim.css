@@ -145,7 +145,7 @@ footer p{font-size: small}
 
 
 main{
-    padding: 1rem 3rem;
+    padding: 1rem min(3rem,5%);
 }
 
 /* .btn-primary {
