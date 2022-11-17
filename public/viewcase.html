@@ -17,6 +17,7 @@
 
     <script defer src="header.js"></script>
     <script defer src="script.js"></script>
+    <script defer src="viewcase.js"></script>
 
 </head>
 
@@ -34,17 +35,18 @@
     </header>
 
     <main>
-        <p>Καλωσήρθατε στην εφαρμογή καταχώρισης περιστατικών του ΕΥΚΑΡΔΙΑ</p>
-        <div class="show-if-guest">
-            <p>Παρακαλώ, συνδεθείτε για να συνεχίσετε:</p>
-            <a href="/login" class="btn btn-success btn-login">Σύνδεση χρήστη</a>
-        </div>
-        <div class="show-if-user">
-            <p>Τρέχων χρήστης: <span data-variable="username"></span></p>
-            <p>Φορέας: <span data-variable="entity"></span></p>
-            <p>Εισέλθετε στην εφαρμογή καταχώρισης περιστατικών:</p>
-            <a href="/dataentryform" class="btn btn-success btn-entry">Καταχώριση περιστατικών</a>
-        </div>
+        <p>Τα παρακάτω καταχωρήθηκαν στη βάση:</p>
+        <pre><div id="answer"></div></pre>
+
+        <p>Επεξηγήσεις:<br>
+        null: Χωρίς τιμή<br>
+        Για πεδία "Ναι/Όχι": 1=Ναι, 0=Όχι<br>
+        Για πεδία με επιλογές: 1-5 (αριθμός επιλογής)<br>
+    </p>
+            
+
+        <br>
+        <a href="/dataentryform" class="btn btn-success btn-login">Επιστροφή στην καταχώριση </a>
     </main>
 
 

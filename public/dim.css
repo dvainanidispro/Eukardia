@@ -148,10 +148,10 @@ main{
     padding: 1rem min(3rem,5%);
 }
 
-/* .btn-primary {
+.btn-primary {
     background-color: var(--primarycolor);
     border-color: var(--primarycolor);
-} */
+}
 
 
 .show-if-user{

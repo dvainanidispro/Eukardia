@@ -87,9 +87,10 @@ server.post('/submitdata', authentication(), async (req,res)=>{
     dataRecieved.author = req?.oidc?.user?.sub ?? "testUser";
     // console.log(dataRecieved);
     let record = await Models.Case.create(dataRecieved);
-    let answer = await Models.Case.findOne({where:{id:record.id}});
+    // let answer = await Models.Case.findOne({where:{id:record.id}});
     // console.log(record);    // returns the data submitted to database, so they are correct
-    res.send(JSON.stringify(answer));
+    // res.send(JSON.stringify(answer));
+    res.redirect("/viewcase.html?case="+record.id);
 });
 
 
@@ -104,19 +105,15 @@ server.get('/checkforduplicate/:patientid', authentication(), async (req,res)=>{
 // search cases by id or by patintid
 server.get('/getcase/:id',authentication(), async (req,res)=>{
     let requestedCase = await Models.Case.findOne({where:{id:req.params.id}});
+    delete requestedCase.author;
     res.send(JSON.stringify(requestedCase));
-    //     res.send(`<pre id="answer"></pre>
-    //         <script type="text/javascript">
-    //         document.write("<pre>");
-    //         document.write(JSON.stringify({hello:"world", dim:"yes"},null, 2);
-    //         document.write("</pre>");
-    // </script></pre>`)
 });
 server.get('/getpatient/:patientid',authentication(), async (req,res)=>{
     let requestedCases = await Models.Case.findAll({where:{patientid:req.params.patientid}});
     res.send(JSON.stringify(requestedCases));
-
 });
+
+
 
 
 
