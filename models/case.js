@@ -50,7 +50,7 @@ const Case = db.define('Case', {
     lpa: DataTypes.FLOAT,
     creatinine: DataTypes.FLOAT,
     
-    artialfibrillation: DataTypes.BOOLEAN,
+    atrialfibrillation: DataTypes.BOOLEAN,
     heartfailure: DataTypes.BOOLEAN,
     cvd: DataTypes.BOOLEAN,
     yrcvd: DataTypes.SMALLINT,
