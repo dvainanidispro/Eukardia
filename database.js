@@ -1,10 +1,6 @@
 const { Sequelize } = require('sequelize');
 // require('dotenv').config();   // comment out when using web server (needs when testing db without web server)
 
-// const { User } = require("./models/user");
-// const { Case } = require("./models/case");
-
-
 /** The database connection using Sequelize */
 db = new Sequelize(
     process.env.DATABASENAME, 
@@ -16,13 +12,18 @@ db = new Sequelize(
         // στο παρακάτω έβαλα 'mariadb' διότι το process.env.DATABASEDIALECT δεν έπαιζε...
         dialectModule: (process.env.vercel!=="true") ? null : require('mariadb'), 
         dialectOptions: {
-        //     useUTC: false,
-        //     dateStrings: true,
             encrypt: true
         },
         timezone: "Europe/Athens",                         // greek time, for writing to database   
-        query:{raw:true},       // returns queries as simple JSON objects
+        query: { raw: true },       // returns queries as simple JSON objects
         logging: false,         // does not console log things...
+        pool: {
+            max: 10,
+            min: 0,
+            acquire: 60000,
+            idle: 300000
+          },
+        retry: { max: 3 },
     }
 );
 
