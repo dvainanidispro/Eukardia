@@ -259,9 +259,10 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
 
 
 .case table{
-    /*TODO: change font*/
-    /* font-family: var(--bs-font-monospace); */    
-    max-width: min(var(--sm),90%);
+    font-family: var(--bs-font-monospace); 
+    font-size: min(1rem,4vw);
+    table-layout:fixed;  
+    max-width: min(var(--sm),100%);
     border: 1px solid grey; 
 }
 
@@ -273,5 +274,13 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
 }
 
 .case table th{
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
+/*
+.case thead th:nth-child(1){
+    width:40%;
+}
+.case thead th:last-child(1){
+    width:60%;
+}
+*/

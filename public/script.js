@@ -166,8 +166,8 @@ if (path.includes("viewcase")){
         let head = /*html*/`
             <thead>
                 <tr>
-                <th scope="col">Πεδίο</th>
-                <th scope="col">Τιμή</th>
+                    <th scope="col">Πεδίο</th>
+                    <th scope="col">Τιμή</th>
                 </tr>
             </thead>`;
         for (const [key,value] of Object.entries(caseObject)){
