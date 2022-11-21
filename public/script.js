@@ -51,10 +51,8 @@ fetch('/profile').then(response=>response.json()).then(profile => {
 }).finally(()=>{initializeContent()});
 
 
-let validateForm = (form) => {
-    form.classList.add("was-validated");          // show errors using bootstrap
-    form.reportValidity();    // reportValidity = CheckValidity + show validation errors using the default browser's way
-};
+
+
 
 
 
@@ -68,11 +66,17 @@ if (path.includes("dataentryform")){
         Q("#testWarning").style.display = this.checked ? "block":"none";
     })
 
+
+    let validateForm = (form) => {
+        form.classList.add("was-validated");          // show errors using bootstrap
+        form.reportValidity();    // reportValidity = CheckValidity + show validation errors using the default browser's way
+    };
+    
     
     // when press Enter, form is not sumbitted, but shows validation errors
     window.addEventListener('keydown', function(e) {
         if (e.keyIdentifier == 'U+000A' || e.keyIdentifier == 'Enter' || e.keyCode == 13) {         // if you press Enter
-            if (e.target.nodeName == 'INPUT') {     // textarea is not an input (in textarea, Enter must have another meaning)
+            if (e.target.nodeName == 'INPUT') {     // textarea is not an input (in textarea, Enter has another meaning)
                 e.preventDefault();                 // prevent sumbit
                 validateForm(Q("#dataform"));
             }
@@ -82,8 +86,11 @@ if (path.includes("dataentryform")){
 
     Q("#btnFormSubmit").on('click',function(){
         validateForm(Q("#dataform"));
+        // since there is no preventDefault, form will be submitted after this. 
     });
-    /* Σημειώνεται ότι το το addEventListener('submit' , καθώς και το html onsubmit εκτελούνται μόνο όταν η φόρμα έχει γίνει validated σωστά.
+
+    /* 
+        Σημειώνεται ότι το το addEventListener('submit' , καθώς και το html onsubmit εκτελούνται μόνο όταν η φόρμα έχει γίνει validated σωστά.
         Αυτό σημαίνει ότι αν η φόρμα δεν γίνει validated, δεν θα εκτελεστεί τίποτα από αυτά!
     */
 
@@ -141,3 +148,53 @@ if (path.includes("dataentryform")){
 
 }
 
+
+
+
+
+if (path.includes("viewcase")){
+
+    let GetParameters = (parameter=null) => parameter 
+    ? Object.fromEntries(new URLSearchParams(window.location.search).entries())[parameter] ?? null  
+    : Object.fromEntries(new URLSearchParams(window.location.search).entries());
+    
+    let theCase = GetParameters("case")
+    console.log(theCase);
+    
+    function tableFromObject(caseObject){
+        let rows = '';
+        let head = `
+            <thead>
+                <tr>
+                <th scope="col">Πεδίο</th>
+                <th scope="col">Τιμή</th>
+                </tr>
+            </thead>`;
+        for (const [key,value] of Object.entries(caseObject)){
+            const val = value??""; //κενό αντί για null
+            rows+=`<tr><td>${key}</td><td>${val}</td></tr>`;
+        }
+        return `
+            <table class="table table-striped">
+                    ${head}
+                <tbody>
+                    ${rows}
+                </tbody>
+            </table>`;
+    }
+    
+    fetch("/getcase/"+theCase).then(answer=>answer.json()).then((answer)=>{
+        
+        let created = new Date(answer.createdAt);
+        let updated = new Date(answer.updatedAt);
+    
+        answer.createdAt = created.toLocaleString("EL-gr");
+        answer.updatedAt = updated.toLocaleString("EL-gr");
+    
+        // Q("#case").innerHTML = JSON.stringify(answer, null, 4);
+        Q('#case').innerHTML = tableFromObject(answer);
+        Q("#mainframe").classList.remove("d-none")
+        
+    });
+
+}

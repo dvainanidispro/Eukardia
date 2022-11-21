@@ -17,7 +17,7 @@ function tableFromObject(caseObject){
             </tr>
         </thead>`;
     for (const [key,value] of Object.entries(caseObject)){
-        const val = value?value:""; //κενό αντί για null
+        const val = value??""; //κενό αντί για null
         rows+=`<tr><td>${key}</td><td>${val}</td></tr>`;
     }
     return `
@@ -39,10 +39,9 @@ fetch("/getcase/"+theCase).then(answer=>answer.json()).then((answer)=>{
 
     answer.createdAt = created.toLocaleString("EL-gr");
     answer.updatedAt = updated.toLocaleString("EL-gr");
-    console.log(answer);
+
     // Q("#case").innerHTML = JSON.stringify(answer, null, 4);
     Q('#case').innerHTML = tableFromObject(answer);
-
     Q("#mainframe").classList.remove("d-none")
-
+    
 })

@@ -25,6 +25,7 @@ const Models = require('./models/models');
 // Authentication, Authorization 
 const { auth, requiresAuth } = require('express-openid-connect');
 const { auth0config } = require('./auth');
+const { Model } = require('sequelize');
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 server.use(auth(auth0config));
 let authentication = requiresAuth;
@@ -70,7 +71,7 @@ server.get('/profile', (req, res) => {
 
 
 
-// access to dataentryform only to authenticated users
+// access to form (only  authenticated users) TODO: dataentryform.html
 server.get('/dataentryform*', authentication(), async (req,res)=>{
     if (/*isDev ||*/ req.oidc.isAuthenticated()) {       // if user has logged in
         res.sendFile(__dirname + '/public/dataentryform.html');
@@ -104,8 +105,12 @@ server.get('/checkforduplicate/:patientid', authentication(), async (req,res)=>{
 
 // search cases by id or by patintid
 server.get('/getcase/:id',authentication(), async (req,res)=>{
-    let requestedCase = await Models.Case.findOne({where:{id:req.params.id}});
-    delete requestedCase.author;
+    let reqId = req.params.id;
+    let userEntity = req?.oidc?.user?.entity;
+    let [sqlSelect,metadata] = await db.query(`SELECT * FROM eukardia.casesview WHERE id="${reqId}" AND entity="${userEntity}"`);
+    let requestedCase = sqlSelect[0];
+    // let requestedCase = await Models.Case.findOne({where:{id:req.params.id},include:{model:Models.User,as:'user',where:{entity:userEntity}}});
+    // delete requestedCase.author;
     res.send(JSON.stringify(requestedCase));
 });
 server.get('/getpatient/:patientid',authentication(), async (req,res)=>{
