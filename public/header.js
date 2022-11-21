@@ -4,7 +4,7 @@ let appHeader = /*html*/`
     
     <a href="/" class="navbar-brand">
     <img src="logo.png" class="logo"/>
-    <h1>ΕΥΚΑΡΔΙΑ</h1>
+    <h1 class="appTitle">ΕΥΚΑΡΔΙΑ</h1>
     <!-- <span>Logo and/or Brand Name</span> -->
     </a>
     <nav class="navbar navbar-dark">

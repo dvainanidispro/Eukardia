@@ -163,7 +163,7 @@ if (path.includes("viewcase")){
     
     function tableFromObject(caseObject){
         let rows = '';
-        let head = `
+        let head = /*html*/`
             <thead>
                 <tr>
                 <th scope="col">Πεδίο</th>
@@ -172,9 +172,9 @@ if (path.includes("viewcase")){
             </thead>`;
         for (const [key,value] of Object.entries(caseObject)){
             const val = value??""; //κενό αντί για null
-            rows+=`<tr><td>${key}</td><td>${val}</td></tr>`;
+            rows+=/*html*/`<tr><td>${key}</td><td>${val}</td></tr>`;
         }
-        return `
+        return /*html*/`
             <table class="table table-striped">
                     ${head}
                 <tbody>

@@ -105,13 +105,14 @@ header, header a:first-of-type, header nav>ul {    /*header, left logo, right na
     justify-content: space-between;
     align-items: center;  /*vertical align, when big logo*/
     list-style-type: none; 
+    padding-inline-start: 0;    /*fixes ul*/
     gap: 2rem 3rem;
 }
 
 header{
     background-color:var(--primarycolor);
     color: whitesmoke;
-    padding: 0.5rem 3rem;
+    padding: 0.5rem min(3rem,10%);
     border-bottom: 1px solid #e5e5e5;
 }
 
@@ -137,6 +138,26 @@ footer p{font-size: small}
     max-width: min(100% - 2rem, var(--lg));
     margin-inline: auto; /*centers */
     overflow-x: hidden;
+}
+
+
+@media ( width < 768px  ){
+    /*NOTE: Προς το παρόν, δεν φαίνεται το navbar στα κινητά*/
+    header nav, .navbar{    
+        display: none;
+    }
+    
+    .app-header{
+        flex-flow: column;
+    }
+
+    .appTitle{
+        display: none;
+    }
+
+    header nav>ul{
+        gap: 1rem 0rem;
+    }
 }
 
 

@@ -71,7 +71,7 @@ server.get('/profile', (req, res) => {
 
 
 
-// access to form (only  authenticated users) TODO: dataentryform.html
+// access to form (only  authenticated users) FIXME: dataentryform.html
 server.get('/dataentryform*', authentication(), async (req,res)=>{
     if (/*isDev ||*/ req.oidc.isAuthenticated()) {       // if user has logged in
         res.sendFile(__dirname + '/public/dataentryform.html');
