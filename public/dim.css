@@ -232,3 +232,16 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
 #testPatient:checked {
     background-color: red;
 }
+
+.case table{
+    max-width: var(--sm);
+    border: 1px solid grey; 
+}
+
+.case table td, .case table th{
+    border: 1px solid grey; 
+}
+
+.case table th{
+    font-size: 1rem;
+}
