@@ -182,6 +182,8 @@ main{
     display: var(--display-if-guest) !important;
 }
 
+
+
 hr{
     margin-block: 1.8rem;
 }
@@ -254,13 +256,20 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
     background-color: red;
 }
 
+
+
 .case table{
-    max-width: var(--sm);
+    /*TODO: change font*/
+    /* font-family: var(--bs-font-monospace); */    
+    max-width: min(var(--sm),90%);
     border: 1px solid grey; 
 }
 
 .case table td, .case table th{
     border: 1px solid grey; 
+    /* white-space: normal; */
+    /* word-wrap: break-word; */     /*this is to split words*/
+    overflow: hidden;
 }
 
 .case table th{

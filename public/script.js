@@ -191,7 +191,7 @@ if (path.includes("viewcase")){
         answer.createdAt = created.toLocaleString("EL-gr");
         answer.updatedAt = updated.toLocaleString("EL-gr");
     
-        // Q("#case").innerHTML = JSON.stringify(answer, null, 4);
+        // Q("#case").innerHTML = JSON.stringify(answer, null, 4);      //needs <pre> html tags
         Q('#case').innerHTML = tableFromObject(answer);
         Q("#mainframe").classList.remove("d-none")
         
