@@ -37,19 +37,19 @@ let resetCSSProperties = () => {
 };
 
 let initializeContent = () => {
-    Q('~username').set(App.user.name);
-    Q('~entity').set(App.user.entity);
+    // Q('~username').set(App.user.name);
+    // Q('~entity').set(App.user.entity);
     resetCSSProperties();
 };
 
-
+/*
 fetch('/profile').then(response=>response.json()).then(profile => {
     console.debug(profile);
     App.user = profile;
     App.userType = profile.name ? 'user' : 'guest';        // jshint ignore:line
     // console.log(App.userType);
 }).finally(()=>{initializeContent()});
-
+*/
 
 
 

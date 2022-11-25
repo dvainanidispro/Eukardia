@@ -36,9 +36,12 @@
         </a>
         <nav class="navbar navbar-dark">
         <ul>
-            <li class="show-if-guest"><a href="/login" id="navlogin" >Σύνδεση χρήστη</a></li>
-            <li class="show-if-user"><a href="/dataentryform" id="naventry" >Καταχώριση</a></li>
-            <li class="show-if-user"><a href="/logout" id="navlogout" >Αποσύνδεση</a></li>
+            {{#if user.guest}}
+            <li class=""><a href="/login" id="navlogin" >Σύνδεση χρήστη</a></li>
+            {{else}}
+            <li class=""><a href="/dataentryform" id="naventry" >Καταχώριση</a></li>
+            <li class=""><a href="/logout" id="navlogout" >Αποσύνδεση</a></li>
+            {{/if}}
         </ul>
         </nav>
     </header>
