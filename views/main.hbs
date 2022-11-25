@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>ΕΥΚΑΡΔΙΑ - Καταχώριση περιστατικών</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    {{!-- <link rel="stylesheet" href="https://unpkg.com/open-props"/>
+    <link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css"/> --}}
+    <link href="dim.css" rel="stylesheet" media="screen">
+
+    {{!-- <script defer src="header.js"></script> --}}
+    <script defer src="script.js"></script>
+
+</head>
+
+
+
+
+<body>
+
+    <div class="body-container">
+
+
+    <header class="app-header" id="app-header">
+        <a href="/" class="navbar-brand">
+        <img src="logo.png" class="logo"/>
+        <h1 class="appTitle">ΕΥΚΑΡΔΙΑ</h1>
+        <!-- <span>Logo and/or Brand Name</span> -->
+        </a>
+        <nav class="navbar navbar-dark">
+        <ul>
+            <li class="show-if-guest"><a href="/login" id="navlogin" >Σύνδεση χρήστη</a></li>
+            <li class="show-if-user"><a href="/dataentryform" id="naventry" >Καταχώριση</a></li>
+            <li class="show-if-user"><a href="/logout" id="navlogout" >Αποσύνδεση</a></li>
+        </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        {{{ body }}}
+
+    </main>
+
+
+    <footer>
+
+    </footer>
+
+    </div>
+</body>
+
+
+
+
+
+
+</html>

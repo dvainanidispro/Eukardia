@@ -13,7 +13,22 @@ const server = express();
 // grab post/put variables, json objects and send static files
 server.use(express.urlencoded({extended: false})); 
 server.use(express.json());
-server.use(express.static(__dirname + '/public'));      // vercel supports only the old command
+server.use(express.static(__dirname + '/public'));      
+// vercel supports only the old command (runs the express app from another directory!)
+
+
+// handlebars config
+const { create } = require ('express-handlebars');
+const handlebarsConfig = { /* config */
+    extname: '.hbs',    // extension for layouts 
+    layoutsDir: 'views',
+    defaultLayout: 'main',
+    helpers: 'views',
+    partialsDir: 'views',
+};
+server.engine('hbs', create(handlebarsConfig).engine);       // πρακτικά, create({obj})=engine()
+server.set('view engine', 'hbs');
+server.set('views', './views');
 
 
 // Database and models
@@ -27,6 +42,8 @@ const { auth, requiresAuth } = require('express-openid-connect');
 const { auth0config } = require('./auth');
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 server.use(auth(auth0config));
+
+/** Requires authentication before visiting the page */
 let authentication = requiresAuth;
 /*
 let authentication;
@@ -37,6 +54,12 @@ if (isDev){
 }
 */
 
+/** Middleware for making user info available to a view */ 
+let userinfo = (req,res,next) =>{
+    res.locals.user = req.oidc.isAuthenticated() ? req.oidc.user : {guest:"true"};
+    next();
+};
+
 
 
 
@@ -44,9 +67,11 @@ if (isDev){
 
 /*******************             ROUTES             ***********************/ 
 
+// homepage
+server.get('/', userinfo, (req,res)=>res.render('index'));
 
 // after login, goto updateprofile
-server.get('/login', (req, res) => res.oidc.login({ returnTo: '/updateprofile' }));
+server.get('/login', (req,res) => res.oidc.login({ returnTo:'/updateprofile' }));
 
 // update user profile on database after login
 server.get('/updateprofile', authentication(), (req, res) => {
@@ -59,23 +84,29 @@ server.get('/updateprofile', authentication(), (req, res) => {
         entity:user.entity,
         roles:JSON.stringify(user.positions)
     });      
-    // userInfo.save();
-    // res.send(req.oidc.isAuthenticated() ? JSON.stringify(req.oidc.user) : {"guest:": "true"});  // IdToken
 });
 
 // send ID token
-server.get('/profile', (req, res) => {
-    res.send(req.oidc.isAuthenticated() ? JSON.stringify(req.oidc.user) : {"guest:": "true"});  // IdToken
+server.get('/profile', userinfo, (req, res) => {
+    res.send(JSON.stringify(res.locals.user));  // IdToken
 });
 
 
 
-// access to form (only  authenticated users) FIXME: dataentryform.html
-server.get('/dataentryform*', authentication(), async (req,res)=>{
+// access to form (only  authenticated users)
+server.get('/dataentryform*', authentication(), userinfo, async (req,res)=>{
     if (/*isDev ||*/ req.oidc.isAuthenticated()) {       // if user has logged in
-        res.sendFile(__dirname + '/public/dataentryform.html');
+        res.render('dataentryform');
     } else {
-        // res.status(403).send('<h1>You are not authorized to access this page</h1>');
+        res.status(403).sendFile(__dirname + '/public/403.html');
+    }
+});
+
+// access to form (only authenticated users)
+server.get('/viewcase*', authentication(), async (req,res)=>{
+    if (/*isDev ||*/ req.oidc.isAuthenticated()) {       // if user has logged in
+        res.render('viewcase');
+    } else {
         res.status(403).sendFile(__dirname + '/public/403.html');
     }
 });
@@ -87,8 +118,7 @@ server.post('/submitdata', authentication(), async (req,res)=>{
     dataRecieved.author = req?.oidc?.user?.sub ?? "testUser";
     // console.log(dataRecieved);
     let record = await Models.Case.create(dataRecieved);
-    // TODO: catch errors and send message to user 
-    res.redirect("/viewcase.html?case="+record.id);
+    res.redirect("/viewcase?case="+record.id);
 });
 
 

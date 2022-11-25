@@ -1,0 +1,522 @@
+
+        <h1>Καταχώριση περιστατικών</h1>
+        <p>Τρέχων χρήστης: <span class="text-nowrap" data-variable="username" ></span></p>
+        <p>Φορέας: <span class="text-nowrap" data-variable="entity"></span></p>
+        <hr>
+
+
+        <form id="dataform" action="/submitdata" method="POST">
+
+            <h3 class="mb-3">Νέο περιστατικό</h3>
+
+            <div class="bootstrap-input-style bg-highlight"><div class="form-check">
+                <input class="form-check-input" type="checkbox" name="testPatient" id="testPatient" value="1">
+                <label class="form-check-label text-secondary" for="testPatient">
+                    Test περιστατικό
+                </label>
+            </div></div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="patientId" name="patientId" placeholder="Αναγνωριστικό ασθενούς" required>
+                    <label for="patientId">Αναγνωριστικό ασθενούς</label>
+                </div>
+                <button class="btn btn-outline-secondary d-none" type="button" role="ignore" for="patientId" id="ignorePatientId">Παράβλεψη Διπλότυπης</button>
+            </div>
+
+            <div class="bootstrap-input-style">
+                <label class="form-label ms-2">Φύλο</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input" type="radio" name="gender" id="noGender" value="">
+                        <label class="form-check-label" for="noGender">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="1">
+                        <label class="form-check-label" for="male">Άνδρας</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="2">
+                        <label class="form-check-label" for="female">Γυναίκα</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="any" class="form-control" id="age" name="age" placeholder="Ηλικία" min="20" max="80">
+                    <label for="age">Ηλικία</label>
+                </div>
+                <span class="input-group-text">Έτη</span>
+            </div>
+
+
+            <hr>
+
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2 ">Φαρμακευτική αγωγή για αρτηριακή πίεση</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input" type="radio" name="drugbp" id="drugbp" value="" checked>
+                        <label class="form-check-label" for="drugbp">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="drugbp" id="drugbp0" value="0">
+                        <label class="form-check-label" for="drugbp0">Όχι</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="drugbp" id="drugbp1" value="1">
+                        <label class="form-check-label" for="drugbp1">Ναι</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="0.01" class="form-control" id="sbp" name="sbp" min="0" placeholder="Συστολική αρτηριακή πίεση">
+                    <label for="sbp">Συστολική αρτηριακή πίεση</label> 
+                </div>
+                <span class="input-group-text">mmHg</span>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="0.01" class="form-control" id="dbp" name="dbp" min="0" placeholder="Διαστολική αρτηριακή πίεση">
+                    <label for="dbp">Διαστολική αρτηριακή πίεση</label>   
+                </div>
+                <span class="input-group-text">mmHg</span>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="0.01" class="form-control" id="glucose" name="glucose" min="0" placeholder="Επίπεδα Γλυκόζης" >
+                    <label for="glucose">Επίπεδα γλυκόζης</label>
+                </div>
+                <span class="input-group-text">mg/dL</span>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="1" class="form-control" id="hba1c" name="hba1c" min="0" placeholder="Γλυκοζυλιωμένη αιμοσφαιρίνη (HbA1c)">
+                    <label for="hba1c">Γλυκοζυλιωμένη αιμοσφαιρίνη (HbA1c)</label>
+                </div>
+                <span class="input-group-text">%</span>
+            </div>
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2 ">Σακχαρώδης διαβήτης</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input" type="radio" name="diabetes" id="diabetes" value="" checked>
+                        <label class="form-check-label" for="diabetes">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="diabetes" id="diabetes0" value="0">
+                        <label class="form-check-label" for="diabetes0">Όχι</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="diabetes" id="diabetes1" value="1">
+                        <label class="form-check-label" for="diabetes1">Ναι</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <hr>
+
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2">Φυσική δραστηριότητα</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input" type="radio" name="activity" id="activity0" value="">
+                        <label class="form-check-label" for="activity0">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="activity" id="activity1" value="1">
+                        <label class="form-check-label" for="activity1">Επίπεδο 1 (καθόλου)</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="activity" id="activity2" value="2">
+                        <label class="form-check-label" for="activity2">Επίπεδο 2</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="activity" id="activity3" value="3">
+                        <label class="form-check-label" for="activity3">Επίπεδο 3</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="activity" id="activity4" value="4">
+                        <label class="form-check-label" for="activity4">Επίπεδο 4</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="activity" id="activity5" value="5">
+                        <label class="form-check-label" for="activity5">Επίπεδο 5 (έντονη)</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2">Διατροφικές συνήθειες</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input" type="radio" name="diet" id="diet0" value="">
+                        <label class="form-check-label" for="diet0">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="diet" id="diet1" value="1">
+                        <label class="form-check-label" for="diet1">1. Φυτοφαγική</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="diet" id="diet2" value="2">
+                        <label class="form-check-label" for="diet2">2. Όσπρια, λαχανικά, φρούτα, σπάνια κρέας</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="diet" id="diet3" value="3">
+                        <label class="form-check-label" for="diet3">3. Όσπρια, λαχανικά, φρούτα, κρέας</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="diet" id="diet4" value="4">
+                        <label class="form-check-label" for="diet4">4. Ζυμαρικά, τηγανητά, κρέας</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="diet" id="diet5" value="5">
+                        <label class="form-check-label" for="diet5">5. Τηγανητά, συχνά κρέας</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2">Αλκοόλ</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input" type="radio" name="alcohol" id="alcohol0" value="">
+                        <label class="form-check-label" for="alcohol0">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="alcohol" id="alcohol1" value="1">
+                        <label class="form-check-label" for="alcohol1">1. Ποτέ </label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="alcohol" id="alcohol2" value="2">
+                        <label class="form-check-label" for="alcohol2">2. Σπάνια</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="alcohol" id="alcohol3" value="3">
+                        <label class="form-check-label" for="alcohol3">3. Κοινωνικές εκδηλώσεις </label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="alcohol" id="alcohol4" value="4">
+                        <label class="form-check-label" for="alcohol4">4. Εβδομαδιαία </label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="alcohol" id="alcohol5" value="5">
+                        <label class="form-check-label" for="alcohol5">5. Καθημερινά</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2 ">Κάπνισμα</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input" type="radio" name="smoking" id="smoking0" value="" checked>
+                        <label class="form-check-label" for="smoking0">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="smoking" id="smoking1" value="1">
+                        <label class="form-check-label" for="smoking1">Ποτέ καπνιστής</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="smoking" id="smoking2" value="2">
+                        <label class="form-check-label" for="smoking2">Πρώην καπνιστής</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="smoking" id="smoking3" value="3">
+                        <label class="form-check-label" for="smoking3">Νυν καπνιστής</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <hr>
+
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2 ">Φαρμακευτική αγωγή λιπιδίων</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input" type="radio" name="druglipids" id="druglipids" value="" checked>
+                        <label class="form-check-label" for="druglipids">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="druglipids" id="druglipids0" value="0">
+                        <label class="form-check-label" for="druglipids0">Όχι</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="druglipids" id="druglipids1" value="1">
+                        <label class="form-check-label" for="druglipids1">Ναι</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="0.01" class="form-control" id="triglycerides" name="triglycerides" min="0" placeholder="Τριγλυκερίδια">
+                    <label for="triglycerides">Τριγλυκερίδια</label>
+                </div>
+                <span class="input-group-text">mg/dL</span>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="0.01" class="form-control" id="cholesterol" name="cholesterol" min="0" placeholder="Ολική χοληστερόλη">
+                    <label for="cholesterol">Ολική χοληστερόλη</label>
+                </div>
+                <span class="input-group-text">mg/dL</span>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="1" class="form-control" id="ldl" name="ldl" min="0" placeholder="Χοληστερόλη LDL">
+                    <label for="ldl">Χοληστερόλη LDL</label>
+                </div>
+                <span class="input-group-text">mg/dL</span>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="1" class="form-control" id="hdl" name="hdl" min="0" placeholder="Χοληστερόλη HDL">
+                    <label for="hdl">Χοληστερόλη HDL</label>
+                </div>
+                <span class="input-group-text">mg/dL</span>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="0.1" class="form-control" id="bmi" name="bmi" min="0" placeholder="Body mass index (BMI)">
+                    <label for="bmi">Body mass index (BMI)</label>
+                </div>
+                <span class="input-group-text">kg/m2</span>
+            </div>
+
+
+            <hr>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="0.01" class="form-control" id="crp" name="crp" min="0" placeholder="C-Αντιδρώσα πρωτεΐνη (CRP)">
+                    <label for="crp">C-Αντιδρώσα πρωτεΐνη (CRP)</label>
+                </div>
+                <span class="input-group-text">mg/L</span>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="0.01" class="form-control" id="wbc" name="wbc" min="0" placeholder="Λευκά αιμοσφαίρια">
+                    <label for="wbc">Λευκά αιμοσφαίρια</label>
+                </div>
+                <span class="input-group-text">10<sup>3</sup>/μL</span>
+            </div>
+            
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="1" class="form-control" id="imt" name="imt" min="0" placeholder="Πάχος έσω-μέσου χιτώνα καρωτίδων">
+                    <label for="imt">Πάχος έσω-μέσου χιτώνα καρωτίδων</label>
+                </div>
+                <span class="input-group-text">mm</span>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="1" class="form-control" id="ef" name="ef" min="0" placeholder="Κλάσμα εξώθησης (EF)">
+                    <label for="ef">Κλάσμα εξώθησης (EF)</label>
+                </div>
+                <span class="input-group-text">%</span>
+            </div>
+            
+            <!-- <div class="input-group"> -->
+                <div class="form-floating input-element">
+                    <input type="number" step="0.01" class="form-control" id="calciumscore" min="0" name="calciumscore" placeholder="Calcium score">
+                    <label for="calciumscore">Calcium score</label>
+                </div>
+            <!-- </div> -->
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="0.01" class="form-control" id="lpa" name="lpa" min="0" placeholder="Λιποπρωτεΐνη α (Lp(α))">
+                    <label for="lpa">Λιποπρωτεΐνη α (Lp(α))</label>
+                </div>
+                <span class="input-group-text">mg/dL</span>
+            </div> 
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="1" class="form-control" id="creatinine" name="creatinine" min="0" placeholder="Κρεατινίνη">
+                    <label for="creatinine">Κρεατινίνη</label>
+                </div>
+                <span class="input-group-text">mg/dL</span>
+            </div>
+
+            <hr>
+
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2 ">Κολπική μαρμαρυγή</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input " type="radio" name="atrialfibrillation" id="atrialfibrillation" value="" checked>
+                        <label class="form-check-label" for="atrialfibrillation">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="atrialfibrillation" id="atrialfibrillation0" value="0">
+                        <label class="form-check-label" for="atrialfibrillation0">Όχι</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="atrialfibrillation" id="atrialfibrillation1" value="1">
+                        <label class="form-check-label" for="atrialfibrillation1">Ναι</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2 ">Καρδιακή ανεπάρκεια</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input " type="radio" name="heartfailure" id="heartfailure" value="" checked>
+                        <label class="form-check-label" for="heartfailure">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="heartfailure" id="heartfailure0" value="0">
+                        <label class="form-check-label" for="heartfailure0">Όχι</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="heartfailure" id="heartfailure1" value="1">
+                        <label class="form-check-label" for="heartfailure1">Ναι</label>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2 ">Καρδιαγγειακό επεισόδιο (ΟΕΜ, ΑΕΕ, άλλο)</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input " type="radio" name="cvd" id="cvd" value="" checked>
+                        <label class="form-check-label" for="cvd">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="cvd" id="cvd0" value="0">
+                        <label class="form-check-label" for="cvd0">Όχι</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="cvd" id="cvd1" value="1">
+                        <label class="form-check-label" for="cvd1">Ναι</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="1" class="form-control" id="yrcvd" name="yrcvd" placeholder="Έτος καρδιαγγειακού επεισοδίου" min="1950" max="2030">
+                    <label for="yrcvd">Έτος καρδιαγγειακού επεισοδίου</label>
+                </div>
+                <!-- <span class="input-group-text">mg/dL</span> -->
+            </div>
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2 ">Θανατηφόρο καρδιαγγειακό επεισόδιο</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input " type="radio" name="deathcvd" id="deathcvd" value="" checked>
+                        <label class="form-check-label" for="deathcvd">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="deathcvd" id="deathcvd0" value="0">
+                        <label class="form-check-label" for="deathcvd0">Όχι</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="deathcvd" id="deathcvd1" value="1">
+                        <label class="form-check-label" for="deathcvd1">Ναι</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="1" class="form-control" id="yrcvddeath" name="yrcvddeath" placeholder="Έτος καρδιαγγειακού επεισοδίου" min="1950" max="2030">
+                    <label for="yrcvddeath">Έτος θανάτου</label>
+                </div>
+                <!-- <span class="input-group-text">mg/dL</span> -->
+            </div>
+
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2 ">Οικογενειακό ιστορικό καρδιαγγειακής νόσου</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input " type="radio" name="familyhistory" id="familyhistory" value="" checked>
+                        <label class="form-check-label" for="familyhistory">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="familyhistory" id="familyhistory0" value="0">
+                        <label class="form-check-label" for="familyhistory0">Όχι</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="familyhistory" id="familyhistory1" value="1">
+                        <label class="form-check-label" for="familyhistory1">Ναι</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <hr>
+
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2 ">Καρκίνος</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input " type="radio" name="cancer" id="cancer" value="" checked>
+                        <label class="form-check-label" for="cancer">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="cancer" id="cancer0" value="0">
+                        <label class="form-check-label" for="cancer0">Όχι</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="cancer" id="cancer1" value="1">
+                        <label class="form-check-label" for="cancer1">Ναι</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="input-group"> -->
+                <div class="form-floating">
+                    <input type="number" step="1" class="form-control" id="yrcancer" name="yrcancer" placeholder="Έτος διάγνωσης καρκίνου" min="1950" max="2030">
+                    <label for="yrcancer">Έτος διάγνωσης καρκίνου</label>
+                </div>
+                <!-- <span class="input-group-text">mg/dL</span> -->
+            <!-- </div> -->
+
+
+            <hr>
+
+
+            <div class="form-floating input-element">
+                <textarea class="form-control" placeholder="Λοιπά Σχόλια" id="comments" name="comments" style="height: 100px"></textarea>
+                <label for="comments">Λοιπά Σχόλια</label>
+            </div>
+
+            <br>
+
+            <p class="text-danger" id="testWarning" style="display: none;">To περιστατικό θα καταχωρηθεί ώς test!</p>
+
+            <button id="btnFormSubmit" type="submit input-element" class="btn btn-primary ">Καταχώριση</button>
+
+
+        </form>
+
