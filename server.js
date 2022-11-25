@@ -21,14 +21,14 @@ server.use(express.static(__dirname + '/public'));
 const { create } = require ('express-handlebars');
 const handlebarsConfig = { /* config */
     extname: '.hbs',    // extension for layouts 
-    layoutsDir: 'views',
+    layoutsDir: __dirname + '/views',
     defaultLayout: 'main',
-    helpers: 'views',
-    partialsDir: 'views',
+    helpers: __dirname + '/views',
+    partialsDir: __dirname + '/views',
 };
 server.engine('hbs', create(handlebarsConfig).engine);       // πρακτικά, create({obj})=engine()
 server.set('view engine', 'hbs');
-server.set('views', './views');
+server.set('views', __dirname + '/views');
 
 
 // Database and models
