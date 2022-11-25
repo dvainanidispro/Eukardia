@@ -196,6 +196,8 @@ if (path.includes("viewcase")){
         Q("#caseframe").classList.remove("d-none");
     }).catch(e=>{
         Q('#caseerror').classList.remove("d-none");
+    }).finally(()=>{
+        Q('#returnBtn').classList.remove("d-none");
     });
 
 }
