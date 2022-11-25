@@ -193,8 +193,9 @@ if (path.includes("viewcase")){
     
         // Q("#case").innerHTML = JSON.stringify(answer, null, 4);      //needs <pre> html tags
         Q('#case').innerHTML = tableFromObject(answer);
-        Q("#mainframe").classList.remove("d-none")
-        
+        Q("#caseframe").classList.remove("d-none");
+    }).catch(e=>{
+        Q('#caseerror').classList.remove("d-none");
     });
 
 }
