@@ -25,7 +25,6 @@ const Models = require('./models/models');
 // Authentication, Authorization 
 const { auth, requiresAuth } = require('express-openid-connect');
 const { auth0config } = require('./auth');
-const { Model } = require('sequelize');
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 server.use(auth(auth0config));
 let authentication = requiresAuth;
@@ -88,9 +87,7 @@ server.post('/submitdata', authentication(), async (req,res)=>{
     dataRecieved.author = req?.oidc?.user?.sub ?? "testUser";
     // console.log(dataRecieved);
     let record = await Models.Case.create(dataRecieved);
-    // let answer = await Models.Case.findOne({where:{id:record.id}});
-    // console.log(record);    // returns the data submitted to database, so they are correct
-    // res.send(JSON.stringify(answer));
+    // TODO: catch errors and send message to user 
     res.redirect("/viewcase.html?case="+record.id);
 });
 
@@ -145,4 +142,6 @@ databaseConnectionTest(db)           // top level await is not supported everywh
 })
 .catch(()=>{
     console.error(`\x1b[31m Server initiation aborted!`);
+}).finally(()=>{
+    // startWebServer(server,port,listeningURL);
 });

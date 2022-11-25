@@ -18,10 +18,23 @@ Case.belongsTo( User, {
 
 // if you all sync tables (models) at once, there will be "locked tables" issues...
 async function syncTables(){   
-    await User.sync({ alter: true });
-    await Case.sync({ alter: true });
-    console.log(`\x1b[35m All database models were synchronized.\x1b[0m`);
+    return new Promise(async (resolve, reject) => {
+        try{
+            await User.sync({ alter: true });
+            await Case.sync({ alter: true });
+            resolve();
+        }
+        catch(e){
+            console.log(e);
+            reject();
+        }
+    });
 }
-syncTables();
+
+syncTables()
+    .then(()=>{console.log(`\x1b[35m All database models were synchronized.\x1b[0m`)})
+    .catch((e)=>{console.error(`\x1b[31m Database models were not synchronized!`)});
+
+
 
 module.exports = { User, Case }

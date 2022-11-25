@@ -31,7 +31,7 @@ db = new Sequelize(
 
 
 
-/** Returns a promise if the database is succesfully connected */
+/** Returns a promise - resolves if the database is succesfully connected */
 databaseConnectionTest = (DbConnection) => {
     return new Promise(async (resolve, reject) => {
         try{
