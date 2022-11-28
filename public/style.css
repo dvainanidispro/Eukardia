@@ -258,7 +258,7 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
 .unknown-choice{
     color: var(--unknown-answer);
 }
-.unknown-choice input[type="radio"]{
+.unknown-choice input[type="radio"]:checked{
     background-color: var(--unknown-answer);
     border: var(--unknown-answer);
 } 

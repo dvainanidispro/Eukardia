@@ -52,6 +52,11 @@ fetch('/profile').then(response=>response.json()).then(profile => {
 */
 
 
+let GetParameters = (parameter=null) => parameter 
+? Object.fromEntries(new URLSearchParams(window.location.search).entries())[parameter] ?? null  
+: Object.fromEntries(new URLSearchParams(window.location.search).entries());
+
+
 
 
 
@@ -150,16 +155,10 @@ if (path.includes("dataentryform")){
 
 
 
-
-
 if (path.includes("viewcase")){
 
-    let GetParameters = (parameter=null) => parameter 
-    ? Object.fromEntries(new URLSearchParams(window.location.search).entries())[parameter] ?? null  
-    : Object.fromEntries(new URLSearchParams(window.location.search).entries());
-    
-    let theCase = GetParameters("case")
-    console.log(theCase);
+
+    let theCase = GetParameters("case");
     
     function tableFromObject(caseObject){
         let rows = '';
@@ -187,7 +186,6 @@ if (path.includes("viewcase")){
         
         let created = new Date(answer.createdAt);
         let updated = new Date(answer.updatedAt);
-    
         answer.createdAt = created.toLocaleString("EL-gr");
         answer.updatedAt = updated.toLocaleString("EL-gr");
     
@@ -255,5 +253,51 @@ if (path.includes("searchcase")){
             });
         }
     });
+
+}
+
+
+
+
+if (path.includes("editcase")){
+
+    let theCase = GetParameters("case");
+    // console.log(theCase);
+    if (theCase){
+        
+        fetch("/getcase/"+theCase).then(answer=>answer.json()).then((answer)=>{
+        
+            let created = new Date(answer.createdAt);
+            let updated = new Date(answer.updatedAt);
+            answer.createdAt = created.toLocaleString("EL-gr");
+            answer.updatedAt = updated.toLocaleString("EL-gr");
+
+            
+            // console.log(answer);
+
+            var Qname = (fieldName) => document.querySelector(`[name='${fieldName}']`);
+            var Qvalue = (fieldName,fieldValue) => document.querySelector(`[name='${fieldName}'][value='${fieldValue}']`);
+            for (const [key,value] of Object.entries(answer)){     // loop for objects
+                console.log(key + " " + value);
+                if (Qname(key)) {
+                    // try{Qname(key).value = value}catch{}
+                    // console.log(Q("#dataform")[key])
+                    try{Q("#dataform")[key].value = value}catch{}
+                    try{
+                        console.log(Qvalue(key,value));
+                        // Q("#dataform")[key][value].checked = true;      // Δεν είναι σωστό, τυχαίνει σε κάποια να το πετυχαίνει λόγω αρίθμισης 
+                        Qvalue(key,value).checked = true;
+                    }catch{}
+                };
+            }
+
+
+            
+        });
+
+    };
+    
+
+
 
 }

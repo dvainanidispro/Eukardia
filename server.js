@@ -151,7 +151,11 @@ server.get('/searchcase', pagetitle, authentication(), async (req,res)=>{
     res.render('searchcase');
 });
 
-
+// access to form (only authenticated users)
+server.get('/editcase*', pagetitle, authentication(), async (req,res)=>{
+        let caseId = '';
+        res.render('dataentryform');
+});
 
 
 
