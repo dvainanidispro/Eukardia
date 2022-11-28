@@ -30,8 +30,8 @@ html:focus-within {
 }
 
 /* Remove default margin and padding */
-h1,
-h2,
+h1, .h1,
+h2, .h2,
 h3,
 h4,
 p,
@@ -106,7 +106,7 @@ header, header a:first-of-type, header nav>ul {    /*header, left logo, right na
     align-items: center;  /*vertical align, when big logo*/
     list-style-type: none; 
     padding-inline-start: 0;    /*fixes ul*/
-    gap: 2rem 3rem;
+    gap: 2rem 1.5rem;
 }
 
 header{
@@ -121,6 +121,9 @@ header a{
     text-decoration: none;
     font-weight: bold;
     transition: all 0.3s;
+}
+header a:hover{
+    color:  hsl(231, 48%, 72%);
 }
 
 footer{padding: 1rem 3rem;}
@@ -143,12 +146,13 @@ footer p{font-size: small}
 
 @media ( width < 768px  ){
     /*NOTE: Προς το παρόν, δεν φαίνεται το navbar στα κινητά*/
-    header nav, .navbar{    
+    /* header nav, .navbar{    
         display: none;
-    }
+    } */
     
     .app-header{
         flex-flow: column;
+        justify-content: space-between;
     }
 
     .app-title{
@@ -283,6 +287,7 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
 .case table th{
     font-size: 1.1rem;
 }
+
 /*
 .case thead th:nth-child(1){
     width:40%;
@@ -291,3 +296,9 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
     width:60%;
 }
 */
+
+
+.btn-case{
+    text-align: start;
+    border-color: silver;
+}

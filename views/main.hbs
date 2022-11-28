@@ -29,20 +29,21 @@
 
 
     <header class="app-header" id="app-header">
-        <a href="/" class="navbar-brand">
-        <img src="logo.png" class="logo"/>
-        <h1 class="appTitle">ΕΥΚΑΡΔΙΑ</h1>
-        <!-- <span>Logo and/or Brand Name</span> -->
+        <a href="/" class="">
+            <img src="logo.png" class="logo"/>
+            <span class="h1 appTitle">ΕΥΚΑΡΔΙΑ</span>
+            <!-- <span>Logo and/or Brand Name</span> -->
         </a>
-        <nav class="navbar navbar-dark">
-        <ul>
-            {{#if user.guest}}
-            <li class=""><a href="/login" id="navlogin" >Σύνδεση χρήστη</a></li>
-            {{else}}
-            <li class=""><a href="/dataentryform" id="naventry" >Καταχώριση</a></li>
-            <li class=""><a href="/logout" id="navlogout" >Αποσύνδεση</a></li>
-            {{/if}}
-        </ul>
+        <nav class="navbar navbar-dark d-none d-md-block">
+            <ul>
+                {{#if user.guest}}
+                <li ><a href="/login" id="navlogin" >Σύνδεση χρήστη</a></li>
+                {{else}}
+                <li id="naventry"><a href="/dataentryform">Καταχώριση</a></li>
+                <li id="navsearch"><a href="/searchcase">Αναζήτηση</a></li>
+                <li ><a href="/logout" id="navlogout" >Αποσύνδεση</a></li>
+                {{/if}}
+            </ul>
         </nav>
     </header>
 

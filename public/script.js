@@ -114,7 +114,7 @@ if (path.includes("dataentryform")){
         } 
         let checkPath = `${path}/${field.value}`;
         let duplicateFound = "initial value";
-        await fetch(checkPath).then(answer=>answer.text()).then(duplicate=>{
+        await fetch(checkPath).then(response=>response.text()).then(duplicate=>{
             duplicate = (duplicate=="false")?false:true;    //duplicate is text!
             if (duplicate){      
                 setValidation(field,"invalid");    // marks field as invalid
@@ -198,6 +198,62 @@ if (path.includes("viewcase")){
         Q('#caseerror').classList.remove("d-none");
     }).finally(()=>{
         Q('#returnBtn').classList.remove("d-none");
+    });
+
+}
+
+
+
+/* Φύλο: ${singleCase.gender=1?"Άνδρας":2?"Γυναίκα":"Άγνωστο"}<br> */
+
+if (path.includes("searchcase")){
+
+    Q("#navsearch").style.display="none";
+
+    let presentCase = singleCase => {
+        let greekGender = (genderNumber) => {
+            if (genderNumber==1) {return "Άνδρας"}
+            if (genderNumber==2) {return "Γυναίκα"}
+            return "Άγνωστο";
+        };
+        return /*html*/ `
+            <a type="button" class="btn btn-case btn-light mb-1" type="button" href="/viewcase?case=${singleCase.id}">
+                ID βάσης: ${singleCase.id}<br>
+                <!--Αναγνωριστικό ασθενούς: ${singleCase.patientId}<br>-->
+                Φύλο: ${greekGender(singleCase.gender)}<br>
+                Ηλικία: ${singleCase.age}<br>
+            </a>
+        `;
+        // return singleCase.id;
+    }
+    let presentCases = allCases => {
+        console.log(allCases);
+        if (!allCases?.length) {return `Δεν βρήθηκαν περιστατικά με αυτό το αναγνωριστικό ή δεν έχετε δικαίωμα να τα δείτε.`}
+        let presentation = `
+            <p>Βρέθηκαν τα παρακάτω περιστατικά:</p>
+            <div class="d-grid gap-2">`;
+        allCases.forEach(singleCase=>{
+            presentation += presentCase(singleCase);
+        });
+        presentation += `</div>`;
+        return presentation;
+    }
+
+    Q("#search").on('click',function(e){
+        e.preventDefault();
+        let dbid = Q("#dbId").value;
+        let patientid = Q("#patientId").value;  
+        if ( !dbid && !patientid) {
+            return;
+        } else if (dbid) {
+            console.log(dbid);
+            location.href = "/viewcase?case="+dbid;
+        } else if (patientid) {
+            fetch('/getpatient/'+patientid).then(response=>response.json()).then((answer)=>{
+                // Q("#searchresult").innerHTML = answer.length;
+                Q("#searchresult").innerHTML = presentCases(answer);
+            });
+        }
     });
 
 }
