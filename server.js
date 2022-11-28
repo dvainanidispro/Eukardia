@@ -15,7 +15,7 @@ let folder = (path)=>__dirname+"/"+path;
 // grab post/put variables, json objects and send static files
 server.use(express.urlencoded({extended: false})); 
 server.use(express.json());
-server.use(express.static(folder('/public')));      
+server.use(express.static(folder('public')));      
 // vercel supports only the old command (runs the express app from another directory!)
 
 
@@ -23,14 +23,14 @@ server.use(express.static(folder('/public')));
 const { create } = require ('express-handlebars');
 const handlebarsConfig = { /* config */
     extname: '.hbs',    // extension for layouts 
-    layoutsDir: folder('/views'),
+    layoutsDir: folder('views'),
     defaultLayout: 'main',
-    helpers: folder('/views'),
-    partialsDir: folder('/views'),
+    helpers: folder('views'),
+    partialsDir: folder('views'),
 };
 server.engine('hbs', create(handlebarsConfig).engine);       // πρακτικά, create({obj})=engine()
 server.set('view engine', 'hbs');
-server.set('views', folder('/views'));
+server.set('views', folder('views'));
 
 
 // Database and models
