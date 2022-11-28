@@ -14,11 +14,19 @@ module.exports.auth0config = {
     },
 };
 
+/** Middleware for making user info available to a view */ 
+module.exports.userinfo = (req,res,next) =>{
+    res.locals.user = req.oidc.isAuthenticated() ? req.oidc.user : {guest:"true"};
+    next();
+};
 
+/** Middleware for making user info available */ 
+/*
 module.exports.appRoles = {
     dataentryform: ["Developer","Admin","Dataentry","Tester"],
     submitdata: ["Developer","Datasubmitter","Tester"]
 }
+*/
 
 /** auth0 authorization using ID Token */ 
 // checks if any of the user's roles matches any of the resource's required roles. 

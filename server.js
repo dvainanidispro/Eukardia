@@ -39,7 +39,7 @@ const Models = require('./models/models');
 
 // Authentication, Authorization 
 const { auth, requiresAuth } = require('express-openid-connect');
-const { auth0config } = require('./auth');
+const { auth0config, userinfo } = require('./auth');
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 server.use(auth(auth0config));
 
@@ -54,11 +54,10 @@ if (isDev){
 }
 */
 
-/** Middleware for making user info available to a view */ 
-let userinfo = (req,res,next) =>{
-    res.locals.user = req.oidc.isAuthenticated() ? req.oidc.user : {guest:"true"};
-    next();
-};
+
+// MIDDLEWARE
+let { pagetitle } = require('./views/pagetitles');
+
 
 
 
@@ -68,7 +67,7 @@ let userinfo = (req,res,next) =>{
 /*******************             ROUTES             ***********************/ 
 
 // homepage
-server.get('/', userinfo, (req,res)=>res.render('index'));
+server.get('/', pagetitle, userinfo, (req,res)=>res.render('index'));
 
 // after login, goto updateprofile
 server.get('/login', (req,res) => res.oidc.login({ returnTo:'/updateprofile' }));
@@ -94,7 +93,7 @@ server.get('/profile', userinfo, (req, res) => {
 
 
 // access to form (only  authenticated users)
-server.get('/dataentryform*', authentication(), userinfo, async (req,res)=>{
+server.get('/dataentryform*', pagetitle, authentication(), userinfo, async (req,res)=>{
     if (/*isDev ||*/ req.oidc.isAuthenticated()) {       // if user has logged in
         res.render('dataentryform');
     } else {
@@ -103,7 +102,7 @@ server.get('/dataentryform*', authentication(), userinfo, async (req,res)=>{
 });
 
 // access to form (only authenticated users)
-server.get('/viewcase*', authentication(), async (req,res)=>{
+server.get('/viewcase*', pagetitle, authentication(), async (req,res)=>{
     if (/*isDev ||*/ req.oidc.isAuthenticated()) {       // if user has logged in
         res.render('viewcase');
     } else {

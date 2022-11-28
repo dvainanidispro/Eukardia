@@ -6,8 +6,7 @@
         </div>
         {{else}}
         <div class="">
-            <p>Τρέχων χρήστης: <span class="text-nowrap" data-variable="username">{{user.name}}</span></p>
-            <p>Φορέας: <span class="text-nowrap" data-variable="entity">{{user.entity}}</span></p>
+            {{> userinfo }}
             <p>Εισέλθετε στην εφαρμογή καταχώρισης περιστατικών:</p>
             <a href="/dataentryform" class="btn btn-success btn-entry">Καταχώριση περιστατικών</a>
         </div>
