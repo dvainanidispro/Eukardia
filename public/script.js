@@ -60,9 +60,11 @@ var Qname = (fieldName) => document.querySelector(`[name='${fieldName}']`);
 var Qvalue = (fieldName,fieldValue) => document.querySelector(`[name='${fieldName}'][value='${fieldValue}']`);
 
 
-
-
 let path = window.location.pathname;
+
+
+
+
 
 if (path.includes("dataentryform")){
 
@@ -190,13 +192,16 @@ if (path.includes("viewcase")){
             let updated = new Date(answer.updatedAt);
             answer.createdAt = created.toLocaleString("EL-gr");
             answer.updatedAt = updated.toLocaleString("EL-gr");
-        
+            
             Q('#case').innerHTML = tableFromObject(answer);
             Q("#caseframe").classList.remove("d-none");
+            Q("#editBtn").href += `?case=${theCase}`;
+
         }).catch(e=>{
             Q('#caseerror').classList.remove("d-none");
         }).finally(()=>{
-            Q('#returnBtn').classList.remove("d-none");
+            Q('#loadingSpinner').classList.add("d-none");
+            Q('#actionButtons').classList.remove("d-none");
         });
 
 }
@@ -245,12 +250,17 @@ if (path.includes("searchcase")){
         if ( !dbid && !patientid) {
             return;
         } else if (dbid) {
-            console.log(dbid);
+            // console.log(dbid);
             location.href = "/viewcase?case="+dbid;
         } else if (patientid) {
+            Q("#searchresult").classList.add('d-none');
+            Q("#loadingSpinner").classList.remove('d-none');
             fetch('/getpatient/'+patientid).then(response=>response.json()).then((answer)=>{
                 // Q("#searchresult").innerHTML = answer.length;
                 Q("#searchresult").innerHTML = presentCases(answer);
+            }).finally(()=>{
+                Q("#loadingSpinner").classList.add('d-none');
+                Q("#searchresult").classList.remove('d-none');
             });
         }
     });
@@ -266,6 +276,7 @@ if (path.includes("editcase")){
     // console.log(theCase);
     if (theCase){
         
+        Q("#loadingSpinner").classList.remove('d-none');
         fetch("/getcase/"+theCase).then(answer=>answer.json())
             .then((answer)=>{
             
@@ -288,6 +299,9 @@ if (path.includes("editcase")){
                 })
                 .catch(e=>{
                     document.querySelector("main").remove();
+                }).finally(()=>{
+                    Q("#loadingSpinner").classList.add('d-none');
+                    Q("#dataform").classList.remove('d-none');
                 })
 
 

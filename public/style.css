@@ -168,6 +168,12 @@ footer p{font-size: small}
 
 /*********************  MAIN   *********************/
 
+.sm{
+    max-width: var(--sm);
+}
+.md{
+    max-width: var(--md);
+}
 
 main{
     padding: 1rem min(3rem,5%);

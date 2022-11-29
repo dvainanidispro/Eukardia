@@ -1,5 +1,13 @@
 
-    <div id="caseframe" class="d-none">
+<div class="center-contents">
+
+    <div class="center-contents" id="loadingSpinner">
+        <div class="m-5 spinner-border text-primary" role="status" >
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div id="caseframe" class="sm d-none">
         <p>Στη βάση καταχωρήθηκαν τα παρακάτω:</p>
         <br>
         <div id="case" class="case center-contents"></div>
@@ -15,5 +23,9 @@
     </div>
 
     <br>
-    <a href="/dataentryform" class="btn btn-success btn-login d-none" id="returnBtn">Επιστροφή στην καταχώριση </a>
+    <div id="actionButtons" class="d-none">
+        <a href="/dataentryform" class="btn btn-success" id="returnBtn">Επιστροφή στην καταχώριση</a>
+        <a href="/editcase" class="btn btn-secondary" id="editBtn">Επεξεργασία περιστατικού</a>
+    </div>
 
+</div>

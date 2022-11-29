@@ -3,8 +3,15 @@
             {{> userinfo }}
         <hr>
 
+        {{#if editcase}}
+            <div class="center-contents d-none" id="loadingSpinner">
+                <div class="m-5 spinner-border text-primary" role="status" >
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        {{/if}}
 
-        <form id="dataform" action="/submitdata" method="POST">
+        <form id="dataform" action="/submitdata" method="POST" {{#if editcase}}class="d-none"{{/if}}>
 
 
             {{#if editcase}}
