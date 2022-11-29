@@ -52,11 +52,12 @@ fetch('/profile').then(response=>response.json()).then(profile => {
 */
 
 
-let GetParameters = (parameter=null) => parameter 
+var GetParameters = (parameter=null) => parameter 
 ? Object.fromEntries(new URLSearchParams(window.location.search).entries())[parameter] ?? null  
 : Object.fromEntries(new URLSearchParams(window.location.search).entries());
 
-
+var Qname = (fieldName) => document.querySelector(`[name='${fieldName}']`);
+var Qvalue = (fieldName,fieldValue) => document.querySelector(`[name='${fieldName}'][value='${fieldValue}']`);
 
 
 
@@ -182,21 +183,21 @@ if (path.includes("viewcase")){
             </table>`;
     }
     
-    fetch("/getcase/"+theCase).then(answer=>answer.json()).then((answer)=>{
+    fetch("/getcase/"+theCase).then(answer=>answer.json())
+        .then((answer)=>{
+            
+            let created = new Date(answer.createdAt);
+            let updated = new Date(answer.updatedAt);
+            answer.createdAt = created.toLocaleString("EL-gr");
+            answer.updatedAt = updated.toLocaleString("EL-gr");
         
-        let created = new Date(answer.createdAt);
-        let updated = new Date(answer.updatedAt);
-        answer.createdAt = created.toLocaleString("EL-gr");
-        answer.updatedAt = updated.toLocaleString("EL-gr");
-    
-        // Q("#case").innerHTML = JSON.stringify(answer, null, 4);      //needs <pre> html tags
-        Q('#case').innerHTML = tableFromObject(answer);
-        Q("#caseframe").classList.remove("d-none");
-    }).catch(e=>{
-        Q('#caseerror').classList.remove("d-none");
-    }).finally(()=>{
-        Q('#returnBtn').classList.remove("d-none");
-    });
+            Q('#case').innerHTML = tableFromObject(answer);
+            Q("#caseframe").classList.remove("d-none");
+        }).catch(e=>{
+            Q('#caseerror').classList.remove("d-none");
+        }).finally(()=>{
+            Q('#returnBtn').classList.remove("d-none");
+        });
 
 }
 
@@ -265,39 +266,36 @@ if (path.includes("editcase")){
     // console.log(theCase);
     if (theCase){
         
-        fetch("/getcase/"+theCase).then(answer=>answer.json()).then((answer)=>{
-        
-            let created = new Date(answer.createdAt);
-            let updated = new Date(answer.updatedAt);
-            answer.createdAt = created.toLocaleString("EL-gr");
-            answer.updatedAt = updated.toLocaleString("EL-gr");
-
+        fetch("/getcase/"+theCase).then(answer=>answer.json())
+            .then((answer)=>{
             
-            // console.log(answer);
+                let created = new Date(answer.createdAt);
+                let updated = new Date(answer.updatedAt);
+                answer.createdAt = created.toLocaleString("EL-gr");
+                answer.updatedAt = updated.toLocaleString("EL-gr");
 
-            var Qname = (fieldName) => document.querySelector(`[name='${fieldName}']`);
-            var Qvalue = (fieldName,fieldValue) => document.querySelector(`[name='${fieldName}'][value='${fieldValue}']`);
-            for (const [key,value] of Object.entries(answer)){     // loop for objects
-                console.log(key + " " + value);
-                if (Qname(key)) {
-                    // try{Qname(key).value = value}catch{}
-                    // console.log(Q("#dataform")[key])
-                    try{Q("#dataform")[key].value = value}catch{}
-                    try{
-                        console.log(Qvalue(key,value));
-                        // Q("#dataform")[key][value].checked = true;      // Δεν είναι σωστό, τυχαίνει σε κάποια να το πετυχαίνει λόγω αρίθμισης 
-                        Qvalue(key,value).checked = true;
-                    }catch{}
-                };
-            }
+                for (const [key,value] of Object.entries(answer)){     // loop for objects
+                        // console.log(key + " " + value);
+                        if (Qname(key)) {
+                            Q("#dataform")[key].value = value;
+                            // console.log(Q("#dataform")[key]);
+                        }
+                        else if (Qvalue(key,value)){
+                            Qvalue(key,value).checked = true;
+                            // console.log(Qvalue(key,value));
+                        }
+                    };
+                })
+                .catch(e=>{
+                    document.querySelector("main").remove();
+                })
 
 
             
-        });
+        }
 
     };
     
 
 
 
-}

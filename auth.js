@@ -20,6 +20,11 @@ module.exports.userinfo = (req,res,next) =>{
     next();
 };
 
+
+
+
+
+
 /** Middleware for making user info available */ 
 /*
 module.exports.appRoles = {

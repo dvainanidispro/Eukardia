@@ -45,7 +45,7 @@ const { auth0config, userinfo } = require('./auth');
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 server.use(auth(auth0config));
 
-/** Requires authentication before visiting the page */
+/** Requires authentication before visiting the page. If not, redirect to login */
 let authentication = requiresAuth;
 /*
 let authentication;
@@ -58,7 +58,8 @@ if (isDev){
 
 
 // MIDDLEWARE
-let { pagetitle } = require('./views/pagetitles');
+let { pageinfo } = require('./views/pageinfo');
+
 
 
 
@@ -69,7 +70,7 @@ let { pagetitle } = require('./views/pagetitles');
 /*******************             ROUTES             ***********************/ 
 
 // homepage
-server.get('/', pagetitle, userinfo, (req,res)=>res.render('index'));
+server.get('/', pageinfo, userinfo, (req,res)=>res.render('index'));
 
 // after login, goto updateprofile
 server.get('/login', (req,res) => res.oidc.login({ returnTo:'/updateprofile' }));
@@ -86,41 +87,56 @@ server.get('/updateprofile', authentication(), (req, res) => {
     });      
 });
 
-// send ID token, used only for testing now
+// send ID token, used only for testing now, because it doesn't need statics or views
 server.get('/profile', userinfo, (req, res) => {
     res.send(JSON.stringify(res.locals.user));  // IdToken
 });
 
 
 
-// access to form (only  authenticated users)
-server.get('/dataentryform*', pagetitle, authentication(), userinfo, async (req,res)=>{
-    if (/*isDev ||*/ req.oidc.isAuthenticated()) {       // if user has logged in
-        res.render('dataentryform');
-    } else {
-        res.status(403).sendFile(__dirname + '/public/403.html');
-    }
+// access to "submit" form (only authenticated users)
+server.get('/dataentryform*', pageinfo, authentication(), userinfo, (req,res)=>{res.render('dataentryform')});
+
+// access to "update" form (only authenticated users)
+server.get('/editcase*', authentication(), pageinfo, userinfo, (req,res)=>{
+    res.render('dataentryform',{editcase:true});
 });
+
 
 // submit data (only authenticated users)
 server.post('/submitdata', authentication(), async (req,res)=>{
     let dataRecieved = clearObject(req.body);
+    let recordId = dataRecieved?.id ?? null;
     dataRecieved.author = req?.oidc?.user?.sub ?? "testUser";
-    // console.log(dataRecieved);
-    let record = await Models.Case.create(dataRecieved);
-    res.redirect("/viewcase?case="+record.id);
-});
-
-
-
-// access to form (only authenticated users)
-server.get('/viewcase*', pagetitle, authentication(), async (req,res)=>{
-    if (/*isDev ||*/ req.oidc.isAuthenticated()) {       // if user has logged in
-        res.render('viewcase');
-    } else {
-        res.status(403).sendFile(__dirname + '/public/403.html');
+    if (!recordId){ // new record
+        let record = await Models.Case.create(dataRecieved);        
+        recordId = record.id;
+    }  else if (recordId) {       // update record
+        let userEntity = req?.oidc?.user?.entity;
+        // First, check if user is allowed to update
+        let [sqlSelect,metadata] = await db.query(`SELECT * FROM eukardia.casesview WHERE id="${recordId}" AND entity="${userEntity}"`);
+        let modifiedCase = sqlSelect[0];    // when no results: sqlSelect is an empty array [] and sqlSelect[0] is undefined
+        if (modifiedCase?.id==recordId) {            // recordId always valid here. modifiedCase?.id = "undefined without error" when not allowed. 
+            let [record,created] = await Models.Case.upsert(dataRecieved,{returning:true});     
+            // Σημείωση 1: update needs "where" - upsert just updates! (trick για συντομότερο κώδικα)
+            // Σημείωση 2: Ενώ το create επιστρέφει την εγγραφή, ενώ το upsert επστρέφει array [εγγραφή,ανδημιουργήθηκε]... 
+        } else {
+            res.status(403).render('403');
+            return; 
+        }
     }
+    res.redirect("/viewcase?case="+recordId);
 });
+
+
+
+// access to cases (only authenticated users)
+server.get('/viewcase*', pageinfo, authentication(), (req,res)=>{res.render('viewcase')});
+
+// search cases by id or patientId
+server.get('/searchcase', pageinfo, authentication(), (req,res)=>{res.render('searchcase')});
+
+
 
 // check patient id for duplicates data (only authenticated users)
 server.get('/checkforduplicate/:patientid', authentication(), async (req,res)=>{
@@ -134,28 +150,23 @@ server.get('/getcase/:id', authentication(), async (req,res)=>{
     let reqId = req.params.id;
     let userEntity = req?.oidc?.user?.entity;
     let [sqlSelect,metadata] = await db.query(`SELECT * FROM eukardia.casesview WHERE id="${reqId}" AND entity="${userEntity}"`);
-    let requestedCase = sqlSelect[0];
-    // let requestedCase = await Models.Case.findOne({where:{id:req.params.id},include:{model:Models.User,as:'user',where:{entity:userEntity}}});
+    let requestedCase = sqlSelect[0];       // when no results: sqlSelect is an empty array [] and sqlSelect[0] is undefined
+    if (!requestedCase) {res.status(404).send('Case not found or you do not have the permissions to see it')}
     // delete requestedCase.author;
     res.send(JSON.stringify(requestedCase));
 });
 // get cases by patientid
 server.get('/getpatient/:patientid', authentication(), async (req,res)=>{
-    let requestedCases = await Models.Case.findAll({where:{patientid:req.params.patientid}});   // TODO: Only same entity
-    res.send(JSON.stringify(requestedCases));
+    let patientid = req.params.patientid;
+    let userEntity = req?.oidc?.user?.entity;
+    let [requestedCases,metadata] = await db.query(`SELECT * FROM eukardia.casesview WHERE patientId="${patientid}" AND entity="${userEntity}"`);
+    res.send(JSON.stringify(requestedCases)); // requestedCases = a (possibly empty) array
 });
 
 
-// search cases by id or patientId
-server.get('/searchcase', pagetitle, authentication(), async (req,res)=>{
-    res.render('searchcase');
-});
 
-// access to form (only authenticated users)
-server.get('/editcase*', pagetitle, authentication(), async (req,res)=>{
-        let caseId = '';
-        res.render('dataentryform');
-});
+
+
 
 
 
