@@ -232,7 +232,7 @@ if (path.includes("searchcase")){
     }
     let presentCases = allCases => {
         console.log(allCases);
-        if (!allCases?.length) {return `Δεν βρήθηκαν περιστατικά με αυτό το αναγνωριστικό ή δεν έχετε δικαίωμα να τα δείτε.`}
+        if (!allCases?.length) {return `Δεν βρέθηκαν περιστατικά με αυτό το αναγνωριστικό ή δεν έχετε δικαίωμα να τα δείτε.`}
         let presentation = `
             <p>Βρέθηκαν τα παρακάτω περιστατικά:</p>
             <div class="d-grid gap-2">`;
