@@ -7,6 +7,7 @@
     --primarycolor: hsl(231, 48%, 24%);
     --backgroundcolor: hsl(231, 48%, 13%);
     --bodybackgroundcolor: lavender;
+    --headertextcolor: lavender;
     --unitcolor: hsl(250, 16%, 92%);
     --display-if-user: none;
     --display-if-guest: block;
@@ -103,7 +104,7 @@ body{
 header, header a:first-of-type, header nav>ul {    /*header, left logo, right navs*/
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;  /*vertical align, when big logo*/
     list-style-type: none; 
     padding-inline-start: 0;    /*fixes ul*/
@@ -112,13 +113,13 @@ header, header a:first-of-type, header nav>ul {    /*header, left logo, right na
 
 header{
     background-color:var(--primarycolor);
-    color: whitesmoke;
+    color: var(--headertextcolor);
     padding: 0.5rem min(3rem,10%);
     border-bottom: 1px solid #e5e5e5;
 }
 
 header a{
-    color: whitesmoke;
+    color: var(--headertextcolor);
     text-decoration: none;
     font-weight: bold;
     transition: all 0.3s;
@@ -145,21 +146,33 @@ footer p{font-size: small}
 }
 
 
+.always-hidden{
+    display: none !important;
+}
+
+
 @media ( width < 768px  ){
     /*NOTE: Προς το παρόν, δεν φαίνεται το navbar στα κινητά*/
     /* header nav, .navbar{    
         display: none;
     } */
 
-    .app-header{
-        justify-content: center;
-    }
+    /* .toggle-menu{
+        width: 50px;
+        height: 50px;
+    } */
+
+    /*Χρειάζεται αν δείχνεις μόνο 1 αντικείμενο*/
+    /* .app-header{
+        justify-content: center; 
+    } */
 
     .app-title{
         display: none;
     }
 
     header nav>ul{
+        flex-flow: column wrap;  /*όταν γίνει responsive*/
         gap: 1rem 0rem;
     }
 }
@@ -274,11 +287,10 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
 }
 
 
-
 .case table{
     font-family: var(--bs-font-monospace); 
     font-size: min(1rem,4vw);
-    table-layout:fixed;  
+    table-layout: fixed; 
     max-width: min(var(--sm),100%);
     border: 1px solid grey; 
 }

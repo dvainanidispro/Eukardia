@@ -52,6 +52,11 @@ fetch('/profile').then(response=>response.json()).then(profile => {
 */
 
 
+Q("#toggle-menu").on('click',function(){
+    Q("#navbar").classList.toggle("d-none");
+});
+
+
 var GetParameters = (parameter=null) => parameter 
 ? Object.fromEntries(new URLSearchParams(window.location.search).entries())[parameter] ?? null  
 : Object.fromEntries(new URLSearchParams(window.location.search).entries());

@@ -30,12 +30,21 @@
 
 
     <header class="app-header" id="app-header">
-        <a href="/" class="d-flex">
+        <a href="/">
             <img src="logo.png" class="logo"/>
-            <span class="h1 appTitle">ΕΥΚΑΡΔΙΑ</span>
-            <!-- <span>Logo and/or Brand Name</span> -->
+            <span class="h1 app-title">ΕΥΚΑΡΔΙΑ</span>
         </a>
-        <nav class="navbar navbar-dark d-none d-md-block">
+        <div class="d-md-none">
+            <button class="btn text-white toggle-menu" id="toggle-menu">
+                <svg viewBox='-5 0 10 8' width='40'>
+                <line y2='8' 
+                        stroke='lavender'  
+                        stroke-width='20' 
+                        stroke-dasharray='2 1'/>
+                </svg>
+            </button>
+        </div>
+        <nav class="navbar navbar-dark d-none d-md-block" id="navbar">
             <ul>
                 {{#if user.guest}}
                 <li ><a href="/login" id="navlogin" >Σύνδεση χρήστη</a></li>
@@ -46,16 +55,7 @@
                 {{/if}}
             </ul>
         </nav>
-        {{!-- <nav class="d-md-none">
-            <button class="btn text-white">
-                <svg viewBox='-5 0 10 8' width='40'>
-                <line y2='8' 
-                        stroke='#fff'  
-                        stroke-width='10' 
-                        stroke-dasharray='2 1'/>
-                </svg>
-            </button>
-        </nav> --}}
+
 
     </header>
 
