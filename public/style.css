@@ -152,11 +152,11 @@ footer p{font-size: small}
 
 
 
-@media ( width < 768px  ){
+@media ( width < 768px ){
 
-    .toggle-menu-div{
-        /*magic number για να πιάνει πιο πολύ χώρο και να μην εμφανίζονται και αυτό και το μενού στην ίδια γραμμή*/
-        flex-basis: 50%;        
+    .toggle-menu-div, .index-link{
+        /*magic number για να πιάνουν πιο πολύ χώρο και να μην εμφανίζονται και αυτά και το μενού στην ίδια γραμμή*/
+        flex-basis: 40%;        
         text-align: right;
     }
 
@@ -171,7 +171,7 @@ footer p{font-size: small}
 }
 
 /* @media ( width < 576px  ){ .toggle-menu-div{flex-basis: 50%} } */
-@media ( width < 300px  ){ .toggle-menu-div{flex-basis: auto} }
+/* @media ( width < 300px  ){ .toggle-menu-div{flex-basis: auto} } */
 
 
 
