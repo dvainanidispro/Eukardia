@@ -285,6 +285,10 @@ input[type="number"]+label, input[type="text"]+label, textarea+label {
     background-color: red;
 }
 
+textarea.form-control{
+    min-height: 6rem;
+}
+
 
 .case table{
     font-family: var(--bs-font-monospace); 

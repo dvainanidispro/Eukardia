@@ -12,6 +12,7 @@ var Q = (selector) => {
     if ( selector.charAt(0)=='#' ) {  
         let element = document.querySelector(selector);    
         element.on ??= function(event,callback){element.addEventListener(event,callback);return element}    // jshint ignore:line
+        element.show ??= function(showthis=true){if (showthis) {element.classList.remove('d-none')} else {element.classList.add('d-none')} }
         return element;
     } else {
         if (selector.charAt(0)=='~') {selector='[data-variable=' + selector.substring(1) + ']'}
@@ -76,7 +77,8 @@ if (path.includes("dataentryform")){
     Q("#naventry").style.display="none";
     
     Q("#testPatient").addEventListener("change",function(){
-        Q("#testWarning").style.display = this.checked ? "block":"none";
+        // Q("#testWarning").style.display = this.checked ? "block":"none";
+        Q("#testWarning").show(this.checked);
     })
 
 
@@ -150,11 +152,11 @@ if (path.includes("dataentryform")){
     // if not invalid (valid, or unknown), check only when changed (and loose focus)
     Q("#patientId").on('change',async function(){
         let isDuplicate = await checkForDuplicate(this,"checkforduplicate");
-        if (isDuplicate) { Q("#ignorePatientId").classList.remove("d-none") }
+        if (isDuplicate) { Q("#ignorePatientId").show(true) }
     });
     // if invalid, check on every letter pressed
     Q("#patientId").on('input',function(){
-        if (!this.checkValidity()) {checkForDuplicate(this,"checkforduplicate")};
+        if (!this.checkValidity()) { checkForDuplicate(this,"checkforduplicate") }
     });
 
 
@@ -199,14 +201,15 @@ if (path.includes("viewcase")){
             answer.updatedAt = updated.toLocaleString("EL-gr");
             
             Q('#case').innerHTML = tableFromObject(answer);
-            Q("#caseframe").classList.remove("d-none");
+            Q("#caseframe").show(true);
             Q("#editBtn").href += `?case=${theCase}`;
 
         }).catch(e=>{
-            Q('#caseerror').classList.remove("d-none");
+            Q('#caseerror').show(true);
+            Q('#editBtn').show(false);
         }).finally(()=>{
-            Q('#loadingSpinner').classList.add("d-none");
-            Q('#actionButtons').classList.remove("d-none");
+            Q('#loadingSpinner').show(false);
+            Q('#actionButtons').show(true);
         });
 
 }
@@ -258,14 +261,14 @@ if (path.includes("searchcase")){
             // console.log(dbid);
             location.href = "/viewcase?case="+dbid;
         } else if (patientid) {
-            Q("#searchresult").classList.add('d-none');
-            Q("#loadingSpinner").classList.remove('d-none');
+            Q("#searchresult").show(false);
+            Q("#loadingSpinner").show(true);
             fetch('/getpatient/'+patientid).then(response=>response.json()).then((answer)=>{
                 // Q("#searchresult").innerHTML = answer.length;
                 Q("#searchresult").innerHTML = presentCases(answer);
             }).finally(()=>{
-                Q("#loadingSpinner").classList.add('d-none');
-                Q("#searchresult").classList.remove('d-none');
+                Q("#loadingSpinner").show(false);
+                Q("#searchresult").show(true);
             });
         }
     });
@@ -281,7 +284,7 @@ if (path.includes("editcase")){
     // console.log(theCase);
     if (theCase){
         
-        Q("#loadingSpinner").classList.remove('d-none');
+        Q("#loadingSpinner").show(true);
         fetch("/getcase/"+theCase).then(answer=>answer.json())
             .then((answer)=>{
             
@@ -305,8 +308,8 @@ if (path.includes("editcase")){
                 .catch(e=>{
                     document.querySelector("main").remove();
                 }).finally(()=>{
-                    Q("#loadingSpinner").classList.add('d-none');
-                    Q("#dataform").classList.remove('d-none');
+                    Q("#loadingSpinner").show(false);
+                    Q("#dataform").show(true);
                 })
 
 
