@@ -19,6 +19,9 @@ server.use(express.static(__dirname + '/public'));
 // vercel supports only the old command (runs the express app from another directory!)
 
 
+//Dimitris standard security  
+server.use(require('./security.js'));
+
 // handlebars config
 const { create } = require ('express-handlebars');
 const handlebarsConfig = { /* config */
@@ -47,14 +50,7 @@ server.use(auth(auth0config));
 
 /** Requires authentication before visiting the page. If not, redirect to login */
 let authentication = requiresAuth;
-/*
-let authentication;
-if (isDev){
-    authentication = () => (req,res,next)=>{next()};
-} else {
-    authentication = requiresAuth;
-}
-*/
+
 
 
 // MIDDLEWARE
