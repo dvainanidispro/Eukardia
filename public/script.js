@@ -189,7 +189,7 @@ if (path.includes("viewcase")){
         return /*html*/`
             <table class="table table-striped">
                     ${head}
-                <tbody>
+                <tbody class="table-group-divider">
                     ${rows}
                 </tbody>
             </table>`;
@@ -326,9 +326,10 @@ if (path.includes("statistics")){
 
     function tableFromArray(statsArray){
         let rows = '';
+        let sum = 0;
         let head = /*html*/`
             <thead>
-                <tr>
+                <tr >
                     <th scope="col">Φορέας</th>
                     <th scope="col">Πλήθος περιστατικών</th>
                 </tr>
@@ -338,17 +339,23 @@ if (path.includes("statistics")){
                 <td>${item.entity}</td>
                 <td>${item.submittedcases}</td>
             </tr>`;
+            sum+=item.submittedcases;
         }
+        let tableFooter = /*html*/`<tfoot class="table-group-divider fw-bold"><tr>
+            <td>Σύνολο</td>
+            <td>${sum}</td>
+        </tr></tfoot>`;
         /*
             <th scope="col">Τελευταία εγγραφή</th>
             <td>${greekDate(item.lastupdate)}</td>
         */
         return /*html*/`
-            <table class="table table-striped">
-                    ${head}
-                <tbody>
+            <table class="table">
+                ${head}
+                <tbody class="table-group-divider">
                     ${rows}
                 </tbody>
+                ${tableFooter}
             </table>`;
     }
 
