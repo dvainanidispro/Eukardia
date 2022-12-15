@@ -104,9 +104,11 @@ server.post('/submitdata', authentication(), async (req,res)=>{
     let dataRecieved = clearObject(req.body);
     let recordId = dataRecieved?.id ?? null;
     dataRecieved.author = req?.oidc?.user?.sub ?? "testUser";
+    let statusCode = 200; // 201 created or 200/204 OK
     if (!recordId){ // new record
         let record = await Models.Case.create(dataRecieved);        
         recordId = record.id;
+        statusCode = 201;
     }  else if (recordId) {       // update record
         let userEntity = req?.oidc?.user?.entity;
         // First, check if user is allowed to update
@@ -116,12 +118,14 @@ server.post('/submitdata', authentication(), async (req,res)=>{
             let [record,created] = await Models.Case.upsert(dataRecieved,{returning:true});     
             // Σημείωση 1: update needs "where" - upsert just updates! (trick για συντομότερο κώδικα)
             // Σημείωση 2: Ενώ το create επιστρέφει την εγγραφή, ενώ το upsert επστρέφει array [εγγραφή,ανδημιουργήθηκε]... 
+            statusCode = 204;
         } else {
             res.status(403).render('403');
             return; 
         }
     }
     res.redirect("/viewcase?case="+recordId);
+    // res.redirect(statusCode, "/viewcase?case="+recordId);    // Αν το redirect δεν έχει 3xx, ο browser αρνείται να το ακολουθήσει. 
 });
 
 
@@ -131,8 +135,6 @@ server.get('/viewcase*', pageinfo, authentication(), (req,res)=>{res.render('vie
 
 // search cases by id or patientId
 server.get('/searchcase', pageinfo, authentication(), (req,res)=>{res.render('searchcase')});
-
-
 
 // check patient id for duplicates data (only authenticated users)
 server.get('/checkforduplicate/:patientid', authentication(), async (req,res)=>{
@@ -160,7 +162,13 @@ server.get('/getpatient/:patientid', authentication(), async (req,res)=>{
 });
 
 
-
+// statistics page
+server.get('/statistics', pageinfo, authentication(), (req,res)=>{res.render('statistics')});
+// get statistics table
+server.get('/getstatistics', authentication(), async (req,res)=>{
+    let [view,metadata] = await db.query(`SELECT * FROM eukardia.statistics`);
+    res.send(JSON.stringify(view));
+});
 
 
 

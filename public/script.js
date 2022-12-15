@@ -65,6 +65,9 @@ var GetParameters = (parameter=null) => parameter
 var Qname = (fieldName) => document.querySelector(`[name='${fieldName}']`);
 var Qvalue = (fieldName,fieldValue) => document.querySelector(`[name='${fieldName}'][value='${fieldValue}']`);
 
+function greekDate(date){
+    return (new Date(date)).toLocaleString("EL-gr");
+}
 
 let path = window.location.pathname;
 
@@ -194,11 +197,9 @@ if (path.includes("viewcase")){
     
     fetch("/getcase/"+theCase).then(answer=>answer.json())
         .then((answer)=>{
-            
-            let created = new Date(answer.createdAt);
-            let updated = new Date(answer.updatedAt);
-            answer.createdAt = created.toLocaleString("EL-gr");
-            answer.updatedAt = updated.toLocaleString("EL-gr");
+
+            answer.createdAt = greekDate(answer.createdAt);
+            answer.updatedAt = greekDate(answer.updatedAt);
             
             Q('#case').innerHTML = tableFromObject(answer);
             Q("#caseframe").show(true);
@@ -316,8 +317,49 @@ if (path.includes("editcase")){
             
         }
 
-    };
+};
     
 
 
+if (path.includes("statistics")){
 
+
+    function tableFromArray(statsArray){
+        let rows = '';
+        let head = /*html*/`
+            <thead>
+                <tr>
+                    <th scope="col">Φορέας</th>
+                    <th scope="col">Πλήθος περιστατικών</th>
+                </tr>
+            </thead>`;
+        for (const item of statsArray){
+            rows+=/*html*/`<tr>
+                <td>${item.entity}</td>
+                <td>${item.submittedcases}</td>
+            </tr>`;
+        }
+        /*
+            <th scope="col">Τελευταία εγγραφή</th>
+            <td>${greekDate(item.lastupdate)}</td>
+        */
+        return /*html*/`
+            <table class="table table-striped">
+                    ${head}
+                <tbody>
+                    ${rows}
+                </tbody>
+            </table>`;
+    }
+
+
+    fetch("/getstatistics").then(answer=>answer.json())
+    .then((answer)=>{
+        console.log(answer);  
+        Q("#caseframe").show(true);
+        Q("#statistics").innerHTML = tableFromArray(answer);
+    }).finally(()=>{
+        Q("#loadingSpinner").show(false);
+    })
+
+};

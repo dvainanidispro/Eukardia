@@ -32,8 +32,8 @@ html:focus-within {
 }
 
 /* Remove default margin and padding */
-h1, .h1,
-h2, .h2,
+h1,
+h2,
 h3,
 h4,
 p,
@@ -137,6 +137,11 @@ footer p{font-size: small}
     height: 6rem;
 }
 
+.app-title{
+    margin: 0;
+    padding: 0.5rem 0;
+}
+
 
 .body-container{
     background-color: var(--bodybackgroundcolor);
@@ -179,6 +184,10 @@ footer p{font-size: small}
 
 
 /*********************  MAIN   *********************/
+
+h1{
+    font-size: 2rem;
+}
 
 .sm{
     max-width: var(--sm);
