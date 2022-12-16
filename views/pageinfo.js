@@ -9,7 +9,7 @@ module.exports.pageinfo = (req,res,next) =>{
         "/editcase" : "ΕΥΚΑΡΔΙΑ - Επεξεργασία περιστατικού",
         "/statistics": "ΕΥΚΑΡΔΙΑ - Συγκεντρωτικά στοιχεία",
     }
-    res.locals.pagetitle = titles[path]??"ΕΥΚΑΡΔΙΑ";  // handlebarst title is the locals.title
+    res.locals.pagetitle = titles[path]??"ΕΥΚΑΡΔΙΑ";  // handlebars title is the locals.title
 
     if (path=="/dataentryform"){
         res.locals.h1 = "Καταχώριση νέου περιστατικού";

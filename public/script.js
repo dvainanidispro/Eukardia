@@ -59,14 +59,14 @@ Q("#toggle-menu").on('click',function(){
 
 
 var GetParameters = (parameter=null) => parameter 
-? Object.fromEntries(new URLSearchParams(window.location.search).entries())[parameter] ?? null  
-: Object.fromEntries(new URLSearchParams(window.location.search).entries());
+    ? Object.fromEntries(new URLSearchParams(window.location.search).entries())[parameter] ?? null  
+    : Object.fromEntries(new URLSearchParams(window.location.search).entries());
 
 var Qname = (fieldName) => document.querySelector(`[name='${fieldName}']`);
 var Qvalue = (fieldName,fieldValue) => document.querySelector(`[name='${fieldName}'][value='${fieldValue}']`);
 
-function greekDate(date){
-    return (new Date(date)).toLocaleString("EL-gr");
+function greekDate(date,notime=false){
+    return !notime ? (new Date(date)).toLocaleString("EL-gr",{hour12:false}):(new Date(date)).toLocaleDateString("EL-gr",{hour12:false});
 }
 
 let path = window.location.pathname;
@@ -331,13 +331,15 @@ if (path.includes("statistics")){
             <thead>
                 <tr >
                     <th scope="col">Φορέας</th>
-                    <th scope="col">Πλήθος περιστατικών</th>
+                    <th scope="col">Πλήθος <span class="hide-md">περιστατικών</span></th>
+                    <th scope="col" class="hide-md">Τελευταία εγγραφή</th>
                 </tr>
             </thead>`;
         for (const item of statsArray){
             rows+=/*html*/`<tr>
                 <td>${item.entity}</td>
                 <td>${item.submittedcases}</td>
+                <td class="hide-md">${greekDate(item.lastupdate,"notime")}</td>
             </tr>`;
             sum+=item.submittedcases;
         }
@@ -346,8 +348,8 @@ if (path.includes("statistics")){
             <td>${sum}</td>
         </tr></tfoot>`;
         /*
-            <th scope="col">Τελευταία εγγραφή</th>
-            <td>${greekDate(item.lastupdate)}</td>
+            <th scope="col" class="hide-md">Τελευταία εγγραφή</th>
+            <td class="hide-md">${greekDate(item.lastupdate)}</td>
         */
         return /*html*/`
             <table class="table">
