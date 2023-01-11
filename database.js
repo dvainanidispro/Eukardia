@@ -11,9 +11,9 @@ db = new Sequelize(
         dialect: process.env.DATABASEDIALECT,
         // στο παρακάτω έβαλα 'mariadb' διότι το process.env.DATABASEDIALECT δεν έπαιζε...
         dialectModule: (process.env.vercel!=="true") ? null : require('mariadb'), 
-        dialectOptions: {
-            encrypt: true
-        },
+        // dialectOptions: {
+        //     encrypt: true
+        // },
         timezone: "Europe/Athens",                         // greek time, for writing to database   
         query: { raw: true },       // returns queries as simple JSON objects
         logging: false,         // does not console log things...

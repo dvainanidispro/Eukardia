@@ -7,7 +7,7 @@ const SecurityHelmet = helmet({
     contentSecurityPolicy:     
         {directives: 
             {
-                "script-src": ["'self'","ajax.googleapis.com"],
+                "script-src": ["'self'","ajax.googleapis.com","cdn.jsdelivr.net"],
                 "style-src": ["*"],
                 "script-src-attr": ["'none'"],  // prevent scripts in (image) attributes
                 "img-src": ["*","data:"]        // without "data:", we get a Bootstrap svg error

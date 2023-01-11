@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 
 
 <head>
@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Εφαρμογή καταχώρισης περιστατικών του ΕΥΚΑΡΔΙΑ">
+    <meta name="author" content="Computer Studio">
     
     <title>{{pagetitle}}</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -36,7 +37,7 @@
         </a>
         <div class="d-md-none toggle-menu-div">
             <button class="btn text-white toggle-menu" id="toggle-menu" aria-label="Navigation menu">
-                <svg viewBox='-5 0 10 8' width='40'>
+                <svg viewBox='-5 0 10 8' width='30'>
                 <line y2='8' 
                         stroke='lavender'  
                         stroke-width='20' 
@@ -47,11 +48,29 @@
         <nav class="navbar navbar-dark d-none d-md-block" id="navbar">
             <ul>
                 {{#if user.guest}}
-                <li ><a href="/login" id="navlogin" >Σύνδεση χρήστη</a></li>
+                <li><a href="/login" id="navlogin" >Σύνδεση χρήστη</a></li>
                 {{else}}
                 <li id="naventry"><a href="/dataentryform">Καταχώριση</a></li>
                 <li id="navsearch"><a href="/searchcase">Αναζήτηση</a></li>
                 <li ><a href="/logout" id="navlogout" >Αποσύνδεση</a></li>
+
+                    {{!-- <li class="nav-item dropdown">
+                    <a id="menutoggle" class="nav-link dropdown-toggle text-shadow fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Μενού
+                    </a>
+                    <ul id="navdropdown" class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/">Αρχική</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/dataentryform">Καταχώριση</a></li>
+                        <li><a class="dropdown-item" href="/searchcase">Αναζήτηση</a></li>
+                        <li><a class="dropdown-item" href="/statistics">Στατιστικά</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/">Πολιτική απορρήτου</a></li>
+                        <li><a class="dropdown-item" href="/">Πολιτική cookies</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout">Αποσύνδεση</a></li>
+                    </ul> --}}
+
                 {{/if}}
             </ul>
         </nav>

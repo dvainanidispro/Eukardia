@@ -57,6 +57,10 @@ Q("#toggle-menu").on('click',function(){
     Q("#navbar").classList.toggle("d-none");
 });
 
+// Q('#menutoggle').on('click',function(){
+//     Q('#navdropdown').classList.toggle('show');
+// })
+
 
 var GetParameters = (parameter=null) => parameter 
     ? Object.fromEntries(new URLSearchParams(window.location.search).entries())[parameter] ?? null  
@@ -331,7 +335,7 @@ if (path.includes("statistics")){
             <thead>
                 <tr >
                     <th scope="col">Φορέας</th>
-                    <th scope="col">Πλήθος <span class="hide-md">περιστατικών</span></th>
+                    <th scope="col">Περιστατικά</th>
                     <th scope="col" class="hide-md">Τελευταία εγγραφή</th>
                 </tr>
             </thead>`;
@@ -364,7 +368,7 @@ if (path.includes("statistics")){
 
     fetch("/getstatistics").then(answer=>answer.json())
     .then((answer)=>{
-        console.log(answer);  
+        // console.log(answer);  
         Q("#caseframe").show(true);
         Q("#statistics").innerHTML = tableFromArray(answer);
     }).finally(()=>{

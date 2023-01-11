@@ -9,8 +9,9 @@ const express = require('express');
 const server = express();
 // let isDev = (process.env.ENVIRONMENT == "Development");
 /** Safer path of the folder when app runs from another directory */
-let folder = (path)=>__dirname+"/"+path;
+let folder = (subfolder)=>__dirname+"/"+subfolder;
 // vercel supports only the old command (runs the express app from another directory!)
+// __dirname: directory of server.js - static(folder): directory that runs the "node server.js" command
 
 // grab post/put variables, json objects and send static files
 server.use(express.urlencoded({extended: false})); 
@@ -100,6 +101,7 @@ server.get('/editcase*', authentication(), pageinfo, userinfo, (req,res)=>{
 
 
 // submit data (only authenticated users)
+// TODO: split into 2: post (create) and put (update)...
 server.post('/submitdata', authentication(), async (req,res)=>{
     let dataRecieved = clearObject(req.body);
     let recordId = dataRecieved?.id ?? null;
