@@ -311,6 +311,7 @@ if (path.includes("editcase")){
                     };
                 })
                 .catch(e=>{
+                    console.log(e);
                     document.querySelector("main").remove();
                 }).finally(()=>{
                     Q("#loadingSpinner").show(false);

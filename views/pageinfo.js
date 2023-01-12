@@ -8,6 +8,7 @@ module.exports.pageinfo = (req,res,next) =>{
         "/searchcase" : "ΕΥΚΑΡΔΙΑ - Αναζήτηση περιστατικών",
         "/editcase" : "ΕΥΚΑΡΔΙΑ - Επεξεργασία περιστατικού",
         "/statistics": "ΕΥΚΑΡΔΙΑ - Συγκεντρωτικά στοιχεία",
+        "/usage": "ΕΥΚΑΡΔΙΑ - Ενεργοί χρήστες",
     }
     res.locals.pagetitle = titles[path]??"ΕΥΚΑΡΔΙΑ";  // handlebars title is the locals.title
 

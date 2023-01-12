@@ -23,7 +23,7 @@ server.use(express.static(__dirname + '/public'));
 //Dimitris standard security  
 server.use(require('./security.js'));
 
-// handlebars config
+// Handlebars config
 const { create } = require ('express-handlebars');
 const handlebarsConfig = { /* config */
     extname: '.hbs',    // extension for layouts 
@@ -45,7 +45,7 @@ const Models = require('./models/models');
 
 // Authentication, Authorization 
 const { auth, requiresAuth } = require('express-openid-connect');
-const { auth0config, userinfo } = require('./auth');
+const { auth0config, userinfo, lmr } = require('./auth');
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 server.use(auth(auth0config));
 
@@ -92,10 +92,10 @@ server.get('/profile', userinfo, (req, res) => {
 
 
 // access to "submit" form (only authenticated users)
-server.get('/dataentryform*', pageinfo, authentication(), userinfo, (req,res)=>{res.render('dataentryform')});
+server.get('/dataentryform*', pageinfo, authentication(), userinfo, lmr, (req,res)=>{res.render('dataentryform')});
 
 // access to "update" form (only authenticated users)
-server.get('/editcase*', authentication(), pageinfo, userinfo, (req,res)=>{
+server.get('/editcase*', authentication(), pageinfo, userinfo, lmr, (req,res)=>{
     res.render('dataentryform',{editcase:true});
 });
 
@@ -133,10 +133,10 @@ server.post('/submitdata', authentication(), async (req,res)=>{
 
 
 // access to cases (only authenticated users)
-server.get('/viewcase*', pageinfo, authentication(), (req,res)=>{res.render('viewcase')});
+server.get('/viewcase*', pageinfo, authentication(),  lmr, (req,res)=>{res.render('viewcase')});
 
 // search cases by id or patientId
-server.get('/searchcase', pageinfo, authentication(), (req,res)=>{res.render('searchcase')});
+server.get('/searchcase', pageinfo, authentication(),  lmr, (req,res)=>{res.render('searchcase')});
 
 // check patient id for duplicates data (only authenticated users)
 server.get('/checkforduplicate/:patientid', authentication(), async (req,res)=>{
@@ -172,6 +172,8 @@ server.get('/getstatistics', authentication(), async (req,res)=>{
     res.send(JSON.stringify(view));
 });
 
+server.get('/usage', pageinfo, authentication(), lmr, (req,res)=>{res.render('usage')});
+
 
 
 
@@ -200,3 +202,4 @@ databaseConnectionTest(db)           // top level await is not supported everywh
 }).finally(()=>{
     // startWebServer(server,port,listeningURL);
 });
+

@@ -22,6 +22,30 @@ module.exports.userinfo = (req,res,next) =>{
 
 
 
+/** an object containing the active users of the app */
+let CurrentUsers = {}
+
+/** Logs/Shows the time of the last meaningfull request (lmr) so you can know if the application is active */
+module.exports.lmr = (req,res,next) => {
+    if (req.originalUrl=='/usage'){
+        /** Maximum time difference in minutes to be considered active */
+        const maxTimeDiff = 60;
+        const rtf = new Intl.RelativeTimeFormat("el", { numeric: "auto" });
+        let returnedUsers = {};
+        for (const [person,time] of Object.entries(CurrentUsers)){
+            let timeDiff = Math.round((time - new Date()) /(1000*60));    // time difference in minutes
+            if (timeDiff<maxTimeDiff) {  
+                returnedUsers[person] = timeDiff ? rtf.format(timeDiff,"minutes") : "Τώρα"; // αν timeDiff=0, δείξε "Τώρα"
+            } 
+        }
+        res.locals.CurrentUsers = (Object.keys(returnedUsers).length==0) ? "Δεν υπάρχουν ενεργοί χρήστες" : JSON.stringify(returnedUsers, null, "\t");
+    } else {
+        let username = req.oidc.user.name;
+        CurrentUsers[username] = new Date();
+    }
+    next();
+};
+
 
 
 
@@ -44,7 +68,7 @@ module.exports.validateRoleUsingToken = (rolesArray) => (req,res,next) => {
     if (hasTheRole) {
         next();
     } else {
-        res.status(403).sendFile(__dirname + '/public/403.html');
+        res.status(403).render('403');
     }
 };
 */
@@ -62,7 +86,7 @@ module.exports.validateRoleUsingDB = (rolesArray=null) => async (req,res,next) =
     if (hasTheRole) {
         next();
     } else {
-        res.status(403).sendFile(__dirname + '/public/403.html');
+        res.status(403).render('403');
     }
 };
 */
