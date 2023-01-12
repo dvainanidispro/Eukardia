@@ -7,7 +7,6 @@ var App = {
     user:{},
 };
 
-
 var Q = (selector) => {
     if ( selector.charAt(0)=='#' ) {  
         let element = document.querySelector(selector);    
@@ -24,57 +23,30 @@ var Q = (selector) => {
 };
 
 
-let resetCSSProperties = () => {
-    let setCSS = (property,value) => {
-        document.documentElement.style.setProperty(property, value);
-    };
-    if (App.userType=="guest"){
-        setCSS('--display-if-user',"none");
-        setCSS('--display-if-guest',"block");
-    } else if (App.userType=="user"){
-        setCSS('--display-if-user',"block");
-        setCSS('--display-if-guest',"none");
-    }
-};
-
-let initializeContent = () => {
-    // Q('~username').set(App.user.name);
-    // Q('~entity').set(App.user.entity);
-    resetCSSProperties();
-};
-
-/*
-fetch('/profile').then(response=>response.json()).then(profile => {
-    console.debug(profile);
-    App.user = profile;
-    App.userType = profile.name ? 'user' : 'guest';        // jshint ignore:line
-    // console.log(App.userType);
-}).finally(()=>{initializeContent()});
-*/
-
-
-Q("#toggle-menu").on('click',function(){
-    Q("#navbar").classList.toggle("d-none");
-});
-
-// Q('#menutoggle').on('click',function(){
-//     Q('#navdropdown').classList.toggle('show');
-// })
-
-
+/** Gets the GET parameter from the URL */
 var GetParameters = (parameter=null) => parameter 
     ? Object.fromEntries(new URLSearchParams(window.location.search).entries())[parameter] ?? null  
     : Object.fromEntries(new URLSearchParams(window.location.search).entries());
 
-var Qname = (fieldName) => document.querySelector(`[name='${fieldName}']`);
-var Qvalue = (fieldName,fieldValue) => document.querySelector(`[name='${fieldName}'][value='${fieldValue}']`);
+/** Selects the (first) input field with the specific name. For type="text|number|etc" */
+var Qname = (fieldName) => document.querySelector(`form [name='${fieldName}']`);
+// να σημειωθεί ότι το form χρειάζεται, γιατί πχ στο fieldName="author" μου έδινε το <meta name="author" content="Computer Studio"> και έβγαζε bug!!!
 
+/** Selects the (first) input that has the specific name and value. For type="radio|other imputs with same name" */
+var Qvalue = (fieldName,fieldValue) => document.querySelector(`form [name='${fieldName}'][value='${fieldValue}']`);
+
+/** Returns a Date/Time in a Greek format */
 function greekDate(date,notime=false){
     return !notime ? (new Date(date)).toLocaleString("EL-gr",{hour12:false}):(new Date(date)).toLocaleDateString("EL-gr",{hour12:false});
 }
 
 let path = window.location.pathname;
 
+
+
+Q("#toggle-menu").on('click',function(){
+    Q("#navbar").classList.toggle("d-none");
+});
 
 
 
@@ -292,21 +264,14 @@ if (path.includes("editcase")){
         Q("#loadingSpinner").show(true);
         fetch("/getcase/"+theCase).then(answer=>answer.json())
             .then((answer)=>{
-            
-                let created = new Date(answer.createdAt);
-                let updated = new Date(answer.updatedAt);
-                answer.createdAt = created.toLocaleString("EL-gr");
-                answer.updatedAt = updated.toLocaleString("EL-gr");
 
                 for (const [key,value] of Object.entries(answer)){     // loop for objects
-                        // console.log(key + " " + value);
-                        if (Qname(key)) {
-                            Q("#dataform")[key].value = value;
-                            // console.log(Q("#dataform")[key]);
-                        }
-                        else if (Qvalue(key,value)){
-                            Qvalue(key,value).checked = true;
-                            // console.log(Qvalue(key,value));
+                        if (Qname(key)) {           // true σε όλα εκτός από author, entity, createdAt, updatedAt
+                            Q("#dataform")[key].value = value;          // όχι Qname(key).value γιατί πχ το Qname("gender") είναι η πρώτη επιλογή μόνο. 
+                        } 
+                        if (Qvalue(key,value)){         // τα radio παίζουν και με τα 2 και γίνεται 2 φορές. Το checkbox μόνο με αυτό. 
+                            // console.log(key)
+                            // Qvalue(key,value).checked = true;
                         }
                     };
                 })
