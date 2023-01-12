@@ -3,7 +3,7 @@
 		{
 			"path": "."
 		}
-    ],
+	],
 	"settings": {
         "liveServer.settings.root": "/public/",
         "liveServer.settings.port": 80

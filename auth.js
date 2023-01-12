@@ -29,12 +29,13 @@ let CurrentUsers = {}
 module.exports.lmr = (req,res,next) => {
     if (req.originalUrl=='/usage'){
         /** Maximum time difference in minutes to be considered active */
-        const maxTimeDiff = 60;
+        const maxTimeDiff = -60;
         const rtf = new Intl.RelativeTimeFormat("el", { numeric: "auto" });
         let returnedUsers = {};
         for (const [person,time] of Object.entries(CurrentUsers)){
             let timeDiff = Math.round((time - new Date()) /(1000*60));    // time difference in minutes
-            if (timeDiff<maxTimeDiff) {  
+            console.log(timeDiff);
+            if (timeDiff>maxTimeDiff) {  
                 returnedUsers[person] = timeDiff ? rtf.format(timeDiff,"minutes") : "Τώρα"; // αν timeDiff=0, δείξε "Τώρα"
             } 
         }

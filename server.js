@@ -117,6 +117,7 @@ server.post('/submitdata', authentication(), async (req,res)=>{
         let [sqlSelect,metadata] = await db.query(`SELECT * FROM eukardia.casesview WHERE id="${recordId}" AND entity="${userEntity}"`);
         let modifiedCase = sqlSelect[0];    // when no results: sqlSelect is an empty array [] and sqlSelect[0] is undefined
         if (modifiedCase?.id==recordId) {            // recordId always valid here. modifiedCase?.id = "undefined without error" when not allowed. 
+            if (!dataRecieved.testPatient) {dataRecieved.testPatient=0}     // Τα checkboxes δεν στέλνονται αν είναι unchecked! Ενώ θα θέλαμε να έρχεται 0. 
             let [record,created] = await Models.Case.upsert(dataRecieved,{returning:true});     
             // Σημείωση 1: update needs "where" - upsert just updates! (trick για συντομότερο κώδικα)
             // Σημείωση 2: Ενώ το create επιστρέφει την εγγραφή, ενώ το upsert επστρέφει array [εγγραφή,ανδημιουργήθηκε]... 

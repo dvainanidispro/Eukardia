@@ -28,12 +28,20 @@ var GetParameters = (parameter=null) => parameter
     ? Object.fromEntries(new URLSearchParams(window.location.search).entries())[parameter] ?? null  
     : Object.fromEntries(new URLSearchParams(window.location.search).entries());
 
-/** Selects the (first) input field with the specific name. For type="text|number|etc" */
-var Qname = (fieldName) => document.querySelector(`form [name='${fieldName}']`);
-// να σημειωθεί ότι το form χρειάζεται, γιατί πχ στο fieldName="author" μου έδινε το <meta name="author" content="Computer Studio"> και έβγαζε bug!!!
 
-/** Selects the (first) input that has the specific name and value. For type="radio|other imputs with same name" */
-var Qvalue = (fieldName,fieldValue) => document.querySelector(`form [name='${fieldName}'][value='${fieldValue}']`);
+/** Selects the field as a DOM Object (not HTML element)*/
+var Qfield = (fieldName,fieldValue=null) => {
+    try{
+        if (!fieldValue) {
+            return Q("#dataform")?.[fieldName] ?? null;
+        } else {
+            return document.querySelector(`form [name='${fieldName}'][value='${fieldValue}']`);
+        }
+    }
+    catch{return null}
+    // try catch, διότι περίεργες τιμές (πχ έχουν αλλαγές γραμμών ή έχεις δώσει περίεργο όρισμα), βγάζουν error
+};
+
 
 /** Returns a Date/Time in a Greek format */
 function greekDate(date,notime=false){
@@ -260,21 +268,25 @@ if (path.includes("editcase")){
     let theCase = GetParameters("case");
     // console.log(theCase);
     if (theCase){
+
+
+        Q("#testPatient").addEventListener("change",function(){
+            Q("#testWarning").show(this.checked);
+        })
         
         Q("#loadingSpinner").show(true);
         fetch("/getcase/"+theCase).then(answer=>answer.json())
             .then((answer)=>{
 
                 for (const [key,value] of Object.entries(answer)){     // loop for objects
-                        if (Qname(key)) {           // true σε όλα εκτός από author, entity, createdAt, updatedAt
-                            Q("#dataform")[key].value = value;          // όχι Qname(key).value γιατί πχ το Qname("gender") είναι η πρώτη επιλογή μόνο. 
+                        if (Qfield(key)) {           // true σε όλα εκτός από author, entity, createdAt, updatedAt
+                            // Ιδιοτροπία checkbox. Επίσης, το παρακάτω λειτουργεί μόνο αν το checkbox έχει values 0 και 1 (όχι άλλα values), διότι #.checked=true|false=1|0
+                            if (Qfield(key).type=="checkbox") {Qfield(key).checked = value}     
+                            else {Qfield(key).value = value}
                         } 
-                        if (Qvalue(key,value)){         // τα radio παίζουν και με τα 2 και γίνεται 2 φορές. Το checkbox μόνο με αυτό. 
-                            // console.log(key)
-                            // Qvalue(key,value).checked = true;
-                        }
                     };
                 })
+
                 .catch(e=>{
                     console.log(e);
                     document.querySelector("main").remove();
@@ -283,8 +295,6 @@ if (path.includes("editcase")){
                     Q("#dataform").show(true);
                 })
 
-
-            
         }
 
 };
