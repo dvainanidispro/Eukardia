@@ -33,8 +33,8 @@ async function syncTables(){
 
 syncTables()
     .then(()=>{console.log(`\x1b[35m All database models were synchronized.\x1b[0m`)})
-    .catch((e)=>{console.error(`\x1b[31m Database models were not synchronized!`)});
+    .catch(()=>{console.error(`\x1b[31m Database models were not synchronized!`)});
 
 
 
-module.exports = { User, Case }
+module.exports = { User, Case };

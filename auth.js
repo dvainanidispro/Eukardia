@@ -1,4 +1,4 @@
-const { auth, requiresAuth } = require('express-openid-connect');
+// const { auth, requiresAuth } = require('express-openid-connect');
 // const { getUserRoles } = require("./models/user");
 
 /** auth0 configuration */
@@ -23,7 +23,7 @@ module.exports.userinfo = (req,res,next) =>{
 
 
 /** an object containing the active users of the app */
-let CurrentUsers = {}
+let CurrentUsers = {};
 
 /** Logs/Shows the time of the last meaningfull request (lmr) so you can know if the application is active */
 module.exports.lmr = (req,res,next) => {
@@ -34,12 +34,11 @@ module.exports.lmr = (req,res,next) => {
         let returnedUsers = {};
         for (const [person,time] of Object.entries(CurrentUsers)){
             let timeDiff = Math.round((time - new Date()) /(1000*60));    // time difference in minutes
-            console.log(timeDiff);
             if (timeDiff>maxTimeDiff) {  
                 returnedUsers[person] = timeDiff ? rtf.format(timeDiff,"minutes") : "Τώρα"; // αν timeDiff=0, δείξε "Τώρα"
             } 
         }
-        res.locals.CurrentUsers = (Object.keys(returnedUsers).length==0) ? "Δεν υπάρχουν ενεργοί χρήστες" : JSON.stringify(returnedUsers, null, "\t");
+        res.locals.CurrentUsers = (Object.keys(returnedUsers).length==0) ? "Δεν υπάρχουν ενεργοί χρήστες αυτή τη στιγμή" : JSON.stringify(returnedUsers, null, "\t");
     } else {
         let username = req.oidc.user.name;
         CurrentUsers[username] = new Date();

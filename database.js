@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 // require('dotenv').config();   // comment out when using web server (needs when testing db without web server)
 
 /** The database connection using Sequelize */
-db = new Sequelize(
+let db = new Sequelize(
     process.env.DATABASENAME, 
     process.env.DATABASEUSERNAME, 
     process.env.DATABASEPASSWORD, 
@@ -32,7 +32,7 @@ db = new Sequelize(
 
 
 /** Returns a promise - resolves if the database is succesfully connected */
-databaseConnectionTest = (DbConnection) => {
+let databaseConnectionTest = (DbConnection) => {
     return new Promise(async (resolve, reject) => {
         try{
             await DbConnection.authenticate();
@@ -45,4 +45,4 @@ databaseConnectionTest = (DbConnection) => {
     });
 };
 
-module.exports = { db , databaseConnectionTest }
+module.exports = { db , databaseConnectionTest } ;

@@ -1,17 +1,19 @@
+/* jshint strict:global , esversion: 11 */
 'use strict';
 
-
+/*
 var App = {
     userType: 'guest',
     // userType: 'user',
     user:{},
 };
+*/
 
 var Q = (selector) => {
     if ( selector.charAt(0)=='#' ) {  
         let element = document.querySelector(selector);    
         element.on ??= function(event,callback){element.addEventListener(event,callback);return element}    // jshint ignore:line
-        element.show ??= function(showthis=true){if (showthis) {element.classList.remove('d-none')} else {element.classList.add('d-none')} }
+        element.show ??= function(showthis=true){if (showthis) {element.classList.remove('d-none')} else {element.classList.add('d-none')} }     // jshint ignore:line
         return element;
     } else {
         if (selector.charAt(0)=='~') {selector='[data-variable=' + selector.substring(1) + ']'}
@@ -66,7 +68,7 @@ if (path.includes("dataentryform")){
     Q("#testPatient").addEventListener("change",function(){
         // Q("#testWarning").style.display = this.checked ? "block":"none";
         Q("#testWarning").show(this.checked);
-    })
+    });
 
 
     let validateForm = (form) => {
@@ -106,7 +108,7 @@ if (path.includes("dataentryform")){
             inputElement.classList.add("is-invalid");
         }
         inputElement.reportValidity();
-    }
+    };
 
     let checkForDuplicate = async (field,path) => {
         // if field empty, do nothing
@@ -157,7 +159,7 @@ if (path.includes("viewcase")){
 
     let theCase = GetParameters("case");
     
-    function tableFromObject(caseObject){
+    let tableFromObject = (caseObject) => {
         let rows = '';
         let head = /*html*/`
             <thead>
@@ -177,7 +179,7 @@ if (path.includes("viewcase")){
                     ${rows}
                 </tbody>
             </table>`;
-    }
+    };
     
     fetch("/getcase/"+theCase).then(answer=>answer.json())
         .then((answer)=>{
@@ -222,7 +224,7 @@ if (path.includes("searchcase")){
             </a>
         `;
         // return singleCase.id;
-    }
+    };
     let presentCases = allCases => {
         console.log(allCases);
         if (!allCases?.length) {return `Δεν βρέθηκαν περιστατικά με αυτό το αναγνωριστικό ή δεν έχετε δικαίωμα να τα δείτε.`}
@@ -234,7 +236,7 @@ if (path.includes("searchcase")){
         });
         presentation += `</div>`;
         return presentation;
-    }
+    };
 
     Q("#search").on('click',function(e){
         e.preventDefault();
@@ -272,7 +274,7 @@ if (path.includes("editcase")){
 
         Q("#testPatient").addEventListener("change",function(){
             Q("#testWarning").show(this.checked);
-        })
+        });
         
         Q("#loadingSpinner").show(true);
         fetch("/getcase/"+theCase).then(answer=>answer.json())
@@ -284,7 +286,7 @@ if (path.includes("editcase")){
                             if (Qfield(key).type=="checkbox") {Qfield(key).checked = value}     
                             else {Qfield(key).value = value}
                         } 
-                    };
+                    }
                 })
 
                 .catch(e=>{
@@ -293,18 +295,18 @@ if (path.includes("editcase")){
                 }).finally(()=>{
                     Q("#loadingSpinner").show(false);
                     Q("#dataform").show(true);
-                })
+                });
 
         }
 
-};
+}
     
 
 
 if (path.includes("statistics")){
 
 
-    function tableFromArray(statsArray){
+    let tableFromArray = (statsArray) => {
         let rows = '';
         let sum = 0;
         let head = /*html*/`
@@ -339,7 +341,7 @@ if (path.includes("statistics")){
                 </tbody>
                 ${tableFooter}
             </table>`;
-    }
+    };
 
 
     fetch("/getstatistics").then(answer=>answer.json())
@@ -349,6 +351,6 @@ if (path.includes("statistics")){
         Q("#statistics").innerHTML = tableFromArray(answer);
     }).finally(()=>{
         Q("#loadingSpinner").show(false);
-    })
+    });
 
-};
+}

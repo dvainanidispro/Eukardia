@@ -319,16 +319,17 @@ textarea.form-control{
 .case table{
     font-family: var(--bs-font-monospace); 
     font-size: min(1rem,4vw);
-    table-layout: fixed; 
+    table-layout: fixed; /* widths are divided equally (or set by first row) */
     max-width: min(var(--sm),100%);
     border: 1px solid grey; 
 }
 
 .case table td, .case table th{
     border: 1px solid grey; 
-    /* white-space: normal; */
-    /* word-wrap: break-word; */     /*this is to split words*/
+    /* word-wrap: break-word; */     /* this is to split words */
     overflow: hidden;
+    white-space: nowrap;    /* do not change line */
+    text-overflow: ellipsis;    /* βάλε "..". όταν δεν χωράει*/
 }
 
 .case table th{

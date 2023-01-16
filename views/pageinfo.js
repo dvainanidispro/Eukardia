@@ -1,3 +1,4 @@
+/* jshint esversion: 11 */
 /** Middleware for making page info available to a view */ 
 module.exports.pageinfo = (req,res,next) =>{
     let path = req.baseUrl + req.path;      // path without get parameters
@@ -9,7 +10,7 @@ module.exports.pageinfo = (req,res,next) =>{
         "/editcase" : "ΕΥΚΑΡΔΙΑ - Επεξεργασία περιστατικού",
         "/statistics": "ΕΥΚΑΡΔΙΑ - Συγκεντρωτικά στοιχεία",
         "/usage": "ΕΥΚΑΡΔΙΑ - Ενεργοί χρήστες",
-    }
+    };
     res.locals.pagetitle = titles[path]??"ΕΥΚΑΡΔΙΑ";  // handlebars title is the locals.title
 
     if (path=="/dataentryform"){

@@ -1,3 +1,4 @@
+/* jshint strict:global , esversion: 11 */
 'use strict';
 
 
@@ -9,7 +10,7 @@ const express = require('express');
 const server = express();
 // let isDev = (process.env.ENVIRONMENT == "Development");
 /** Safer path of the folder when app runs from another directory */
-let folder = (subfolder)=>__dirname+"/"+subfolder;
+// let folder = (subfolder)=>__dirname+"/"+subfolder;
 // vercel supports only the old command (runs the express app from another directory!)
 // __dirname: directory of server.js - static(folder): directory that runs the "node server.js" command
 
@@ -76,12 +77,13 @@ server.get('/login', (req,res) => res.oidc.login({ returnTo:'/updateprofile' }))
 server.get('/updateprofile', authentication(), (req, res) => {
     res.redirect('/');      // redirect to index.html
     let user = req.oidc.user;
-    const userInfo = Models.User.upsert({       // upsert: create or update if already exists!
+    const [record,created] = Models.User.upsert({       // upsert: create or update if already exists!
         id:user.sub,
         name:user.name,
         entity:user.entity,
         roles:JSON.stringify(user.positions)
-    });      
+    });
+    // Ενώ το create επιστρέφει την εγγραφή, ενώ το upsert επστρέφει array [εγγραφή,ανδημιουργήθηκε]...   
 });
 
 // send ID token, used only for testing now, because it doesn't need statics or views
@@ -119,8 +121,7 @@ server.post('/submitdata', authentication(), async (req,res)=>{
         if (modifiedCase?.id==recordId) {            // recordId always valid here. modifiedCase?.id = "undefined without error" when not allowed. 
             if (!dataRecieved.testPatient) {dataRecieved.testPatient=0}     // Τα checkboxes δεν στέλνονται αν είναι unchecked! Ενώ θα θέλαμε να έρχεται 0. 
             let [record,created] = await Models.Case.upsert(dataRecieved,{returning:true});     
-            // Σημείωση 1: update needs "where" - upsert just updates! (trick για συντομότερο κώδικα)
-            // Σημείωση 2: Ενώ το create επιστρέφει την εγγραφή, ενώ το upsert επστρέφει array [εγγραφή,ανδημιουργήθηκε]... 
+            // update needs "where" - upsert just updates! (trick για συντομότερο κώδικα)
             statusCode = 204;
         } else {
             res.status(403).render('403');
@@ -189,7 +190,7 @@ const startWebServer = (server,port,listeningURL="http://localhost") => {
         let presentTime = new Date().toLocaleString('el-GR',{hour12: false});
         console.log(`\x1b[35m Server is listening at \x1b[4m ${listeningURL}:${port} \x1b[0m\x1b[35m. Started at: ${presentTime}. \x1b[0m`);
     });
-}
+};
 
 const port = process.env.PORT || 80;
 const listeningURL = process.env.LISTENINGURL;
