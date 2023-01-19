@@ -24,6 +24,8 @@ var Q = (selector) => {
     }
 };
 
+/** Public (window) variable for checks using the browser console */
+var currentCase = {};
 
 /** Gets the GET parameter from the URL */
 var GetParameters = (parameter=null) => parameter 
@@ -198,6 +200,8 @@ if (path.includes("viewcase")){
     fetch("/getcase/"+theCase).then(answer=>answer.json())
         .then((answer)=>{
 
+            currentCase = answer;
+
             answer.createdAt = greekDate(answer.createdAt);
             answer.updatedAt = greekDate(answer.updatedAt);
             
@@ -296,9 +300,10 @@ if (path.includes("editcase")){
         fetch("/getcase/"+theCase).then(answer=>answer.json())
             .then((answer)=>{
                 // console.log(answer);
+                currentCase = answer;
 
                 for (const [key,value] of Object.entries(answer)){     // loop for objects
-                        if (Qfield(key)) {           // true σε όλα εκτός από author, entity, createdAt, updatedAt
+                        if (!!value && Qfield(key)) {           // το Qfield(key) είανι true σε όλα εκτός από author, entity, createdAt, updatedAt
                             // Ιδιοτροπία checkbox. Επίσης, το παρακάτω λειτουργεί μόνο αν το checkbox έχει values 0 και 1 (όχι άλλα values), διότι #.checked=true|false->1|0
                             if (Qfield(key).type=="checkbox") {Qfield(key).checked = value}     
                             else {Qfield(key).value = value}
