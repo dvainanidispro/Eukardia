@@ -85,7 +85,7 @@ a:hover{color: hwb(180 10% 81%)}
 body{
     background-color: var(--backgroundcolor);
 
-    /* background-image: url('background.png'); */
+    background-image: url('background.png');
     background-repeat: no-repeat; 
     /*background no-scrolling:"*/  
     background-attachment: fixed;   

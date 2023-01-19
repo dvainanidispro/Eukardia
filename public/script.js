@@ -284,7 +284,7 @@ if (path.includes("editcase")){
     Q(".calcBmi").on('input',calculateBMI);
 
     let theCase = GetParameters("case");
-    // console.log(theCase);
+
     if (theCase){
 
 
@@ -295,6 +295,7 @@ if (path.includes("editcase")){
         Q("#loadingSpinner").show(true);
         fetch("/getcase/"+theCase).then(answer=>answer.json())
             .then((answer)=>{
+                // console.log(answer);
 
                 for (const [key,value] of Object.entries(answer)){     // loop for objects
                         if (Qfield(key)) {           // true σε όλα εκτός από author, entity, createdAt, updatedAt
