@@ -303,7 +303,7 @@ if (path.includes("editcase")){
                 currentCase = answer;
 
                 for (const [key,value] of Object.entries(answer)){     // loop for objects
-                        if (!!value && Qfield(key)) {           // το Qfield(key) είανι true σε όλα εκτός από author, entity, createdAt, updatedAt
+                        if (value!=null && Qfield(key)) {           // το Qfield(key) είανι true σε όλα εκτός από author, entity, createdAt, updatedAt
                             // Ιδιοτροπία checkbox. Επίσης, το παρακάτω λειτουργεί μόνο αν το checkbox έχει values 0 και 1 (όχι άλλα values), διότι #.checked=true|false->1|0
                             if (Qfield(key).type=="checkbox") {Qfield(key).checked = value}     
                             else {Qfield(key).value = value}
