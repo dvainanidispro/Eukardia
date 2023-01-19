@@ -11,7 +11,7 @@ module.exports.pageinfo = (req,res,next) =>{
         "/statistics": "ΕΥΚΑΡΔΙΑ - Συγκεντρωτικά στοιχεία",
         "/usage": "ΕΥΚΑΡΔΙΑ - Ενεργοί χρήστες",
     };
-    res.locals.pagetitle = titles[path]??"ΕΥΚΑΡΔΙΑ";  // handlebars title is the locals.title
+    res.locals.pagetitle = titles[path]??"ΕΥΚΑΡΔΙΑ";  // handlebars' title is the locals.title
 
     if (path=="/dataentryform"){
         res.locals.h1 = "Καταχώριση νέου περιστατικού";
@@ -21,7 +21,7 @@ module.exports.pageinfo = (req,res,next) =>{
         res.locals.h1 = "Επεξεργασία περιστατικού";
         res.locals.submitlabel = "Ενημέρωση περιστατικού";
         res.locals.editcase = true;
-    } else{
+    } else {
         res.locals.h1 = "ΕΥΚΑΡΔΙΑ";
     }
 

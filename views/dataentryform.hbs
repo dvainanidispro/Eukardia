@@ -11,6 +11,8 @@
             </div>
         {{/if}}
 
+
+
         <form id="dataform" action="/submitdata" method="POST" {{#if editcase}}class="d-none"{{/if}}>
 
 
@@ -32,13 +34,32 @@
                 </label>
             </div></div>
 
+            {{!-- Δεν είναι rounded οι δύο δεξιές γωνίες, λόγω του input-group για να εμφανίζεται το κουμπί "Παράβλεψη Διπλότυπης" --}}
             <div class="input-group">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="patientId" name="patientId" placeholder="Αναγνωριστικό ασθενούς" required>
+                    <input type="text" class="form-control rounded-corners" id="patientId" name="patientId" placeholder="Αναγνωριστικό ασθενούς" required>
                     <label for="patientId">Αναγνωριστικό ασθενούς</label>
                 </div>
                 <button class="btn btn-outline-secondary d-none" type="button" role="ignore" for="patientId" id="ignorePatientId">Παράβλεψη Διπλότυπης</button>
             </div>
+
+            {{!-- <div class="input-group"> --}}
+                <div class="form-floating">
+                <select class="form-select" id="yrinc" name="yrinc" aria-label="Έτος ένταξης στη μελέτη">
+                    <option selected value="" class="unknown-choice">Άγνωστο</option>
+                    <option value="2008" >2008</option>
+                    <option value="2009">2009</option>
+                    <option value="2010">2010</option>
+                    <option value="2011">2011</option>
+                    <option value="2012">2012</option>
+                    <option value="2013">2013</option>
+                    <option value="2014">2014</option>
+                </select>
+                <label for="floatingSelect">Έτος ένταξης στη μελέτη</label>
+                </div>
+            {{!-- </div> --}}
+
+            <hr>
 
             <div class="bootstrap-input-style">
                 <label class="form-label ms-2">Φύλο</label>
@@ -66,6 +87,29 @@
                 <span class="input-group-text">Έτη</span>
             </div>
 
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="1" class="form-control calcBmi" id="weight" name="weight" placeholder="Βάρος" min="40" max="200">
+                    <label for="weight">Βάρος</label>
+                </div>
+                <span class="input-group-text">Kg</span>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="0.01" class="form-control calcBmi" id="height" name="height" placeholder="Ύψος" min="0.50" max="2.20">
+                    <label for="height">Ύψος</label>
+                </div>
+                <span class="input-group-text">m</span>
+            </div>
+
+            <div class="input-group">
+                <div class="form-floating">
+                    <input type="number" step="0.01" class="form-control" id="bmi" name="bmi" min="0" placeholder="Body mass index (BMI)">
+                    <label for="bmi">Body mass index (BMI)</label>
+                </div>
+                <span class="input-group-text">kg/m<sup>2</sup></span>
+            </div>
 
             <hr>
 
@@ -309,14 +353,6 @@
                 <span class="input-group-text">mg/dL</span>
             </div>
 
-            <div class="input-group">
-                <div class="form-floating">
-                    <input type="number" step="0.1" class="form-control" id="bmi" name="bmi" min="0" placeholder="Body mass index (BMI)">
-                    <label for="bmi">Body mass index (BMI)</label>
-                </div>
-                <span class="input-group-text">kg/m2</span>
-            </div>
-
 
             <hr>
 
@@ -375,8 +411,38 @@
                 <span class="input-group-text">mg/dL</span>
             </div>
 
+            
             <hr>
 
+
+            <div class="input-element bootstrap-input-style">
+                <label class="form-label ms-2 ">Καρκίνος</label>
+                <div class="ms-3">
+                    <div class="form-check col unknown-choice">
+                        <input class="form-check-input " type="radio" name="cancer" id="cancer" value="" checked>
+                        <label class="form-check-label" for="cancer">Άγνωστο</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="cancer" id="cancer0" value="0">
+                        <label class="form-check-label" for="cancer0">Όχι</label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="cancer" id="cancer1" value="1">
+                        <label class="form-check-label" for="cancer1">Ναι</label>
+                    </div>
+                </div>
+            </div>
+
+            {{!-- <div class="input-group"> --}}
+                <div class="form-floating">
+                    <input type="number" step="1" class="form-control" id="yrcancer" name="yrcancer" placeholder="Έτος διάγνωσης καρκίνου" min="1950" max="2030">
+                    <label for="yrcancer">Έτος διάγνωσης καρκίνου</label>
+                </div>
+            {{!-- </div> --}}
+
+
+
+            <hr>
 
             <div class="input-element bootstrap-input-style">
                 <label class="form-label ms-2 ">Κολπική μαρμαρυγή</label>
@@ -488,36 +554,6 @@
 
 
             <hr>
-
-
-            <div class="input-element bootstrap-input-style">
-                <label class="form-label ms-2 ">Καρκίνος</label>
-                <div class="ms-3">
-                    <div class="form-check col unknown-choice">
-                        <input class="form-check-input " type="radio" name="cancer" id="cancer" value="" checked>
-                        <label class="form-check-label" for="cancer">Άγνωστο</label>
-                    </div>
-                    <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="cancer" id="cancer0" value="0">
-                        <label class="form-check-label" for="cancer0">Όχι</label>
-                    </div>
-                    <div class="form-check col">
-                        <input class="form-check-input" type="radio" name="cancer" id="cancer1" value="1">
-                        <label class="form-check-label" for="cancer1">Ναι</label>
-                    </div>
-                </div>
-            </div>
-
-            {{!-- <div class="input-group"> --}}
-                <div class="form-floating">
-                    <input type="number" step="1" class="form-control" id="yrcancer" name="yrcancer" placeholder="Έτος διάγνωσης καρκίνου" min="1950" max="2030">
-                    <label for="yrcancer">Έτος διάγνωσης καρκίνου</label>
-                </div>
-            {{!-- </div> --}}
-
-
-            <hr>
-
 
             <div class="form-floating input-element">
                 <textarea class="form-control taller" placeholder="Λοιπά Σχόλια" id="comments" name="comments"></textarea>

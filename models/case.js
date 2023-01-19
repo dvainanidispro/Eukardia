@@ -19,9 +19,13 @@ const Case = db.define('Case', {
       type: DataTypes.STRING,
       allowNull: false
     },
+    yrinc:DataTypes.SMALLINT,
 
     gender: DataTypes.TINYINT,
     age: DataTypes.TINYINT,
+    weight: DataTypes.TINYINT,
+    height: DataTypes.FLOAT,
+    bmi: DataTypes.FLOAT,
 
     drugbp: DataTypes.BOOLEAN,
     sbp: DataTypes.FLOAT,
@@ -40,7 +44,6 @@ const Case = db.define('Case', {
     cholesterol: DataTypes.FLOAT,
     ldl: DataTypes.FLOAT,
     hdl: DataTypes.FLOAT,
-    bmi: DataTypes.FLOAT,
 
     crp: DataTypes.FLOAT,
     wbc: DataTypes.FLOAT,
@@ -49,6 +52,9 @@ const Case = db.define('Case', {
     calciumscore: DataTypes.FLOAT,
     lpa: DataTypes.FLOAT,
     creatinine: DataTypes.FLOAT,
+
+    cancer: DataTypes.BOOLEAN,
+    yrcancer: DataTypes.SMALLINT,
     
     atrialfibrillation: DataTypes.BOOLEAN,
     heartfailure: DataTypes.BOOLEAN,
@@ -58,8 +64,6 @@ const Case = db.define('Case', {
     yrcvddeath: DataTypes.SMALLINT,
     familyhistory: DataTypes.BOOLEAN,
 
-    cancer: DataTypes.BOOLEAN,
-    yrcancer: DataTypes.SMALLINT,
     comments: DataTypes.TEXT('medium'),
 
   }, 

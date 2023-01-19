@@ -31,7 +31,10 @@ var GetParameters = (parameter=null) => parameter
     : Object.fromEntries(new URLSearchParams(window.location.search).entries());
 
 
-/** Selects the field as a DOM Object (not HTML element)*/
+/** Selects the field as a DOM Object (not HTML element). 
+ * For example Qfield('gender') is a RadioNodeList with 3 children!
+ * Useful properties: Qfield(*).value, Qfield(*).type
+ */
 var Qfield = (fieldName,fieldValue=null) => {
     try{
         if (!fieldValue) {
@@ -59,6 +62,14 @@ Q("#toggle-menu").on('click',function(){
 });
 
 
+var calculateBMI = () => {
+    let roundTo2 = (num) => Math.round(num*100)/100;
+    if (Qfield('height').value>99) {Qfield('height').value = (Qfield('height').value/100).toFixed(2)}
+    if (Qfield('weight').value=="" || Qfield('height').value=="") {return}
+    Qfield('bmi').value = roundTo2(Qfield('weight').value/Math.pow(Qfield('height').value,2)).toFixed(2);
+};
+
+
 
 
 if (path.includes("dataentryform")){
@@ -70,12 +81,13 @@ if (path.includes("dataentryform")){
         Q("#testWarning").show(this.checked);
     });
 
+    Q(".calcBmi").on('input',calculateBMI);
+
 
     let validateForm = (form) => {
         form.classList.add("was-validated");          // show errors using bootstrap
         form.reportValidity();    // reportValidity = CheckValidity + show validation errors using the default browser's way
     };
-    
     
     // when press Enter, form is not sumbitted, but shows validation errors
     window.addEventListener('keydown', function(e) {
@@ -86,7 +98,6 @@ if (path.includes("dataentryform")){
             }
         }
     }, true);
-
 
     Q("#btnFormSubmit").on('click',function(){
         validateForm(Q("#dataform"));
@@ -131,6 +142,9 @@ if (path.includes("dataentryform")){
         });
         return duplicateFound;
     };
+
+
+    //// ingore validation functions
 
     Q('[role="ignore"]').on('click',function(){
         let underlyingField = Q("#"+this.getAttribute("for"));
@@ -267,6 +281,8 @@ if (path.includes("searchcase")){
 
 if (path.includes("editcase")){
 
+    Q(".calcBmi").on('input',calculateBMI);
+
     let theCase = GetParameters("case");
     // console.log(theCase);
     if (theCase){
@@ -282,7 +298,7 @@ if (path.includes("editcase")){
 
                 for (const [key,value] of Object.entries(answer)){     // loop for objects
                         if (Qfield(key)) {           // true σε όλα εκτός από author, entity, createdAt, updatedAt
-                            // Ιδιοτροπία checkbox. Επίσης, το παρακάτω λειτουργεί μόνο αν το checkbox έχει values 0 και 1 (όχι άλλα values), διότι #.checked=true|false=1|0
+                            // Ιδιοτροπία checkbox. Επίσης, το παρακάτω λειτουργεί μόνο αν το checkbox έχει values 0 και 1 (όχι άλλα values), διότι #.checked=true|false->1|0
                             if (Qfield(key).type=="checkbox") {Qfield(key).checked = value}     
                             else {Qfield(key).value = value}
                         } 

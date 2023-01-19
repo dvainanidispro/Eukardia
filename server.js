@@ -108,6 +108,8 @@ server.post('/submitdata', authentication(), async (req,res)=>{
     let dataRecieved = clearObject(req.body);
     let recordId = dataRecieved?.id ?? null;
     dataRecieved.author = req?.oidc?.user?.sub ?? "testUser";
+    console.log(dataRecieved);
+    
     let statusCode = 200; // 201 created or 200/204 OK
     if (!recordId){ // new record
         let record = await Models.Case.create(dataRecieved);        
