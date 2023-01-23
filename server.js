@@ -94,7 +94,7 @@ server.get('/profile', userinfo, (req, res) => {
 
 
 // access to "submit" form (only authenticated users)
-server.get('/dataentryform*', pageinfo, authentication(), userinfo, lmr, (req,res)=>{res.render('dataentryform')});
+server.get(['/dataentryform*','/newcase*'], pageinfo, authentication(), userinfo, lmr, (req,res)=>{res.render('dataentryform')});
 
 // access to "update" form (only authenticated users)
 server.get('/editcase*', authentication(), pageinfo, userinfo, lmr, (req,res)=>{

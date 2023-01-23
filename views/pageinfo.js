@@ -5,6 +5,7 @@ module.exports.pageinfo = (req,res,next) =>{
     let titles = {
         "/":"ΕΥΚΑΡΔΙΑ",
         "/dataentryform" : "ΕΥΚΑΡΔΙΑ - Καταχώριση περιστατικού",
+        "/newcase" : "ΕΥΚΑΡΔΙΑ - Καταχώριση περιστατικού",
         "/viewcase" : "ΕΥΚΑΡΔΙΑ - Περιστατικό",
         "/searchcase" : "ΕΥΚΑΡΔΙΑ - Αναζήτηση περιστατικών",
         "/editcase" : "ΕΥΚΑΡΔΙΑ - Επεξεργασία περιστατικού",
@@ -13,7 +14,7 @@ module.exports.pageinfo = (req,res,next) =>{
     };
     res.locals.pagetitle = titles[path]??"ΕΥΚΑΡΔΙΑ";  // handlebars' title is the locals.title
 
-    if (path=="/dataentryform"){
+    if (path=="/dataentryform" || path=="/newcase"){
         res.locals.h1 = "Καταχώριση νέου περιστατικού";
         res.locals.submitlabel = "Καταχώριση περιστατικού";
         res.locals.editcase = false;

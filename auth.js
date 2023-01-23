@@ -22,13 +22,13 @@ module.exports.userinfo = (req,res,next) =>{
 
 
 
-/** an object containing the active users of the app */
+/** Αn object containing the active users of the app */
 let CurrentUsers = {};
 
-/** Logs/Shows the time of the last meaningfull request (lmr) so you can know if the application is active */
+/** Logs/Shows the time of the last meaningfull request (lmr) so you can know if the application is currently used by users */
 module.exports.lmr = (req,res,next) => {
     if (req.originalUrl=='/usage'){
-        /** Maximum time difference in minutes to be considered active */
+        /** Maximum time difference in minutes to be considered active (negative number) */
         const maxTimeDiff = -60;
         const rtf = new Intl.RelativeTimeFormat("el", { numeric: "auto" });
         let returnedUsers = {};

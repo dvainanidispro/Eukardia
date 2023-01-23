@@ -65,11 +65,13 @@ Q("#toggle-menu").on('click',function(){
 
 
 var calculateBMI = () => {
-    let roundTo2 = (num) => Math.round(num*100)/100;
+    /** Round to 2 decimals and always show 2 decimals, even if they are zero */
+    let roundTo2 = (num) => (Math.round(num*100)/100).toFixed(2);
     if (Qfield('height').value>99) {Qfield('height').value = (Qfield('height').value/100).toFixed(2)}
     if (Qfield('weight').value=="" || Qfield('height').value=="") {return}
-    Qfield('bmi').value = roundTo2(Qfield('weight').value/Math.pow(Qfield('height').value,2)).toFixed(2);
+    Qfield('bmi').value = roundTo2( Qfield('weight').value/Math.pow(Qfield('height').value,2) );
 };
+
 
 
 
@@ -79,12 +81,13 @@ if (path.includes("dataentryform")){
     Q("#naventry").style.display="none";
     
     Q("#testPatient").addEventListener("change",function(){
-        // Q("#testWarning").style.display = this.checked ? "block":"none";
         Q("#testWarning").show(this.checked);
     });
 
     Q(".calcBmi").on('input',calculateBMI);
 
+
+    ////////    VALIDATE FROM    ////////
 
     let validateForm = (form) => {
         form.classList.add("was-validated");          // show errors using bootstrap
@@ -107,9 +110,12 @@ if (path.includes("dataentryform")){
     });
 
     /* 
-        Σημειώνεται ότι το το addEventListener('submit' , καθώς και το html onsubmit εκτελούνται μόνο όταν η φόρμα έχει γίνει validated σωστά.
+        Σημειώνεται ότι το το addEventListener('submit'... , καθώς και το html onsubmit εκτελούνται μόνο όταν η φόρμα έχει γίνει validated σωστά.
         Αυτό σημαίνει ότι αν η φόρμα δεν γίνει validated, δεν θα εκτελεστεί τίποτα από αυτά!
     */
+
+
+    ////////    Check for duplicate petientID and show error    ////////
 
     let setValidation = (inputElement,value) => {
         if (value=="valid"){
@@ -146,7 +152,7 @@ if (path.includes("dataentryform")){
     };
 
 
-    //// ingore validation functions
+    ////////    Ingore validation functions    ////////
 
     Q('[role="ignore"]').on('click',function(){
         let underlyingField = Q("#"+this.getAttribute("for"));
@@ -170,24 +176,30 @@ if (path.includes("dataentryform")){
 
 
 
+
 if (path.includes("viewcase")){
 
 
     let theCase = GetParameters("case");
     
-    let tableFromObject = (caseObject) => {
-        let rows = '';
+
+    /** Converts the Case object (key-value) to an html table */
+    let tableFromObject = (caseObject,headers=["key","value"]) => {
+
         let head = /*html*/`
             <thead>
                 <tr>
-                    <th scope="col">Πεδίο</th>
-                    <th scope="col">Τιμή</th>
+                    <th scope="col">${headers[0]}</th>
+                    <th scope="col">${headers[1]}</th>
                 </tr>
             </thead>`;
+
+        let rows = '';
         for (const [key,value] of Object.entries(caseObject)){
             const val = value??""; //κενό αντί για null
             rows+=/*html*/`<tr><td>${key}</td><td>${val}</td></tr>`;
         }
+
         return /*html*/`
             <table class="table table-striped">
                     ${head}
@@ -195,8 +207,10 @@ if (path.includes("viewcase")){
                     ${rows}
                 </tbody>
             </table>`;
+
     };
     
+
     fetch("/getcase/"+theCase).then(answer=>answer.json())
         .then((answer)=>{
 
@@ -205,7 +219,7 @@ if (path.includes("viewcase")){
             answer.createdAt = greekDate(answer.createdAt);
             answer.updatedAt = greekDate(answer.updatedAt);
             
-            Q('#case').innerHTML = tableFromObject(answer);
+            Q('#case').innerHTML = tableFromObject(answer,["Πεδίο","Τιμή"]);
             Q("#caseframe").show(true);
             Q("#editBtn").href += `?case=${theCase}`;
 
@@ -221,7 +235,6 @@ if (path.includes("viewcase")){
 
 
 
-/* Φύλο: ${singleCase.gender=1?"Άνδρας":2?"Γυναίκα":"Άγνωστο"}<br> */
 
 if (path.includes("searchcase")){
 
@@ -244,7 +257,7 @@ if (path.includes("searchcase")){
         // return singleCase.id;
     };
     let presentCases = allCases => {
-        console.log(allCases);
+        // console.log(allCases);
         if (!allCases?.length) {return `Δεν βρέθηκαν περιστατικά με αυτό το αναγνωριστικό ή δεν έχετε δικαίωμα να τα δείτε.`}
         let presentation = `
             <p>Βρέθηκαν τα παρακάτω περιστατικά:</p>
@@ -329,7 +342,6 @@ if (path.includes("statistics")){
 
 
     let tableFromArray = (statsArray) => {
-        let rows = '';
         let sum = 0;
         let head = /*html*/`
             <thead>
@@ -339,6 +351,7 @@ if (path.includes("statistics")){
                     <th scope="col" class="hide-md">Τελευταία εγγραφή</th>
                 </tr>
             </thead>`;
+        let rows = '';
         for (const item of statsArray){
             rows+=/*html*/`<tr>
                 <td>${item.entity}</td>
