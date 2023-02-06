@@ -59,7 +59,7 @@ let path = window.location.pathname;
 
 
 
-Q("#toggle-menu").on('click',function(){
+Q("#toggle-menu").on('click',function(){       //TODO: remove when menu is added
     Q("#navbar").classList.toggle("d-none");
 });
 
@@ -76,7 +76,7 @@ var calculateBMI = () => {
 
 
 
-if (path.includes("dataentryform")){
+if (path.includes("dataentryform") || path.includes("newcase")){
 
     Q("#naventry").style.display="none";
     

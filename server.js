@@ -74,10 +74,10 @@ server.get('/', pageinfo, userinfo, (req,res)=>res.render('index'));
 server.get('/login', (req,res) => res.oidc.login({ returnTo:'/updateprofile' }));
 
 // update user profile on database after login
-server.get('/updateprofile', authentication(), (req, res) => {
+server.get('/updateprofile', authentication(), async (req, res) => {
     res.redirect('/');      // redirect to index.html
     let user = req.oidc.user;
-    const [record,created] = Models.User.upsert({       // upsert: create or update if already exists!
+    const [record,created] = await Models.User.upsert({       // upsert: create or update if already exists! needs await!
         id:user.sub,
         name:user.name,
         entity:user.entity,

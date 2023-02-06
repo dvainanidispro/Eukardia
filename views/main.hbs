@@ -35,6 +35,32 @@
             <img src="logo.png" class="logo" alt="ΕΥΚΑΡΔΙΑ Logo"/>
             <span class="h1 app-title">ΕΥΚΑΡΔΙΑ</span>
         </a>
+
+                {{!-- TODO: Different items for logged in users and logged off users --}}
+                {{!-- <nav class="">
+                    <div class="dropdown-center">
+                    <button id="menutoggle" class="btn btn-primary dropdown-toggle text-shadow fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Μενού
+                    </button>
+                    <ul id="navdropdown" class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/">Αρχική</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/dataentryform">Καταχώριση</a></li>
+                        <li><a class="dropdown-item" href="/searchcase">Αναζήτηση</a></li>
+                        <li><a class="dropdown-item" href="/statistics">Στατιστικά</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/privacy">Πολιτική απορρήτου</a></li>
+                        <li><a class="dropdown-item" href="/cookies">Πολιτική cookies</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/info">Πληροφορίες</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/logout">Αποσύνδεση</a></li>
+                    </ul>
+                    </div>
+                </nav> --}}
+
+
+
         <div class="d-md-none toggle-menu-div">
             <button class="btn text-white toggle-menu" id="toggle-menu" aria-label="Navigation menu">
                 <svg viewBox='-5 0 10 8' width='30'>
@@ -53,25 +79,6 @@
                 <li id="naventry"><a href="/dataentryform">Καταχώριση</a></li>
                 <li id="navsearch"><a href="/searchcase">Αναζήτηση</a></li>
                 <li ><a href="/logout" id="navlogout" >Αποσύνδεση</a></li>
-
-                    {{!-- <li class="nav-item dropdown">
-                    <a id="menutoggle" class="nav-link dropdown-toggle text-shadow fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Μενού
-                    </a>
-                    <ul id="navdropdown" class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/">Αρχική</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/dataentryform">Καταχώριση</a></li>
-                        <li><a class="dropdown-item" href="/searchcase">Αναζήτηση</a></li>
-                        <li><a class="dropdown-item" href="/statistics">Στατιστικά</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/privacy">Πολιτική απορρήτου</a></li>
-                        <li><a class="dropdown-item" href="/cookies">Πολιτική cookies</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/info">Πληροφορίες</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/logout">Αποσύνδεση</a></li>
-                    </ul> --}}
 
                 {{/if}}
             </ul>
