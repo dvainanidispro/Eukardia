@@ -87,7 +87,7 @@ if (path.includes("dataentryform") || path.includes("newcase")){
     Q(".calcBmi").on('input',calculateBMI);
 
 
-    ////////    VALIDATE FROM    ////////
+    ////////    VALIDATE FORM    ////////
 
     let validateForm = (form) => {
         form.classList.add("was-validated");          // show errors using bootstrap

@@ -3,7 +3,7 @@
 
 
 
-/***************************      PACKAGES & EXPRESS BOILERPLATE           ***************************/ 
+//***************************      PACKAGES & EXPRESS BOILERPLATE           ***************************// 
 
 require('dotenv').config();
 const express = require('express');
@@ -65,7 +65,7 @@ let { pageinfo } = require('./views/pageinfo');
 
 
 
-/*******************             ROUTES             ***********************/ 
+//*******************             ROUTES             ***********************// 
 
 // homepage
 server.get('/', pageinfo, userinfo, (req,res)=>res.render('index'));
@@ -103,7 +103,7 @@ server.get('/editcase*', authentication(), pageinfo, userinfo, lmr, (req,res)=>{
 
 
 // submit data (only authenticated users)
-// TODO: split into 2: post (create) and put (update)...
+// * todo maybe: split into 2: post (create) and put (update)...
 server.post('/submitdata', authentication(), async (req,res)=>{
     let dataRecieved = clearObject(req.body);
     let recordId = dataRecieved?.id ?? null;
@@ -185,7 +185,7 @@ server.get('/usage', pageinfo, authentication(), lmr, (req,res)=>{res.render('us
 
 
 
-/***************************         START WEB SERVER         ***************************/ 
+//***************************         START WEB SERVER         ***************************//
 
 const startWebServer = (server,port,listeningURL="http://localhost") => {
     server.listen(port, () => {
