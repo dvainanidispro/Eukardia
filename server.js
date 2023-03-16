@@ -58,6 +58,8 @@ let authentication = requiresAuth;
 // MIDDLEWARE
 let { pageinfo } = require('./views/pageinfo');
 
+/** Helper function to shorten the longer function: (req,res) => res.render('view') */
+let render = (view,params={}) => (req,res) => res.render(view,params);
 
 
 
@@ -68,13 +70,13 @@ let { pageinfo } = require('./views/pageinfo');
 //*******************             ROUTES             ***********************// 
 
 // homepage
-server.get('/', pageinfo, userinfo, (req,res)=>res.render('index'));
+server.get('/', pageinfo, userinfo, render('index'));
 
-// after login, goto updateprofile
+// after login, goto updateprofile (custom function istead of default auth0's /login)
 server.get('/login', (req,res) => res.oidc.login({ returnTo:'/updateprofile' }));
 
 // update user profile on database after login
-server.get('/updateprofile', authentication(), async (req, res) => {
+server.get('/updateprofile', authentication(), async (req,res) => {
     res.redirect('/');      // redirect to index.html
     let user = req.oidc.user;
     const [record,created] = await Models.User.upsert({       // upsert: create or update if already exists! needs await!
@@ -87,23 +89,21 @@ server.get('/updateprofile', authentication(), async (req, res) => {
 });
 
 // send ID token, used only for testing now, because it doesn't need statics or views
-server.get('/profile', userinfo, (req, res) => {
+server.get('/profile', userinfo, (req,res) => {
     res.send(JSON.stringify(res.locals.user));  // IdToken
 });
 
 
 
 // access to "submit" form (only authenticated users)
-server.get(['/dataentryform*','/newcase*'], pageinfo, authentication(), userinfo, lmr, (req,res)=>{res.render('dataentryform')});
+server.get(['/dataentryform*','/newcase*'], pageinfo, authentication(), userinfo, lmr, render('dataentryform'));
 
 // access to "update" form (only authenticated users)
-server.get('/editcase*', authentication(), pageinfo, userinfo, lmr, (req,res)=>{
-    res.render('dataentryform',{editcase:true});
-});
+server.get('/editcase*', pageinfo, authentication(), userinfo, lmr, render('dataentryform'));
 
 
 // submit data (only authenticated users)
-// * todo maybe: split into 2: post (create) and put (update)...
+// * todo maybe: split into 2: post (create) and put (update)...maybe not!
 server.post('/submitdata', authentication(), async (req,res)=>{
     let dataRecieved = clearObject(req.body);
     let recordId = dataRecieved?.id ?? null;
@@ -137,10 +137,10 @@ server.post('/submitdata', authentication(), async (req,res)=>{
 
 
 // access to cases (only authenticated users)
-server.get('/viewcase*', pageinfo, authentication(),  lmr, (req,res)=>{res.render('viewcase')});
+server.get('/viewcase*', pageinfo, authentication(), userinfo, lmr, render('viewcase'));
 
 // search cases by id or patientId
-server.get('/searchcase', pageinfo, authentication(),  lmr, (req,res)=>{res.render('searchcase')});
+server.get('/searchcase', pageinfo, authentication(), userinfo, lmr, render('searchcase'));
 
 // check patient id for duplicates data (only authenticated users)
 server.get('/checkforduplicate/:patientid', authentication(), async (req,res)=>{
@@ -169,16 +169,18 @@ server.get('/getpatient/:patientid', authentication(), async (req,res)=>{
 
 
 // statistics page
-server.get('/statistics', pageinfo, authentication(), (req,res)=>{res.render('statistics')});
+server.get('/statistics', pageinfo, authentication(), userinfo, render('statistics'));
 // get statistics table
 server.get('/getstatistics', authentication(), async (req,res)=>{
     let [view,metadata] = await db.query(`SELECT * FROM eukardia.statistics`);
     res.send(JSON.stringify(view));
 });
 
-server.get('/usage', pageinfo, authentication(), lmr, (req,res)=>{res.render('usage')});
+// secret page for administrators
+server.get('/usage', pageinfo, authentication(), userinfo, lmr, render('usage'));
 
-
+// info page
+server.get('/info', pageinfo, userinfo, render('info'));
 
 
 

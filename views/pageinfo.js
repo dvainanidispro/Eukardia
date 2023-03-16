@@ -1,5 +1,8 @@
 /* jshint esversion: 11 */
-/** Middleware for making page info available to a view */ 
+
+// remember that hanldebars has access to res.locals
+
+/** Middleware for making page info (title, h1 text, buttons text) available to a view */ 
 module.exports.pageinfo = (req,res,next) =>{
     let path = req.baseUrl + req.path;      // path without get parameters
     let titles = {
@@ -11,6 +14,7 @@ module.exports.pageinfo = (req,res,next) =>{
         "/editcase" : "ΕΥΚΑΡΔΙΑ - Επεξεργασία περιστατικού",
         "/statistics": "ΕΥΚΑΡΔΙΑ - Συγκεντρωτικά στοιχεία",
         "/usage": "ΕΥΚΑΡΔΙΑ - Ενεργοί χρήστες",
+        "/info": "ΕΥΚΑΡΔΙΑ - Πληροφορίες εφαρμογής",
     };
     res.locals.pagetitle = titles[path]??"ΕΥΚΑΡΔΙΑ";  // handlebars' title is the locals.title
 
@@ -21,7 +25,7 @@ module.exports.pageinfo = (req,res,next) =>{
     } else if (path=="/editcase") {
         res.locals.h1 = "Επεξεργασία περιστατικού";
         res.locals.submitlabel = "Ενημέρωση περιστατικού";
-        res.locals.editcase = true;
+        res.locals.editcase = true;     //used by handlebars later to know if "new" case or "edit" case
     } else {
         res.locals.h1 = "ΕΥΚΑΡΔΙΑ";
     }

@@ -14,7 +14,7 @@ module.exports.auth0config = {
     },
 };
 
-/** Middleware for making user info available to a view */ 
+/** Middleware for making user info available to a view, and also populate the app's menu */ 
 module.exports.userinfo = (req,res,next) =>{
     res.locals.user = req.oidc.isAuthenticated() ? req.oidc.user : {guest:"true"};
     next();

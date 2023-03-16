@@ -55,14 +55,15 @@ function greekDate(date,notime=false){
     return !notime ? (new Date(date)).toLocaleString("EL-gr",{hour12:false}):(new Date(date)).toLocaleDateString("EL-gr",{hour12:false});
 }
 
+/** the relative path of the current page */
 let path = window.location.pathname;
 
 
-
+/*
 Q("#toggle-menu").on('click',function(){       //TODO: remove when menu is added
     Q("#navbar").classList.toggle("d-none");
 });
-
+*/
 
 var calculateBMI = () => {
     /** Round to 2 decimals and always show 2 decimals, even if they are zero */
@@ -74,11 +75,14 @@ var calculateBMI = () => {
 
 
 
+Q("~currentYear").set(new Date().getFullYear());       // used in info page
+
+
 
 
 if (path.includes("dataentryform") || path.includes("newcase")){
 
-    Q("#naventry").style.display="none";
+    // Q("#naventry").style.display="none";
     
     Q("#testPatient").addEventListener("change",function(){
         Q("#testWarning").show(this.checked);
@@ -238,7 +242,7 @@ if (path.includes("viewcase")){
 
 if (path.includes("searchcase")){
 
-    Q("#navsearch").style.display="none";
+    // Q("#navsearch").style.display="none";
 
     let presentCase = singleCase => {
         let greekGender = (genderNumber) => {

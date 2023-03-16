@@ -15,7 +15,7 @@
     <meta name="theme-color" content="#20295b">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    {{!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     {{!-- <link rel="stylesheet" href="https://unpkg.com/open-props"/>
     <link rel="stylesheet" href="https://unpkg.com/open-props/normalize.min.css"/> --}}
     <link href="style.css" rel="stylesheet" media="screen">
@@ -39,52 +39,36 @@
         </a>
 
                 {{!-- TODO: Different items for logged in users and logged off users --}}
-                {{!-- <nav class="">
+                <nav class="">
                     <div class="dropdown-center">
-                    <button id="menutoggle" class="btn btn-primary dropdown-toggle text-shadow fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button id="menutoggle" class="btn menu-button dropdown-toggle text-shadow" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Μενού
                     </button>
                     <ul id="navdropdown" class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/">Αρχική</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/dataentryform">Καταχώριση</a></li>
-                        <li><a class="dropdown-item" href="/searchcase">Αναζήτηση</a></li>
-                        <li><a class="dropdown-item" href="/statistics">Στατιστικά</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/privacy">Πολιτική απορρήτου</a></li>
-                        <li><a class="dropdown-item" href="/cookies">Πολιτική cookies</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/info">Πληροφορίες</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/logout">Αποσύνδεση</a></li>
+                        {{#if user.guest}}      
+                            <li><a class="dropdown-item" href="/login">Σύνδεση χρήστη</a></li>
+                            <li><a class="dropdown-item" href="/info">Πληροφορίες</a></li>           
+                        {{else if user.sub}}
+                            <li><a class="dropdown-item" href="/">Αρχική</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/dataentryform">Καταχώριση</a></li>
+                            <li><a class="dropdown-item" href="/searchcase">Αναζήτηση</a></li>
+                            <li><a class="dropdown-item" href="/statistics">Στατιστικά</a></li>
+                            {{!-- <li><hr class="dropdown-divider"></li> --}}
+                            {{!-- <li><a class="dropdown-item" href="/privacy">Πολιτική απορρήτου</a></li>
+                            <li><a class="dropdown-item" href="/cookies">Πολιτική cookies</a></li> --}}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/info">Πληροφορίες</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout">Αποσύνδεση</a></li>
+                        {{/if}}
                     </ul>
                     </div>
-                </nav> --}}
+                </nav>
 
 
 
-        <div class="d-md-none toggle-menu-div">
-            <button class="btn text-white toggle-menu" id="toggle-menu" aria-label="Navigation menu">
-                <svg viewBox='-5 0 10 8' width='30'>
-                <line y2='8' 
-                        stroke='lavender'  
-                        stroke-width='20' 
-                        stroke-dasharray='1.5 1.5'/>
-                </svg>
-            </button>
-        </div>
-        <nav class="navbar navbar-dark d-none d-md-block" id="navbar">
-            <ul>
-                {{#if user.guest}}
-                <li><a href="/login" id="navlogin" >Σύνδεση χρήστη</a></li>
-                {{else}}
-                <li id="naventry"><a href="/dataentryform">Καταχώριση</a></li>
-                <li id="navsearch"><a href="/searchcase">Αναζήτηση</a></li>
-                <li ><a href="/logout" id="navlogout" >Αποσύνδεση</a></li>
 
-                {{/if}}
-            </ul>
-        </nav>
 
 
     </header>

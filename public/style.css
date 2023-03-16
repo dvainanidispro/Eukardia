@@ -76,7 +76,7 @@ a{
     box-shadow: none;
     transition: all 0.3s; 
     font-weight: bold;
-    /* color: Blue; */
+    color: darkblue;
 }
 a:hover{color: hwb(180 10% 81%)}
 /* a:focus{outline: black solid 3px} */
@@ -111,7 +111,7 @@ body{
 header, header > a:first-of-type, header nav>ul {    /*header, left logo, right navs*/
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;  /*vertical align, when big logo*/
     list-style-type: none; 
     padding-inline-start: 0;    /*fixes ul*/
@@ -152,7 +152,7 @@ footer p{font-size: small}
 
 .body-container{
     background-color: var(--bodybackgroundcolor);
-    min-height: 500px;
+    min-height: 400px;
     max-width: min(100% - 2rem, var(--lg));
     margin-inline: auto; /*centers */
     overflow-x: hidden;
@@ -169,6 +169,16 @@ footer p{font-size: small}
 }
 .toggle-menu:active{
     border-color: red !important;
+}
+
+.menu-button{
+    font-weight: bold;
+    color: var(--headertextcolor);
+    background-color: var(--backgroundcolor);
+}
+.btn.menu-button:hover, .btn.menu-button:focus, .btn.menu-button:active, .btn.menu-button:focus-within{
+    background-color: var(--bs-black);
+    border-color: var(--bs-black);
 }
 
 
@@ -206,6 +216,11 @@ footer p{font-size: small}
 
 h1{
     font-size: 2rem;
+}
+
+h2{
+    margin-top: 1rem;
+    font-size: 1.5rem;
 }
 
 .sm{
