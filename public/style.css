@@ -181,6 +181,11 @@ footer p{font-size: small}
     border-color: var(--bs-black);
 }
 
+/* this is because we use our custom .js for opening the dropdown istead of bootstrap's js */
+.dropdown-menu{
+    inset: auto auto auto -50px;
+}
+
 
 @media ( width < 768px ){
 

@@ -59,11 +59,6 @@ function greekDate(date,notime=false){
 let path = window.location.pathname;
 
 
-/*
-Q("#toggle-menu").on('click',function(){       //TODO: remove when menu is added
-    Q("#navbar").classList.toggle("d-none");
-});
-*/
 
 var calculateBMI = () => {
     /** Round to 2 decimals and always show 2 decimals, even if they are zero */
@@ -76,6 +71,27 @@ var calculateBMI = () => {
 
 
 Q("~currentYear").set(new Date().getFullYear());       // used in info page
+
+
+// EventListener for bootstrap's dropdown menu. 
+// It may need the .dropdown-menu to have the additional css: "inset: xxx" to specify its position
+Q(".dropdown-toggle").on('click',function(e){
+     //* δεν είναι πλήρως accessible... */
+    e.stopPropagation();    // else, the click will propagate (bubble) to the document, and the menu will close again instantly
+    let closeMenu = function(el){
+        el.classList.remove('show');
+        el.setAttribute('aria-expanded',"false");
+        el.parentElement.querySelector('.dropdown-menu').classList.remove('show');
+    };
+    let openMenu = function(el){
+        el.classList.add('show');
+        el.setAttribute('aria-expanded',"true");
+        el.parentElement.querySelector('.dropdown-menu').classList.add('show');
+        document.addEventListener('click',_=>{closeMenu(el)},{once:true});     // close menu on next click
+    };  
+    (this.getAttribute('aria-expanded')=="false") ? openMenu(this) : closeMenu(this);
+});
+
 
 
 
