@@ -12,9 +12,10 @@ module.exports.pageinfo = (req,res,next) =>{
         "/viewcase" : "ΕΥΚΑΡΔΙΑ - Περιστατικό",
         "/searchcase" : "ΕΥΚΑΡΔΙΑ - Αναζήτηση περιστατικών",
         "/editcase" : "ΕΥΚΑΡΔΙΑ - Επεξεργασία περιστατικού",
+        "/howto": "ΕΥΚΑΡΔΙΑ - Οδηγίες καταχώρισης",
         "/statistics": "ΕΥΚΑΡΔΙΑ - Συγκεντρωτικά στοιχεία",
-        "/usage": "ΕΥΚΑΡΔΙΑ - Ενεργοί χρήστες",
         "/info": "ΕΥΚΑΡΔΙΑ - Πληροφορίες εφαρμογής",
+        "/usage": "ΕΥΚΑΡΔΙΑ - Ενεργοί χρήστες",
     };
     res.locals.pagetitle = titles[path]??"ΕΥΚΑΡΔΙΑ";  // handlebars' title is the locals.title
 

@@ -5,7 +5,7 @@
     "start_url": "/",
     "scope": "/",
     "display": "standalone",    
-    "background_color": "#e6e6fa",
+    "background_color": "#20295b",
     "theme_color": "#20295b",
     "description": "Εφαρμογή καταχώρισης περιστατικών του προγράμματος ΕΥΚΑΡΔΙΑ",
     "orientation": "portrait-primary",

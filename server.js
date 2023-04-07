@@ -182,6 +182,9 @@ server.get('/usage', pageinfo, authentication(), userinfo, lmr, render('usage'))
 // info page
 server.get('/info', pageinfo, userinfo, render('info'));
 
+// how-to page
+server.get('/howto', pageinfo, authentication(), userinfo, render('howto'));
+
 
 
 
