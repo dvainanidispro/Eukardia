@@ -22,8 +22,8 @@ const Case = db.define('Case', {
     yrinc:DataTypes.SMALLINT,
 
     gender: DataTypes.TINYINT,
-    age: DataTypes.TINYINT,
-    weight: DataTypes.TINYINT,
+    age: DataTypes.SMALLINT,
+    weight: DataTypes.SMALLINT,
     height: DataTypes.FLOAT,
     bmi: DataTypes.FLOAT,
 
